@@ -1,0 +1,46 @@
+package hr.nhex.graphic;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
+public class NeuroshimaHex extends JFrame {
+	
+	public NeuroshimaHex() {
+		initGui();
+	}
+	
+	
+
+	private void initGui() {
+		
+		this.setTitle("Neuroshima Hex");
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setSize(500, 500);
+		initGui();
+	}
+
+
+
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args) {
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+
+				NeuroshimaHex nhex = new NeuroshimaHex();
+				nhex.setUndecorated(true);
+				nhex.setVisible(true);
+
+			}
+
+		});
+
+	}
+
+
+
+}

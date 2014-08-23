@@ -1,0 +1,305 @@
+package hr.nhex.battle;
+
+import hr.nhex.board.Board;
+import hr.nhex.board.BoardTile;
+import hr.nhex.board.IBasicBoard;
+import hr.nhex.generic.Pair;
+import hr.nhex.model.Module;
+import hr.nhex.model.Netter;
+import hr.nhex.model.Player;
+import hr.nhex.model.Tile;
+import hr.nhex.model.Unit;
+import hr.nhex.model.ability.Ability;
+import hr.nhex.model.ability.AbilityType;
+import hr.nhex.model.unit.Attack;
+import hr.nhex.model.unit.AttackType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Razred koji predstavlja simulator borbe u igri Neuroshima Hex.
+ * 
+ * @author Luka Rukliæ
+ * @author Marin Bužanèiæ
+ *
+ */
+
+public class BattleSimulator implements IBasicBoard {
+
+	// hp treba updateat
+
+	private Board board;
+
+	private List<BattleTile> boardBattleTiles = new ArrayList<>();
+
+	private static final int MAXSHIFT_SMALL_BOARD = 4;
+
+	int[] angleX = {1, 0, -1, -1, 0, 1};	// zakomentiraj
+	int[] angleY = {0, 1, 1, 0, -1, -1};
+
+	/**
+	 * Konstruktor koji popunjava listu s poljima koja æe se koristiti prilikom borbe.
+	 * 
+	 * @param listTiles lista s poljima trenutno na ploèi
+	 */
+	public BattleSimulator(Board board) {
+		this.board = board;
+		for (BoardTile tile : board.getTiles()) {
+			boardBattleTiles.add(new BattleTile(tile.copy()));
+		}
+	}
+
+	/**
+	 * Metoda koja obavlja funkciju konstruktora razreda BattleSimulator na naèin da kopira èitavu ploèu
+	 * odnosno sva njezina polja u razred <code>BattleSimulator</code>.
+	 * 
+	 * @param listTiles lista s poljima
+	 */
+	public void reloadBoardToBattle(List<BoardTile> listTiles) {
+		boardBattleTiles.clear();
+		for (BoardTile tile : listTiles) {
+			boardBattleTiles.add(new BattleTile(tile.copy()));
+		}
+	}
+
+	/**
+	 * Metoda simulatora borbe koja izvršava borbu.
+	 */
+	public void executeBattle() {
+		applyModuleBonus();
+
+		for (int currentSpeed = defineHighestSpeed(); currentSpeed >= 0; currentSpeed--) {
+			//applyInstant();
+			executeBattleInitiative(currentSpeed);
+			updateAfterEffects();
+			if (currentSpeed != 0) {
+				applyModuleBonus();
+			}
+		}
+
+	}
+
+	/**
+	 * Metoda koja izvršava fazu borbe odreðenu ulaznom varijablom <code>currentSpeed</code> koja
+	 * predstavlja trenutnu inicijativu.
+	 * 
+	 * @param currentSpeed trenutna inicijativa
+	 */
+
+	private void executeBattleInitiative(int currentSpeed) {
+
+		for (BattleTile bt : boardBattleTiles) {
+			if (bt.getTile() instanceof Unit && !tileIsNetted(bt.getX(), bt.getY(), 0, bt.getTile().getPlayer())) {
+				Unit unit = ((Unit)bt.getTile());
+				for (Integer unitSpeed : unit.getSpeed()) {
+					if (unitSpeed == currentSpeed) {
+						executeAttacks(unit);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * <p>Metoda koja pretražuje napade odreðene jedinice primljene u metodu preko varijable <code>unit</code> i te iste napade izvršava.
+	 * 
+	 * <p>Ako je rijeè o napadu prsa-o-prsa (engl. <i>melee</i>), napad se izvršava nad jedinicom na polju na koje je napad usmjeren.
+	 * Ukoliko je pak rijeè o napadu na daljinu (engl. <i>ranged</i>), napad se izvršava nad svim poljima u liniji smjera napada, dok ne
+	 * doðe do protivnièke jedinice. Napad na daljinu je moguæe oslabiti štitom (engl. <i>block</i>).
+	 * 
+	 * @param unit jedinica èiji se napadi izvršavaju
+	 */
+
+	private void executeAttacks(Unit unit) {
+		for (Attack attack : unit.getAttacks()) {
+			if (attack.getType() == AttackType.MELEE) {
+				int pointsToTileX = unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6];
+				int pointsToTileY = unit.getY() + angleY[(attack.getPointsTo() + unit.getAngle()) % 6];
+				BattleTile attacked = getBattleTile(pointsToTileX, pointsToTileY);
+				if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer())) {
+					attack.getType().attack(attacked, attack.getValue());
+				}
+			}
+			else if (attack.getType() == AttackType.RANGED) {
+				int shift = 1;
+				while (true) {
+					int pointsToTileXrange =
+							unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6]*shift;
+					int pointsToTileYrange =
+							unit.getY() + angleY[(attack.getPointsTo() + unit.getAngle()) % 6]*shift;
+					if (shift > MAXSHIFT_SMALL_BOARD) {
+						break;
+					}
+					BattleTile attacked = getBattleTile(pointsToTileXrange, pointsToTileYrange);
+					if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer())) {
+
+						if (attacked.getTile() instanceof Unit) {
+							Unit unitBlock = (Unit)attacked.getTile();
+							int pointsToBlock = (attack.getPointsTo() + unit.getAngle() + 3 - unitBlock.getAngle()) % 6;
+							if (unitBlock.getAbilities().contains(new Ability(pointsToBlock, AbilityType.BLOCK))) {
+								attack.getType().attack(attacked, attack.getValue() - 1);
+							} else {
+								attack.getType().attack(attacked, attack.getValue());
+							}
+							break;
+						}
+						if (attacked.getTile() instanceof Module) {
+							Module moduleBlock = (Module)attacked.getTile();
+							int pointsToBlock = (attack.getPointsTo() + unit.getAngle() + 3 - moduleBlock.getAngle()) % 6;
+							if (moduleBlock.getAbilities().contains(new Ability(pointsToBlock, AbilityType.BLOCK))) {
+								attack.getType().attack(attacked, attack.getValue() - 1);
+							} else {
+								attack.getType().attack(attacked, attack.getValue());
+							}
+							break;
+						}
+
+					}
+					shift++;
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * Metoda koja odreðuje najveæu brzinu (inicijativu) koja se pojavljuje tijekom borbe.
+	 */
+
+	private int defineHighestSpeed() {
+		int highestSpeed = 0;
+		for (BattleTile bt : boardBattleTiles) {
+			if (bt.getTile() instanceof Unit) {
+				Unit unit = (Unit)bt.getTile();
+				for (int speed : unit.getSpeed()) {
+					if (speed > highestSpeed) {
+						highestSpeed = speed;
+					}
+				}
+			}
+		}
+		return highestSpeed;
+	}
+
+	private void applyModuleBonus() {
+
+		for (BattleTile battleTile : boardBattleTiles) {
+			BoardTile currentTile = battleTile.getTile();
+			// provjera da li postoje moguæi potezi unutar borbe
+			if (currentTile instanceof Module && !tileIsNetted(currentTile.getX(), currentTile.getY(), 0, battleTile.getTile().getPlayer())) {
+				for (Ability ability : ((Module)currentTile).getAbilities()) {
+					int pointsToTileX = currentTile.getX() + angleX[(ability.getPointsTo() + currentTile.getAngle()) % 6];
+					int pointsToTileY = currentTile.getY() + angleY[(ability.getPointsTo() + currentTile.getAngle()) % 6];
+					BattleTile bonusApplicant = getBattleTile(pointsToTileX, pointsToTileY);
+					if (bonusApplicant != null && currentTile.getPlayer().equals(bonusApplicant.getTile().getPlayer())) {
+						ability.getType().applyBonus(bonusApplicant);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * <p>Metoda koja nakon izvršene borbe ažurira stanje ploèe (životne bodove, mreže, otrov) te
+	 * mièe jedinice èiji su se životni bodovi spustili ispod 1.
+	 * <p>Takoðer, metoda nakon svake borbe provjerava maknute jedinice sa sposobnosti bacanje mreže (
+	 * engl. <i>Netter</i>) te ukoliko je netko od njih ima
+	 */
+
+	private void updateAfterEffects() {
+
+		List<BoardTile> deadTiles = new ArrayList<BoardTile>();
+
+		for (BattleTile bt : boardBattleTiles) {
+			if (bt.getTile().getHitPoints() <= 0) {
+				deadTiles.add(bt.getTile());
+			}
+			else if (bt.getTile().getHitPoints() != board.getTile(bt.getX(), bt.getY()).getHitPoints()) {
+				board.getTile(bt.getTile().getX(), bt.getTile().getY()).setHitPoints(bt.getTile().getHitPoints());
+			}
+		}
+
+		board.getTiles().removeAll(deadTiles);
+		reloadBoardToBattle(board.getTiles());
+
+	}
+
+	@Override
+	public boolean isFilled(int x, int y) {
+		for (BattleTile battleTile : boardBattleTiles) {
+			if (battleTile.getTile().getX() == x && battleTile.getTile().getY() == y) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public BattleTile getBattleTile(int x, int y) {
+		for (BattleTile battleTile : boardBattleTiles) {
+			if (battleTile.getTile().getX() == x && battleTile.getTile().getY() == y) {
+				return battleTile;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Tile getTile(int x, int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Metoda koja ispisuje trenutna polja na ploèi, zajedno s njihovim imenima, životnim bodovima te lokacijom
+	 */
+
+	public void printBoardState() {
+		for (BattleTile battleTile : boardBattleTiles) {
+			BoardTile tile = battleTile.getTile();
+			System.out.println(tile.getName() + ", HP: " +
+					tile.getHitPoints() + ", LOC: " +
+					tile.getX() + ", " + tile.getY());
+		}
+	}
+
+	public void printBoardUnitState() {
+		for (BattleTile battleTile : boardBattleTiles) {
+			if (battleTile.getTile() instanceof Unit) {
+				Unit unit = (Unit)battleTile.getTile();
+				System.out.println(unit.getName() + ", HP: " +
+						unit.getHitPoints() + ", LOC: " +
+						unit.getX() + ", " + unit.getY());
+				System.out.print("speed:");
+				for (Integer speed : unit.getSpeed()) {
+					System.out.println(speed + " ");
+				}
+				System.out.print("attacks: ");
+				for (Attack attack : unit.getAttacks()) {
+					System.out.println("Attack Side: " + attack.getPointsTo() + " Attack Value: "+attack.getValue());
+				}
+				System.out.println();
+			}
+		}
+	}
+
+	@Override
+	public boolean tileIsNetted(int x, int y, int noOfIterations, Player player) {
+		if (noOfIterations == 5) {
+			return false;
+		}
+		for (BattleTile tile : boardBattleTiles) {
+			if (tile.getTile() instanceof Netter && tile.getTile().getPlayer().equals(player)) {
+				if (!tileIsNetted(tile.getX(), tile.getY(), noOfIterations+1, player)) {
+					for (Pair p : ((Netter) tile.getTile()).getNettedTiles()) {
+						if (p.getX() == x && p.getY() == y) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+}

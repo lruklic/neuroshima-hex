@@ -1,0 +1,152 @@
+package hr.nhex.board;
+
+import hr.nhex.exception.BoardException;
+import hr.nhex.generic.Pair;
+import hr.nhex.model.Netter;
+import hr.nhex.model.ability.Ability;
+import hr.nhex.model.ability.AbilityType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Razred koji predstavlja ploèu za igru u Neuroshimi Hex.
+ * 
+ * @author Luka Rukliæ
+ *
+ */
+
+public class Board implements IBasicBoard {
+
+	/**
+	 * Konstanta koja definira velièinu ploèe za 2-4 igraèa.
+	 */
+	private static final int BOARD_SIZE = 2;
+
+	int[] angleX = {1, 0, -1, -1, 0, 1};	// zakomentiraj
+	int[] angleY = {0, 1, 1, 0, -1, -1};
+
+	/**
+	 * Polja na ploèi spremljena u obliku liste.
+	 */
+	private List<BoardTile> tiles = new ArrayList<>();
+
+	/**
+	 * Metoda koja dodaje polje na ploèu.
+	 * 
+	 * @param tile polje koje se dodaje na ploèu
+	 */
+	public void addTile(BoardTile tile, int x, int y, int angle) {
+
+		if (isFilled(x, y)) {
+			throw new BoardException("Field already contains a tile.");
+		}
+		if (!isLegal(x,y)) {
+			throw new BoardException("Given coordinates are outside board area.");
+		}
+		tile.x = x;
+		tile.y = y;
+		tile.angle = angle;
+		tile.setOnBoard();
+		tiles.add(tile);
+
+		addNettedToTile(tile, x, y);
+	}
+
+	/**
+	 * Metoda koja provjerava da li je dodano (odnosno pomaknuto ili pogurnuto) polje došlo na poziciju
+	 * gdje je aktivan net. Ukoliko je, polje nema efekta, inaèe se u listu polja pod mrežom dodaje polje ili
+	 * polja na koje jedinica pokazuje.
+	 * 
+	 * @param tile polje koje dolazi na ploèu
+	 * @param x koordinata x na koju dolazi polje
+	 * @param y koordinata y na koju dolazi polje
+	 */
+
+	private void addNettedToTile(BoardTile tile, int x, int y) {
+		if (tile instanceof Netter) {
+			Netter unit = ((Netter)tile);
+			//			for (BoardTile bt : this.tiles) {
+			//				if (bt instanceof Netter) {
+			//					if (((Netter) bt).getNettedTiles().contains(new Pair(x, y))) {
+			//						return;
+			//					}
+			//				}
+			//			}
+			for (Ability ability : unit.getAbilities()) {
+				if (ability.getType() == AbilityType.NET) {
+					int pointsToTileX = unit.getX() + angleX[(ability.getPointsTo() + unit.getAngle()) % 6];
+					int pointsToTileY = unit.getY() + angleY[(ability.getPointsTo() + unit.getAngle()) % 6];
+					if (isFilled(pointsToTileX, pointsToTileY)) { // i ne sadrži mrežu usmjerenu prema meni
+
+					}
+					unit.addNettedTile(new Pair(pointsToTileX, pointsToTileY));
+				}
+			}
+		}
+	}
+
+	public List<Pair> getAdjecantTiles (int x, int y) {
+		List<Pair> pairList = new ArrayList<>();
+
+		if (isLegal(x,y+1)) pairList.add(new Pair(x, y+1));
+		if (isLegal(x+1,y)) pairList.add(new Pair(x+1, y));
+
+		if (isLegal(x,y-1)) pairList.add(new Pair(x, y-1));
+		if (isLegal(x-1,y)) pairList.add(new Pair(x-1, y));
+
+		if (isLegal(x-1,y+1)) pairList.add(new Pair(x-1, y+1));
+		if (isLegal(x+1,y-1)) pairList.add(new Pair(x+1, y-1));
+
+		return pairList;
+
+	}
+
+	public List<BoardTile> getTiles() {
+		return tiles;
+	}
+
+	public boolean isLegal(int x, int y) {
+		if ((Math.abs(x+y) > BOARD_SIZE) || (Math.abs(x) > BOARD_SIZE) || (Math.abs(y) > BOARD_SIZE)) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isFilled(int x, int y) {
+		for (BoardTile tile : tiles) {
+			if (tile.x == x && tile.y == y) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public BoardTile getTile(int x, int y) {
+		for (BoardTile tile : tiles) {
+			if (tile.x == x && tile.y == y) {
+				return tile;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean tileIsNetted(int x, int y, int noOfIteration) {
+		for (BoardTile tile : tiles) {
+			if (tile instanceof Netter && !tileIsNetted(tile.getX(), tile.getY())) {
+				for (Pair p : ((Netter) tile).getNettedTiles()) {
+					if (p.getX() == x && p.getY() == y) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+}

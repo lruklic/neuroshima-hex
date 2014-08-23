@@ -1,0 +1,13 @@
+1407173489494	Rename type 'BasicDeck'
+1407260766450	Move compilation unit
+1407260781163	Move compilation unit
+1407260784947	Delete element
+1407260897160	Move compilation unit
+1407260938466	Move compilation unit
+1407267564168	Move compilation unit
+1407267576668	Move compilation unit
+1407351518223	Extract method 'defineSpeeds'
+1407618048977	Extract method 'executeAttacks'
+1407619079159	Rename package 'hr.nhex.board.exception'
+1407660878599	Delete element
+1407689659573	Extract method 'addNettedToTile'

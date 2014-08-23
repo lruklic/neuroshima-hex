@@ -1,0 +1,31 @@
+package hr.nhex.decks.implementation;
+
+import hr.nhex.decks.IBasicDeck;
+
+public class MolochDeck implements IBasicDeck {
+
+	@Override
+	public void actionTileCreation() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void unitTileCreation() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void moduleTileCreation() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void hqTileCreation() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

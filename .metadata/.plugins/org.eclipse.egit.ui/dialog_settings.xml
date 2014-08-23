@@ -14,6 +14,7 @@
 		<item value="Luka Ruklić &lt;ruklic.luka@gmail.com&gt;"/>
 	</list>
 	<list key="RepositorySelectionPage.UsedUris">
+		<item value="https://github.com/stijena/neuroshimaHex.git"/>
 		<item value="https://github.com/stijena/testRepo.git"/>
 		<item value="git://github.com/vogella/eclipse4book.git"/>
 	</list>
@@ -31,7 +32,7 @@
 	</section>
 	<section name="org.eclipse.egit.ui.COMMIT_DIALOG_SECTION">
 		<item value="642" key="DIALOG_WIDTH"/>
-		<item value="102" key="DIALOG_Y_ORIGIN"/>
+		<item value="96" key="DIALOG_Y_ORIGIN"/>
 		<item value="647" key="DIALOG_X_ORIGIN"/>
 		<item value="640" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>

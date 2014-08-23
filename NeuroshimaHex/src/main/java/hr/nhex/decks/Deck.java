@@ -1,0 +1,77 @@
+package hr.nhex.decks;
+
+import hr.nhex.model.Tile;
+import hr.nhex.model.ability.Ability;
+import hr.nhex.model.unit.Attack;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Razred koji predstavlja �pil polja.
+ * 
+ * @author Luka Ruklić
+ *
+ */
+
+public class Deck {
+
+	protected static final int NUMBER_OF_SIDES = 6;
+	protected static final int STANDARD_HQ_HIT_POINTS = 20;
+
+	/**
+	 * Ime �pila.
+	 */
+	private String deckName;
+
+	/**
+	 * Lista polja koje �pil sadr�i.
+	 */
+	private List<Tile> tiles = new ArrayList<>();
+
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+
+	public void addTileToDeck(Tile tile) {
+		tiles.add(tile);
+	}
+
+	public String getDeckName() {
+		return deckName;
+	}
+
+	public void setDeckName(String deckName) {
+		this.deckName = deckName;
+	}
+
+	/**
+	 * Metoda koja mi�e sve elemente iz primljenih listi.
+	 * 
+	 * @param speed lista brzina jedinice koja se prazni
+	 * @param attacks lista napada jedinice koja se prazni
+	 * @param abilities lista sposobnosti jedinice koja se prazni
+	 */
+
+	public void clearAllLists(List<Integer> speed, List<Attack> attacks, List<Ability> abilities) {
+		speed.clear();
+		attacks.clear();
+		abilities.clear();
+	}
+
+	/**
+	 * Metoda koja prema primljenom imenu vra�a polje s tim imenom iz �pila.
+	 * 
+	 * @param name naziv polja
+	 * @return polje ukoliko postoji, <code>null</code> ina�e
+	 */
+	public Tile getTileByName(String name) {
+		for (Tile tile : tiles) {
+			if (tile.getName().equals(name) && !tile.isOnBoard()) {
+				return tile;
+			}
+		}
+		return null;
+	}
+
+}

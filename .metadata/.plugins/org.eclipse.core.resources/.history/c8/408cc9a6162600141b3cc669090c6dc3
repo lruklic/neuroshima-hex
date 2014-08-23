@@ -1,0 +1,66 @@
+package hr.nhex.model;
+
+import hr.nhex.board.BoardTile;
+import hr.nhex.model.ability.Ability;
+import hr.nhex.model.unit.Attack;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Razred koji predstavlja bazu (engl. <i>headquarters, HQ</i>) u igri Neuroshima Hex.
+ * 
+ * @author Luka Ruklić
+ *
+ */
+
+public class HQ extends Unit {
+
+	public HQ(String name, int hitPoints, List<Integer> speed, List<Attack> attacks,
+			List<Ability> abilities) {
+		this.name = name;
+		this.hitPoints = hitPoints;
+		this.speed = speed;
+		this.attacks = attacks;
+		this.abilities = abilities;
+	}
+
+	private HQ(String name, Player player, int x, int y, int hitPoints, int angle, boolean isNetted,
+			List<Integer> speed, List<Attack> attacks, List<Ability> abilities) {
+		super(name, player, x, y, hitPoints, angle, isNetted, speed, attacks, abilities);
+	}
+	
+	@Override
+	public BoardTile copy() {
+
+		List<Integer> newSpeed = new ArrayList<Integer>();
+		List<Attack> newAttack = new ArrayList<Attack>();
+		List<Ability> newAbility = new ArrayList<Ability>();
+
+		for (Integer speed : this.speed) {
+			newSpeed.add(speed.intValue());
+		}
+
+		for (Attack attack : this.attacks) {
+			newAttack.add(new Attack(attack.getPointsTo(), attack.getValue(), attack.getType()));
+		}
+
+		for (Ability ability : this.abilities) {
+			newAbility.add(new Ability(ability.getPointsTo(), ability.getType()));
+		}
+
+		return new HQ(
+				this.name,
+				new Player(this.player.getPlayerName(), this.player.getPlayerColor()),
+				this.x,
+				this.y,
+				this.hitPoints,
+				this.angle,
+				this.isNetted,
+				newSpeed,
+				newAttack,
+				newAbility
+				);
+	}
+
+}

@@ -1,0 +1,28 @@
+package hr.nhex.model;
+
+import hr.nhex.model.ability.Ability;
+import hr.nhex.model.unit.Attack;
+
+import java.util.List;
+
+/**
+ * Razred koji predstavlja bazu (engl. <i>headquarters, HQ</i>) u igri Neuroshima Hex.
+ * 
+ * @author Luka Ruklić
+ *
+ */
+
+public class HQ extends Unit {
+
+	public HQ(String name, int hitPoints, List<Integer> speed, List<Attack> attacks,
+			List<Ability> abilities) {
+		this.name = name;
+		this.hitPoints = hitPoints;
+		this.speed = speed;
+		this.attacks = attacks;
+		this.abilities = abilities;
+	}
+
+
+
+}

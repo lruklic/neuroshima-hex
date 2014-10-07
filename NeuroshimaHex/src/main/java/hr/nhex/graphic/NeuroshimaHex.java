@@ -12,6 +12,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 public class NeuroshimaHex extends JFrame {
+	
+	private NeuroshimaCanvas canvas;
 
 	public NeuroshimaHex() {
 		initGui();
@@ -25,6 +27,9 @@ public class NeuroshimaHex extends JFrame {
 
 		createActions();
 		createMenu();
+		
+		this.canvas = new NeuroshimaCanvas(this);
+		this.getContentPane().add(canvas);
 	}
 
 	private void createMenu() {

@@ -62,7 +62,7 @@ public class Netter extends Unit {
 
 		return new Netter(
 				this.name,
-				new Player(this.player.getPlayerName(), this.player.getPlayerColor()),
+				new Player(this.player.getPlayerName(), this.player.getPlayerColor(), this.player.getPlayerDeck()),
 				this.x,
 				this.y,
 				this.hitPoints,

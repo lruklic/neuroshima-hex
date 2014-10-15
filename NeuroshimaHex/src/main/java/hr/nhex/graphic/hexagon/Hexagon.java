@@ -102,17 +102,13 @@ public class Hexagon extends JComponent {
 		
 		BufferedImage img = null;
 		try {
-		    img = ImageIO.read(new File("pics/universal_soldier.jpg"));
+		    img = ImageIO.read(new File("pics/hegemony/battle.jpg"));
 		} catch (IOException e) {
 			System.out.println("image not found");
 		}
 		
-		//Shape hxgn = getPointedShape(6, 32);
-		//final BufferedImage txtr = getTexturedImage(img, hxgn, -200, -120);
-		
         TexturePaint tex = new TexturePaint(img, poly.getBounds2D());
 		
-        //g2.setColor(Color.CYAN);
         if (this.tileX == -1 && this.tileY == 0) {
     		g2.setPaint(tex);
         }
@@ -122,12 +118,6 @@ public class Hexagon extends JComponent {
         	texture.rotate(Math.PI/3, img.getWidth()/2, img.getHeight()/2);
         	AffineTransformOp op = new AffineTransformOp(texture, AffineTransformOp.TYPE_BILINEAR);
         	img = op.filter(img, null);
-        	
-        	File outputfile = new File("image.jpg");
-			try {
-				ImageIO.write(img, "jpg", outputfile);
-			} catch (IOException e) {
-			}
 			
 			img = cropImage(img);
 
@@ -145,7 +135,7 @@ public class Hexagon extends JComponent {
 	}
 	
 	  private BufferedImage cropImage(BufferedImage src) {
-	      BufferedImage dest = src.getSubimage(0, 0, 351, 398);
+	      BufferedImage dest = src.getSubimage(0, 0, 370, 428);
 	      return dest; 
 	   }
 	

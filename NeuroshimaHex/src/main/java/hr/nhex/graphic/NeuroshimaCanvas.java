@@ -1,7 +1,11 @@
 package hr.nhex.graphic;
 
+import hr.nhex.decks.implementation.HegemonyDeck;
+import hr.nhex.game.Game;
 import hr.nhex.graphic.hexagon.Hexagon;
+import hr.nhex.model.Player;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -27,13 +31,24 @@ public class NeuroshimaCanvas extends JPanel implements ComponentListener {
 
 	private JFrame mainWindow;
 	
+	private Game gameInstance;
+	
 	private int hexSize;
 	
 	private List<Hexagon> hexagonList = new ArrayList<>();
 	
-	public NeuroshimaCanvas(JFrame mainWindow) {
+	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
 		addComponentListener(this);
 		this.mainWindow = mainWindow;
+		
+		// test-run
+		
+		Player player1 = new Player("Luka", Color.YELLOW, new HegemonyDeck());
+		List<Player> players = new ArrayList<>();
+		players.add(player1);
+		
+		this.gameInstance = new Game(players);
+		
 	}
 	
 	@Override
@@ -44,11 +59,11 @@ public class NeuroshimaCanvas extends JPanel implements ComponentListener {
 		
 		hexagonList.clear();
 		
-		int windowHeight = mainWindow.getHeight();
-		int windowWidth = mainWindow.getWidth();
+		int windowHeight = this.getHeight();
+		int windowWidth = this.getWidth();
 				
-		int hexSizeX = windowHeight / 10;
-		int hexSizeY = (int) (windowWidth / (10*(Math.sqrt(3)/2)));
+		int hexSizeX = windowHeight / 12;
+		int hexSizeY = (int) (windowWidth / (12*(Math.sqrt(3)/2)));
 		
 		if (hexSizeX < hexSizeY) {
 			hexSize = hexSizeX;
@@ -67,6 +82,10 @@ public class NeuroshimaCanvas extends JPanel implements ComponentListener {
 				}
 			}
 		}
+		
+		hexagonList.add(new Hexagon(-3, -3, (int)(windowWidth - Math.sqrt(3)/2*hexSize), windowHeight - hexSize, hexSize));
+		hexagonList.add(new Hexagon(-3, -3, (int)(windowWidth - Math.sqrt(3)/2*hexSize), windowHeight - 3*hexSize, hexSize));
+		hexagonList.add(new Hexagon(-3, -3, (int)(windowWidth - Math.sqrt(3)/2*hexSize), windowHeight - 5*hexSize, hexSize));
 		
 		for (Hexagon h : hexagonList) {
 			h.drawHex(g2);

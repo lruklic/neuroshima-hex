@@ -25,10 +25,10 @@ public class NeuroshimaHex extends JFrame {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(800, 600);
 
-		createActions();
-		createMenu();
+		//createActions();
+		//createMenu();
 		
-		this.canvas = new NeuroshimaCanvas(this);
+		this.canvas = new NeuroshimaCanvas(this, null);
 		this.getContentPane().add(canvas);
 	}
 

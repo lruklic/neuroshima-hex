@@ -16,8 +16,8 @@ public class BattleSimulatorTest {
 	@Test
 	public void battleTest1() {
 
-		Player firstPlayer = new Player("Stijena", Color.YELLOW);
-		Player secondPlayer = new Player("Marin", Color.BLUE);
+		Player firstPlayer = new Player("Stijena", Color.YELLOW, null);
+		Player secondPlayer = new Player("Marin", Color.BLUE, null);
 
 		HegemonyDeck deck = new HegemonyDeck();
 		for (Tile tile : deck.getTiles()) {
@@ -58,8 +58,8 @@ public class BattleSimulatorTest {
 	@Test
 	public void battleTest2() {
 
-		Player firstPlayer = new Player("Stijena", Color.YELLOW);
-		Player secondPlayer = new Player("Marin", Color.BLUE);
+		Player firstPlayer = new Player("Stijena", Color.YELLOW, null);
+		Player secondPlayer = new Player("Marin", Color.BLUE, null);
 
 		HegemonyDeck deck = new HegemonyDeck();
 		for (Tile tile : deck.getTiles()) {
@@ -107,8 +107,8 @@ public class BattleSimulatorTest {
 	@Test
 	public void battleTest3() {
 
-		Player firstPlayer = new Player("Lenard", Color.YELLOW);
-		Player secondPlayer = new Player("Luka", Color.BLUE);
+		Player firstPlayer = new Player("Lenard", Color.YELLOW, null);
+		Player secondPlayer = new Player("Luka", Color.BLUE, null);
 
 		HegemonyDeck deck = new HegemonyDeck();
 		for (Tile tile : deck.getTiles()) {
@@ -162,8 +162,8 @@ public class BattleSimulatorTest {
 	@Test
 	public void battleTest4() {
 
-		Player firstPlayer = new Player("Lenard", Color.YELLOW);
-		Player secondPlayer = new Player("Luka", Color.BLUE);
+		Player firstPlayer = new Player("Lenard", Color.YELLOW, null);
+		Player secondPlayer = new Player("Luka", Color.BLUE, null);
 
 		HegemonyDeck deck = new HegemonyDeck();
 		for (Tile tile : deck.getTiles()) {
@@ -218,8 +218,8 @@ public class BattleSimulatorTest {
 	@Test
 	public void battleTest5() {
 
-		Player firstPlayer = new Player("Rade", Color.YELLOW);
-		Player secondPlayer = new Player("Stijena", Color.BLUE);
+		Player firstPlayer = new Player("Rade", Color.YELLOW, null);
+		Player secondPlayer = new Player("Stijena", Color.BLUE, null);
 
 		HegemonyDeck deck = new HegemonyDeck();
 		for (Tile tile : deck.getTiles()) {

@@ -1,5 +1,7 @@
 package hr.nhex.model;
 
+import hr.nhex.decks.Deck;
+
 import java.awt.Color;
 
 /**
@@ -12,24 +14,29 @@ import java.awt.Color;
 public class Player {
 
 	/**
-	 * Ime igraèa.
+	 * Player name.
 	 */
 	private String playerName;
 	/**
-	 * Boja igraèa.
+	 * Player color.
 	 */
 	private Color playerColor;
-
 	/**
-	 * Konstruktor.
-	 * 
-	 * @param playerName ime igraèa
-	 * @param playerColor boja igraèa
+	 * Deck that player uses.
 	 */
-	public Player(String playerName, Color playerColor) {
+	private Deck playerDeck;
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param playerName name of the player
+	 * @param playerColor color of the player
+	 */
+	public Player(String playerName, Color playerColor, Deck playerDeck) {
 		super();
 		this.playerName = playerName;
 		this.playerColor = playerColor;
+		this.playerDeck = playerDeck;
 	}
 
 	public String getPlayerName() {
@@ -46,6 +53,14 @@ public class Player {
 
 	public void setPlayerColor(Color playerColor) {
 		this.playerColor = playerColor;
+	}
+	
+	public Deck getPlayerDeck() {
+		return playerDeck;
+	}
+
+	public void setPlayerDeck(Deck playerDeck) {
+		this.playerDeck = playerDeck;
 	}
 
 	@Override

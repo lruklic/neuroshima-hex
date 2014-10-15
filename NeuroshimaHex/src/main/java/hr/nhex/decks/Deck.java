@@ -5,30 +5,40 @@ import hr.nhex.model.ability.Ability;
 import hr.nhex.model.unit.Attack;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
- * Razred koji predstavlja ï¿½pil polja.
+ * Class that represents deck of tiles.
  * 
- * @author Luka RukliÄ‡
+ * @author Luka Rukliæ
  *
  */
 
 public class Deck {
-
-	protected static final int NUMBER_OF_SIDES = 6;
-	protected static final int STANDARD_HQ_HIT_POINTS = 20;
-
+	
 	/**
-	 * Ime ï¿½pila.
+	 * Number of sides on one NHex tile.
+	 */
+	protected static final int NUMBER_OF_SIDES = 6;
+	/**
+	 * Number of hit points standard Headquaters unit in NHex has.
+	 */
+	protected static final int STANDARD_HQ_HIT_POINTS = 20;
+	/**
+	 * Name of the deck.
 	 */
 	private String deckName;
-
 	/**
-	 * Lista polja koje ï¿½pil sadrï¿½i.
+	 * List of tiles that are contained in a deck.
 	 */
 	private List<Tile> tiles = new ArrayList<>();
-
+	
+	public GameDeck createGameDeck() {
+		return new GameDeck(this);
+	}
+	
 	public List<Tile> getTiles() {
 		return tiles;
 	}
@@ -45,6 +55,8 @@ public class Deck {
 		this.deckName = deckName;
 	}
 
+	
+	
 	/**
 	 * Metoda koja miï¿½e sve elemente iz primljenih listi.
 	 * 

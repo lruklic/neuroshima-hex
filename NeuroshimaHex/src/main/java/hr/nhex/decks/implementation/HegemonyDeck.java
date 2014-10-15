@@ -47,8 +47,6 @@ public class HegemonyDeck extends Deck implements IBasicDeck {
 		unitTileCreation();
 		moduleTileCreation();
 
-
-
 	}
 
 	@Override

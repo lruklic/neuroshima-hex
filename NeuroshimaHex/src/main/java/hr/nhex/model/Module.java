@@ -69,7 +69,7 @@ public class Module extends BoardTile {
 
 		return new Module(
 				this.name,
-				new Player(this.player.getPlayerName(), this.player.getPlayerColor()),
+				new Player(this.player.getPlayerName(), this.player.getPlayerColor(), this.player.getPlayerDeck()),
 				this.x,
 				this.y,
 				this.hitPoints,

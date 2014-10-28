@@ -11,16 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Razred koji predstavlja ploèu za igru u Neuroshimi Hex.
+ * Class that represents playing board in Neuroshima Hex game.
  * 
  * @author Luka Rukliæ
+ * @author Marin Bužanèiæ
  *
  */
 
 public class Board implements IBasicBoard {
 
 	/**
-	 * Konstanta koja definira velièinu ploèe za 2-4 igraèa.
+	 * Constant that defines board size for 2 to 4 players.
 	 */
 	private static final int BOARD_SIZE = 2;
 

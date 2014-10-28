@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Razred koji predstavlja simulator borbe u igri Neuroshima Hex.
+ * Class that represents battle simulator in Neuroshima Hex board game.
  * 
- * @author Luka Rukliï¿½
- * @author Marin Buï¿½anï¿½iï¿½
+ * @author Luka Rukliæ
+ * @author Marin Bužanèiæ
  *
  */
 

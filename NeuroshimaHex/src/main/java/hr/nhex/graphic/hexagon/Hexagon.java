@@ -8,9 +8,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.TexturePaint;
+import java.awt.color.ColorSpace;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
 import java.io.File;
 import java.io.IOException;
 
@@ -127,6 +129,70 @@ public class Hexagon extends JComponent {
 		g2.drawPolygon(poly);
 	}
 
+	public void drawHex(Graphics2D g2, BoardTile bt, int se) {
+
+		Polygon poly = createHex(x,y);
+
+		BufferedImage img = null;
+		BufferedImage img2 = null;
+		TexturePaint tex = null;
+		if (bt != null) {
+			try {
+				StringBuilder imagePath = new StringBuilder();
+				imagePath.append("pics/"+bt.getPlayer().getPlayerDeck().getDeckName().toLowerCase()+"/");
+				imagePath.append(bt.getName().toLowerCase().replaceAll(" ", "_")+".jpg");
+				img = ImageIO.read(new File(imagePath.toString()));
+				if (se == 1) {
+					ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);
+					ColorConvertOp op = new ColorConvertOp(cs, null);
+					img2 = op.filter(img, null);
+
+					//					File outputfile = new File("prvi.png");
+					//					ImageIO.write(img, "png", outputfile);
+					//
+					//					File outputfile2 = new File("drugi.png");
+					//					ImageIO.write(img2, "png", outputfile2);
+				}
+				tex = new TexturePaint(img2, poly.getBounds2D());
+			} catch (IOException e) {
+				System.out.println("Unit image not found.");
+			}
+		}
+
+		if (tex != null && bt.getAngle() == 0) {
+			g2.setPaint(tex);
+		}
+		else if (tex != null && bt.getAngle() != 0) {
+
+			double theta = (Math.PI/3)*bt.getAngle();
+
+			AffineTransform texture = new AffineTransform();
+			texture.rotate(theta, img.getWidth()/2, img.getHeight()/2);
+			AffineTransformOp op = new AffineTransformOp(texture, AffineTransformOp.TYPE_BILINEAR);
+			img = op.filter(img2, null);
+
+			img = cropImage(img);
+
+			File outputfile2 = new File("drugi.png");
+			try {
+				ImageIO.write(img, "png", outputfile2);
+			} catch (IOException e) {
+			}
+
+			tex = new TexturePaint(img, poly.getBounds2D());
+			g2.setPaint(tex);
+		}
+		else {
+			g2.setColor(Color.WHITE);
+		}
+
+		g2.fillPolygon(poly);
+
+		g2.setColor(Color.BLACK);
+		g2.drawPolygon(poly);
+
+	}
+
 	public void drawHex(Graphics2D g2, BoardTile bt) {
 
 		Polygon poly = createHex(x,y);
@@ -156,6 +222,12 @@ public class Hexagon extends JComponent {
 			texture.rotate(theta, img.getWidth()/2, img.getHeight()/2);
 			AffineTransformOp op = new AffineTransformOp(texture, AffineTransformOp.TYPE_BILINEAR);
 			img = op.filter(img, null);
+
+			File outputfile2 = new File("normal.png");
+			try {
+				ImageIO.write(img, "png", outputfile2);
+			} catch (IOException e) {
+			}
 
 			img = cropImage(img);
 

@@ -51,7 +51,11 @@ public class NeuroshimaCanvas extends JPanel {
 	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
 
 		addComponentListener(new CanvasResizeComponentAdapter());
-		addMouseListener(new TilePlacementMouseAdapter());
+
+		TilePlacementMouseAdapter tpma = new TilePlacementMouseAdapter();
+
+		addMouseListener(tpma);
+		addMouseMotionListener(tpma);
 
 		this.mainWindow = mainWindow;
 
@@ -91,11 +95,31 @@ public class NeuroshimaCanvas extends JPanel {
 
 	}
 
+	public void repaintComponentPart(Graphics g, Tile t, int xClick, int yClick) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		int windowHeight = this.getHeight();
+		int windowWidth = this.getWidth();
+
+		int hexSizeX = windowHeight / 12;		// numbers have to be adjusted
+		int hexSizeY = (int) (windowWidth / (12*(Math.sqrt(3)/2)));
+
+		if (hexSizeX < hexSizeY) {
+			hexSize = hexSizeX;
+		} else {
+			hexSize = hexSizeY;
+		}
+
+		Hexagon h = new Hexagon(-5, -5, xClick, yClick, hexSize);
+		h.drawDrawnHex(g2, t, gameInstance.getCurrentPlayer());
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		super.paintComponent(g2);
+		//super.paintComponent(g2);
 
 		hexagonList.clear();
 		hexagonSideList.clear();
@@ -147,6 +171,19 @@ public class NeuroshimaCanvas extends JPanel {
 
 	public Game getGameInstance() {
 		return gameInstance;
+	}
+
+	public int getHexSize() {
+		return hexSize;
+	}
+
+	public Hexagon getHexagon(int x, int y) {
+		for (Hexagon hex : hexagonList) {
+			if (hex.getTileX() == x && hex.getTileY() == y) {
+				return hex;
+			}
+		}
+		return null;
 	}
 
 }

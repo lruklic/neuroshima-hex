@@ -77,4 +77,12 @@ public class Game {
 		return turnPhase;
 	}
 
+	public void setGamePhase(GamePhase gamePhase) {
+		this.gamePhase = gamePhase;
+	}
+
+	public void setTurnPhase(TurnPhase turnPhase) {
+		this.turnPhase = turnPhase;
+	}
+
 }

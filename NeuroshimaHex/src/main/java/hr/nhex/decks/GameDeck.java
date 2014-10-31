@@ -47,6 +47,10 @@ public class GameDeck {
 		}
 	}
 
+	public void discardTile(int numberOfTile) {
+		drawnTiles[numberOfTile] = null;
+	}
+
 	public String getDeckName() {
 		return deckName;
 	}

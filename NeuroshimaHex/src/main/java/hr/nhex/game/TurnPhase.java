@@ -6,7 +6,9 @@ public enum TurnPhase {
 
 	DISCARD_PHASE,
 
-	TILE_SELECTED,
+	TILE_PLACED,
+
+	TILE_ROTATED,
 
 	TILES_PLACED
 

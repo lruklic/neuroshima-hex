@@ -51,6 +51,8 @@ public class Hexagon extends JComponent {
 	 * Pixel distance between center of the hexagon and any of its six tops.
 	 */
 	private int hexSize;
+
+	private BufferedImage image;
 	/**
 	 * Constructor for class hexagon.
 	 * 
@@ -74,44 +76,68 @@ public class Hexagon extends JComponent {
 	 * 
 	 * @param xC x coordinate of hexagon center
 	 * @param yC y coordinate of hexagon center
+	 * @param flatOrientation is hexagon rotated to flat side up
 	 * @return instance of polygon that is hexagon
 	 */
 
-	public Polygon createHex(int xC, int yC) {
+	public Polygon createHex(int xC, int yC, boolean flatOrientation) {
 
-		int x0 = xC;
-		int x1 = (int)(xC + (hexSize*Math.sqrt(3)/2));
-		int x2 = x1;
-		int x3 = x0;
-		int x4 = (int)(xC - (hexSize*Math.sqrt(3)/2));;
-		int x5 = x4;
+		int[] arrayX = null;
+		int[] arrayY = null;
 
-		int y0 = yC - hexSize;
-		int y1 = (int)(yC - (hexSize*0.5));
-		int y2 = (int)(yC + (hexSize*0.5));
-		int y3 = yC + hexSize;
-		int y4 = y2;
-		int y5 = y1;
+		if (flatOrientation) {
+			int x0;
+			int x1;
+			int x2;
+			int x3;
+			int x4;
+			int x5;
 
-		int[] arrayX = new int[] {x0,x1,x2,x3,x4,x5};
-		int[] arrayY = new int[] {y0,y1,y2,y3,y4,y5};
+			int y0;
+			int y1;
+			int y2;
+			int y3;
+			int y4;
+			int y5;
+		} else {
+			int x0 = xC;
+			int x1 = (int)(xC + (hexSize*Math.sqrt(3)/2));
+			int x2 = x1;
+			int x3 = x0;
+			int x4 = (int)(xC - (hexSize*Math.sqrt(3)/2));;
+			int x5 = x4;
+
+			int y0 = yC - hexSize;
+			int y1 = (int)(yC - (hexSize*0.5));
+			int y2 = (int)(yC + (hexSize*0.5));
+			int y3 = yC + hexSize;
+			int y4 = y2;
+			int y5 = y1;
+
+			arrayX = new int[] {x0,x1,x2,x3,x4,x5};
+			arrayY = new int[] {y0,y1,y2,y3,y4,y5};
+		}
+
 
 		return new Polygon(arrayX,arrayY,6);
 	}
 
 	public void drawDrawnHex(Graphics2D g2, Tile t, Player currentPlayer) {
 
-		Polygon poly = createHex(x,y);
+		Polygon poly = createHex(x,y,false);
 
-		BufferedImage img = null;
 		TexturePaint tex = null;
 		if (t != null) {
 			try {
-				StringBuilder imagePath = new StringBuilder();
-				imagePath.append("pics/"+currentPlayer.getPlayerDeck().getDeckName().toLowerCase()+"/");
-				imagePath.append(t.getName().toLowerCase().replaceAll(" ", "_")+".jpg");
-				img = ImageIO.read(new File(imagePath.toString()));
-				tex = new TexturePaint(img, poly.getBounds2D());
+				if (image == null) {
+					StringBuilder imagePath = new StringBuilder();
+					imagePath.append("pics/"+currentPlayer.getPlayerDeck().getDeckName().toLowerCase()+"/");
+					imagePath.append(t.getName().toLowerCase().replaceAll(" ", "_")+".jpg");
+					this.image = ImageIO.read(new File(imagePath.toString()));
+				}
+
+				tex = new TexturePaint(image, poly.getBounds2D());
+
 			} catch (IOException e) {
 				System.out.println("Image not found.");
 			}
@@ -127,25 +153,28 @@ public class Hexagon extends JComponent {
 
 		g2.setColor(Color.BLACK);
 		g2.drawPolygon(poly);
+
 	}
 
 	public void drawHex(Graphics2D g2, BoardTile bt, int se) {
 
-		Polygon poly = createHex(x,y);
+		Polygon poly = createHex(x,y,false);
 
-		BufferedImage img = null;
 		BufferedImage img2 = null;
 		TexturePaint tex = null;
 		if (bt != null) {
 			try {
-				StringBuilder imagePath = new StringBuilder();
-				imagePath.append("pics/"+bt.getPlayer().getPlayerDeck().getDeckName().toLowerCase()+"/");
-				imagePath.append(bt.getName().toLowerCase().replaceAll(" ", "_")+".jpg");
-				img = ImageIO.read(new File(imagePath.toString()));
+				if (image == null) {
+					StringBuilder imagePath = new StringBuilder();
+					imagePath.append("pics/"+bt.getPlayer().getPlayerDeck().getDeckName().toLowerCase()+"/");
+					imagePath.append(bt.getName().toLowerCase().replaceAll(" ", "_")+".jpg");
+					this.image = ImageIO.read(new File(imagePath.toString()));
+				}
+
 				if (se == 1) {
 					ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);
 					ColorConvertOp op = new ColorConvertOp(cs, null);
-					img2 = op.filter(img, null);
+					img2 = op.filter(image, null);
 
 					//					File outputfile = new File("prvi.png");
 					//					ImageIO.write(img, "png", outputfile);
@@ -167,19 +196,13 @@ public class Hexagon extends JComponent {
 			double theta = (Math.PI/3)*bt.getAngle();
 
 			AffineTransform texture = new AffineTransform();
-			texture.rotate(theta, img.getWidth()/2, img.getHeight()/2);
+			texture.rotate(theta, image.getWidth()/2, image.getHeight()/2);
 			AffineTransformOp op = new AffineTransformOp(texture, AffineTransformOp.TYPE_BILINEAR);
-			img = op.filter(img2, null);
+			image = op.filter(img2, null);
 
-			img = cropImage(img);
+			image = cropImage(image);
 
-			File outputfile2 = new File("drugi.png");
-			try {
-				ImageIO.write(img, "png", outputfile2);
-			} catch (IOException e) {
-			}
-
-			tex = new TexturePaint(img, poly.getBounds2D());
+			tex = new TexturePaint(image, poly.getBounds2D());
 			g2.setPaint(tex);
 		}
 		else {
@@ -195,17 +218,31 @@ public class Hexagon extends JComponent {
 
 	public void drawHex(Graphics2D g2, BoardTile bt) {
 
-		Polygon poly = createHex(x,y);
+		Polygon poly = createHex(x,y,false);
 
-		BufferedImage img = null;
 		TexturePaint tex = null;
+
+		if (image != null) {
+			tex = new TexturePaint(image, poly.getBounds2D());
+			g2.setPaint(tex);
+			g2.fillPolygon(poly);
+
+			g2.setColor(Color.BLACK);
+			g2.drawPolygon(poly);
+			return;
+
+		}
+
 		if (bt != null) {
 			try {
-				StringBuilder imagePath = new StringBuilder();
-				imagePath.append("pics/"+bt.getPlayer().getPlayerDeck().getDeckName().toLowerCase()+"/");
-				imagePath.append(bt.getName().toLowerCase().replaceAll(" ", "_")+".jpg");
-				img = ImageIO.read(new File(imagePath.toString()));
-				tex = new TexturePaint(img, poly.getBounds2D());
+				if (image == null) {
+					StringBuilder imagePath = new StringBuilder();
+					imagePath.append("pics/"+bt.getPlayer().getPlayerDeck().getDeckName().toLowerCase()+"/");
+					imagePath.append(bt.getName().toLowerCase().replaceAll(" ", "_")+".jpg");
+					image = ImageIO.read(new File(imagePath.toString()));
+				}
+
+				tex = new TexturePaint(image, poly.getBounds2D());
 			} catch (IOException e) {
 				System.out.println("Unit image not found.");
 			}
@@ -215,23 +252,18 @@ public class Hexagon extends JComponent {
 			g2.setPaint(tex);
 		}
 		else if (tex != null && bt.getAngle() != 0) {
+			System.out.println("something");
 
 			double theta = (Math.PI/3)*bt.getAngle();
 
 			AffineTransform texture = new AffineTransform();
-			texture.rotate(theta, img.getWidth()/2, img.getHeight()/2);
+			texture.rotate(theta, image.getWidth()/2, image.getHeight()/2);
 			AffineTransformOp op = new AffineTransformOp(texture, AffineTransformOp.TYPE_BILINEAR);
-			img = op.filter(img, null);
+			image = op.filter(image, null);
 
-			File outputfile2 = new File("normal.png");
-			try {
-				ImageIO.write(img, "png", outputfile2);
-			} catch (IOException e) {
-			}
+			image = cropImage(image);
 
-			img = cropImage(img);
-
-			tex = new TexturePaint(img, poly.getBounds2D());
+			tex = new TexturePaint(image, poly.getBounds2D());
 			g2.setPaint(tex);
 		}
 		else {

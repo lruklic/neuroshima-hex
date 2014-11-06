@@ -7,7 +7,9 @@ import hr.nhex.decks.implementation.HegemonyDeck;
 import hr.nhex.game.Game;
 import hr.nhex.graphic.adapters.CanvasResizeComponentAdapter;
 import hr.nhex.graphic.adapters.TilePlacementMouseAdapter;
+import hr.nhex.graphic.adapters.TileRotateMouseAdapter;
 import hr.nhex.graphic.hexagon.Hexagon;
+import hr.nhex.graphic.imagecache.ImageCache;
 import hr.nhex.model.Player;
 import hr.nhex.model.Tile;
 
@@ -47,19 +49,27 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private int hexSize;
 
-	public Hexagon draggedHexagon;
-
-	public int draggedNo;
+	private Hexagon draggedHexagon;
+	private Tile draggedTile;
+	private int draggedNo;
 
 	private List<Hexagon> hexagonList = new ArrayList<>();
 
 	private List<Hexagon> hexagonSideList = new ArrayList<>();
 
+	private BufferedImage img;
+
+	private ImageCache cache = new ImageCache();
+
+	private TilePlacementMouseAdapter tpma = new TilePlacementMouseAdapter(this);
+	private TileRotateMouseAdapter trma = new TileRotateMouseAdapter(this);
+
 	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
 
 		addComponentListener(new CanvasResizeComponentAdapter());
 
-		TilePlacementMouseAdapter tpma = new TilePlacementMouseAdapter(this);
+		tpma.setTrma(trma);
+		trma.setTpma(tpma);
 
 		addMouseListener(tpma);
 		addMouseMotionListener(tpma);
@@ -100,10 +110,6 @@ public class NeuroshimaCanvas extends JPanel {
 
 	}
 
-	public void repaintComponentPart(Graphics g, Tile t, int xClick, int yClick) {
-
-	}
-
 	@Override
 	public void paintComponent(Graphics g) {
 
@@ -111,12 +117,14 @@ public class NeuroshimaCanvas extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		super.paintComponent(g2);
 
-		try {
-			System.out.println("slika");
-			BufferedImage img = ImageIO.read(new File("background.jpg"));
-			g2.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-		} catch (IOException e) {
+		if (this.img == null) {
+			try {
+				img = ImageIO.read(new File("background.jpg"));
+			} catch (IOException e) {
+				System.out.println("Background image not found.");
+			}
 		}
+		g2.drawImage(img, 0, 0, getWidth(), getHeight(), this);
 
 		// Calculating hexagon size from window height and width
 		int windowHeight = this.getHeight();
@@ -132,21 +140,20 @@ public class NeuroshimaCanvas extends JPanel {
 		// Draw hexagons that are in hexagon lists
 		for (Hexagon h : hexagonList) {
 			BoardTile t = this.gameInstance.getBoard().getTile(h.getTileX(), h.getTileY());		// just boardTile drawing
-			h.drawHex(g2, t);
+			h.drawHex(g2, cache, t, null);
 		}
-
 		List<Tile> currentDrawnTiles = Arrays.asList(getGameInstance().getCurrentPlayerGameDeck().getDrawnTiles());
 		int tileNo = 0;
 
 		for (Hexagon h : hexagonSideList) {
 			if (currentDrawnTiles.size() > tileNo) {
-				h.drawDrawnHex(g2, currentDrawnTiles.get(tileNo), gameInstance.getCurrentPlayer());
+				h.drawHex(g2, cache, currentDrawnTiles.get(tileNo), gameInstance.getCurrentPlayer());
 			}
 			tileNo++;
 		}
 
 		if (draggedHexagon != null) {
-			draggedHexagon.drawDrawnHex(g2, currentDrawnTiles.get(draggedNo-1), gameInstance.getCurrentPlayer());
+			draggedHexagon.drawHex(g2, cache, tpma.getTileSelected(), gameInstance.getCurrentPlayer());
 		}
 
 	}
@@ -224,5 +231,33 @@ public class NeuroshimaCanvas extends JPanel {
 		hexagonList.clear();
 		hexagonSideList.clear();
 	}
+
+	public Hexagon getDraggedHexagon() {
+		return draggedHexagon;
+	}
+
+	public int getDraggedNo() {
+		return draggedNo;
+	}
+
+	public void setDraggedHexagon(Hexagon draggedHexagon) {
+		this.draggedHexagon = draggedHexagon;
+	}
+
+	public void setDraggedNo(int draggedNo) {
+		this.draggedNo = draggedNo;
+	}
+
+	public Tile getDraggedTile() {
+		return draggedTile;
+	}
+
+	public void setDraggedTile(Tile draggedTile) {
+		this.draggedTile = draggedTile;
+	}
+
+
+
+
 
 }

@@ -32,6 +32,8 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 
 	private Point anchorPoint;
 
+	private TileRotateMouseAdapter trma;
+
 	public TilePlacementMouseAdapter(NeuroshimaCanvas cn) {
 		this.cn = cn;
 	}
@@ -39,25 +41,15 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 	@Override
 	public void mouseClicked(MouseEvent ev) {
 
-		getClickedTile(cn, ev);
-
-		double n = -10;
-		double m = -10;
-
 		if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
 
-			//			n = (ev.getY() - (cn.getHeight()/2)) / ((-1.5)*cn.getHexSize());
-			//			m = (ev.getX() - (cn.getWidth()/2) - ((Math.sqrt(3)/2)*cn.getHexSize())*n)/(Math.sqrt(3)*cn.getHexSize());
-			//
-			//			System.out.println("X: "+Math.round(m) + ", Y: "+Math.round(n));
+			Integer clickedTile = getClickedDrawnTile(cn, ev);
 
-			//			Integer clickedTile = getClickedDrawnTile(cn, ev);
-			//
-			//			if (clickedTile != null) {
-			//				cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
-			//				cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
-			//				cn.repaint();
-			//			}
+			if (clickedTile != null) {
+				cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
+				cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+				cn.repaint();
+			}
 		}
 
 		//		int realN = (int)Math.round(n);
@@ -87,11 +79,11 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 	public void mousePressed(MouseEvent ev) {
 
 		if (cn.getGameInstance().getTurnPhase() == TurnPhase.TILES_DRAWN) {
-			Integer clickedTile = getClickedDrawnTile(cn, ev);
-			cn.draggedNo = clickedTile;
+			Integer clickedTileNo = getClickedDrawnTile(cn, ev);
 
-			this.tileSelected = cn.getGameInstance().getCurrentPlayerGameDeck().getDrawnTile(clickedTile-1);
+			this.tileSelected = cn.getGameInstance().getCurrentPlayerGameDeck().getDrawnTile(clickedTileNo-1);
 			cn.getGameInstance().setTurnPhase(TurnPhase.TILE_PLACED);
+
 			// ako je BoardTile, promijeni kursor u onaj za rotaciju
 
 		}
@@ -103,18 +95,38 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 
 		if (tileSelected != null) {
 
-			if (tileSelected instanceof BoardTile) {
-				// if tile is board tile
-				this.tileLocation = getClickedTile(cn, ev);
+			Pair tilePos = getClickedTile(cn, ev);
 
-			} else {
-				// if tile is action tile
+			if (tilePos != null && Math.abs(tilePos.getX()) < 2 && Math.abs(tilePos.getY()) < 2) { // urediti moguæe koordinate
+
+				if (cn.getGameInstance().getBoard().getTile(tilePos.getX(), tilePos.getY()) == null) {
+
+					if (tileSelected instanceof BoardTile) {
+						// if tile is board tile
+						trma.setRotatedTile((BoardTile)tileSelected);
+						cn.setDraggedHexagon(new Hexagon(
+								tilePos.getX(),
+								tilePos.getY(),
+								cn.getHexagon(tilePos.getX(), tilePos.getY()).getxC(),
+								cn.getHexagon(tilePos.getX(), tilePos.getY()).getyC(),
+								cn.getHexSize()+cn.HEX_GAP
+								));
+
+						cn.repaint();
+						cn.removeMouseListener(this);
+						cn.removeMouseMotionListener(this);
+						cn.addMouseListener(trma);
+						cn.addMouseMotionListener(trma);
+
+					} else {
+						// if tile is action tile
+					}
+				}
 			}
 
-
-			this.tileSelected = null;
-			cn.repaint();
 		}
+		//this.tileSelected = null;
+		cn.repaint();
 
 	}
 
@@ -126,14 +138,12 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 	@Override
 	public void mouseDragged(MouseEvent ev) {
 
-
-
 		if (tileSelected != null) {
-			if (cn.draggedHexagon != null) {
-				cn.draggedHexagon = null;
+			if (cn.getDraggedHexagon() != null) {
+				cn.setDraggedHexagon(null);
 			}
 
-			cn.draggedHexagon = new Hexagon(-5, -5, ev.getX(), ev.getY(), 46);
+			cn.setDraggedHexagon(new Hexagon(-5, -5, ev.getX(), ev.getY(), cn.getHexSize()));
 
 			int anchorX = anchorPoint.x;
 			int anchorY = anchorPoint.y;
@@ -142,13 +152,22 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 			Point mouseOnScreen = ev.getLocationOnScreen();
 			Point position = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
 
-			cn.draggedHexagon.setLocation(position);
+			cn.getDraggedHexagon().setLocation(position);
+			//System.out.println("X,Y: "+cn.draggedHexagon.getX()+", "+cn.draggedHexagon.getY());
 			cn.repaint();
 			//cn.repaintComponentPart(cn.getGraphics(), tileSelected, position.x, position.y);
 			//cn.paintComponent(cn.getGraphics());
 
 		}
 
+	}
+
+	public TileRotateMouseAdapter getTrma() {
+		return trma;
+	}
+
+	public void setTrma(TileRotateMouseAdapter trma) {
+		this.trma = trma;
 	}
 
 	public Pair getClickedTile(NeuroshimaCanvas cn, MouseEvent ev) {
@@ -196,10 +215,10 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 
 		//ako su p i q dovoljno blizu nuli, onda je stvarno stisnut tile
 		if ((Math.round(p) == 0) && (Math.round(q) == 0)) {
-			System.out.println("Stisnut je:" + Math.round(m) + ", "+ Math.round(n));
+			//System.out.println("Stisnut je: " + Math.round(m) + ", "+ Math.round(n));
 			return new Pair((int)Math.round(m), (int)Math.round(n));
 		} else {
-			System.out.println("Nista nije stisnuto");
+			//System.out.println("Nista nije stisnuto");
 			return null;
 		}
 
@@ -247,6 +266,10 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 
 		return null;
 
+	}
+
+	public Tile getTileSelected() {
+		return tileSelected;
 	}
 
 }

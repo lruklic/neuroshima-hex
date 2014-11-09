@@ -74,26 +74,17 @@ public class NeuroshimaCanvas extends JPanel {
 		addMouseListener(tpma);
 		addMouseMotionListener(tpma);
 
-		JButton newTilesBtn = new JButton("Draw!");
-		newTilesBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				getGameInstance().getCurrentPlayerGameDeck().drawNew();
-				repaint();
-			}
-		});
-		this.add(newTilesBtn, BorderLayout.SOUTH);
+		addBtn();
 
 		// TEST-RUN (this should go in NeuroshimaHex.java)
 
-		Player player1 = new Player("Luka", Color.YELLOW, new HegemonyDeck());
-		Player player2 = new Player("Marin", Color.BLUE, new BorgoDeck());
+		Player player1 = new Player("Luka", Color.BLUE, new BorgoDeck());
+		Player player2 = new Player("Marin", Color.YELLOW, new HegemonyDeck());
 		List<Player> players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
 
-		HegemonyDeck deck = new HegemonyDeck();
+		BorgoDeck deck = new BorgoDeck();
 		for (Tile tile : deck.getTiles()) {
 			if (tile instanceof BoardTile) {
 				((BoardTile)tile).setPlayer(player1);
@@ -102,11 +93,37 @@ public class NeuroshimaCanvas extends JPanel {
 
 		Board board = new Board();
 
-		board.addTile((BoardTile)deck.getTileByName("Officer One"), 0, 0, 0);
-		board.addTile((BoardTile)deck.getTileByName("Ganger"), 0, 1, 0);
-		board.addTile((BoardTile)deck.getTileByName("Runner"), 1, 0, 2);
+		board.addTile((BoardTile)deck.getTileByName("Assassin"), 0, 0, 0);
+		board.addTile((BoardTile)deck.getTileByName("Scout"), 0, 1, 0);
+		board.addTile((BoardTile)deck.getTileByName("Butcher"), 1, 0, 2);
 
 		this.gameInstance = new Game(board, players);
+
+	}
+
+	private void addBtn() {
+		JButton newTilesBtn = new JButton("Draw!");
+		newTilesBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getGameInstance().getCurrentPlayerGameDeck().drawNew(gameInstance);
+				repaint();
+			}
+		});
+		this.add(newTilesBtn, BorderLayout.SOUTH);
+
+		JButton endTurnBtn = new JButton("End Turn");
+		endTurnBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getGameInstance().getCurrentPlayerGameDeck().discardAllTiles();
+				getGameInstance().nextPlayerTurn();
+				repaint();
+			}
+		});
+		this.add(endTurnBtn, BorderLayout.SOUTH);
 
 	}
 
@@ -207,6 +224,7 @@ public class NeuroshimaCanvas extends JPanel {
 	 */
 	private void fillEmptyHexagonLists(int windowHeight, int windowWidth, int hexSize) {
 
+		clearHexagonLists();
 		for (int m = -2; m <= 2; m++) {
 			for (int n = -2; n <= 2; n++) {
 				if (Math.abs(m + n) <= 2) {
@@ -256,8 +274,12 @@ public class NeuroshimaCanvas extends JPanel {
 		this.draggedTile = draggedTile;
 	}
 
+	public TilePlacementMouseAdapter getTpma() {
+		return tpma;
+	}
 
-
-
+	public TileRotateMouseAdapter getTrma() {
+		return trma;
+	}
 
 }

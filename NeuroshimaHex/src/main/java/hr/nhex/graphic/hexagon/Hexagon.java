@@ -83,38 +83,23 @@ public class Hexagon extends JComponent {
 		int[] arrayX = null;
 		int[] arrayY = null;
 
-		if (flatOrientation) {
-			int x0;
-			int x1;
-			int x2;
-			int x3;
-			int x4;
-			int x5;
+		int x0 = xC;
+		int x1 = (int)(xC + (hexSize*Math.sqrt(3)/2));
+		int x2 = x1;
+		int x3 = x0;
+		int x4 = (int)(xC - (hexSize*Math.sqrt(3)/2));;
+		int x5 = x4;
 
-			int y0;
-			int y1;
-			int y2;
-			int y3;
-			int y4;
-			int y5;
-		} else {
-			int x0 = xC;
-			int x1 = (int)(xC + (hexSize*Math.sqrt(3)/2));
-			int x2 = x1;
-			int x3 = x0;
-			int x4 = (int)(xC - (hexSize*Math.sqrt(3)/2));;
-			int x5 = x4;
+		int y0 = yC - hexSize;
+		int y1 = (int)(yC - (hexSize*0.5));
+		int y2 = (int)(yC + (hexSize*0.5));
+		int y3 = yC + hexSize;
+		int y4 = y2;
+		int y5 = y1;
 
-			int y0 = yC - hexSize;
-			int y1 = (int)(yC - (hexSize*0.5));
-			int y2 = (int)(yC + (hexSize*0.5));
-			int y3 = yC + hexSize;
-			int y4 = y2;
-			int y5 = y1;
+		arrayX = new int[] {x0,x1,x2,x3,x4,x5};
+		arrayY = new int[] {y0,y1,y2,y3,y4,y5};
 
-			arrayX = new int[] {x0,x1,x2,x3,x4,x5};
-			arrayY = new int[] {y0,y1,y2,y3,y4,y5};
-		}
 
 
 		return new Polygon(arrayX,arrayY,6);
@@ -211,7 +196,8 @@ public class Hexagon extends JComponent {
 	}
 
 	private BufferedImage cropImage(BufferedImage src) {
-		BufferedImage dest = src.getSubimage(0, 0, 234, 270);
+		//System.out.println("dimension: "+src.getWidth() + ", "+src.getHeight());
+		BufferedImage dest = src.getSubimage(0, 0, 230, 270);
 		return dest;
 	}
 
@@ -221,6 +207,14 @@ public class Hexagon extends JComponent {
 
 	public int getyC() {
 		return yC;
+	}
+
+	public void setxC(int xC) {
+		this.xC = xC;
+	}
+
+	public void setyC(int yC) {
+		this.yC = yC;
 	}
 
 	public int getTileX() {

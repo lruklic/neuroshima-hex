@@ -19,7 +19,6 @@ public class BoardTile extends Tile {
 
 	}
 
-
 	public BoardTile(String name, Player player, int x, int y, int hitPoints, int angle, boolean isNetted) {
 		super(name);
 		this.player = player;
@@ -89,7 +88,11 @@ public class BoardTile extends Tile {
 	}
 
 	public void setAngle(int angle) {
-		this.angle = angle;
+		if (angle < 0) {
+			// angle 5 is equal to angle rotate for one in opposite direction, -1
+			angle = 5;
+		}
+		this.angle = angle % 6;
 	}
 
 	public boolean isNetted() {

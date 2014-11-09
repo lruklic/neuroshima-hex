@@ -1,12 +1,15 @@
 package hr.nhex.graphic.adapters;
 
+import hr.nhex.board.ActionTileResolver;
 import hr.nhex.board.BoardTile;
 import hr.nhex.game.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.generic.Position;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
+import hr.nhex.graphic.timer.TileAttackTimer;
 import hr.nhex.model.Tile;
+import hr.nhex.model.action.ActionTile;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -24,11 +27,12 @@ import java.awt.event.MouseEvent;
 
 public class TilePlacementMouseAdapter extends MouseAdapter {
 
+	private boolean listenerOn = true;
+
 	private NeuroshimaCanvas cn;
 
 	private Tile tileSelected = null;
-	private Pair tileLocation = null;
-	private int tileAngle = 0;
+	private Integer clickedTileNo;
 
 	private Point anchorPoint;
 
@@ -39,71 +43,71 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent ev) {
+	public void mouseClicked(final MouseEvent ev) {
 
-		if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
+		if (listenerOn) {
 
-			Integer clickedTile = getClickedDrawnTile(cn, ev);
+			// probno
+			Pair tilePos = getClickedTile(cn, ev);
 
-			if (clickedTile != null) {
-				cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
-				cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
-				cn.repaint();
+			TileAttackTimer tat = new TileAttackTimer(cn);
+			if (tilePos != null) {
+				tat.animateAttack(tilePos);
 			}
-		}
 
-		//		int realN = (int)Math.round(n);
-		//		int realM = (int)Math.round(m);
-		//		Hexagon hex = cn.getHexagon(realM, realN);
-		//
-		//		if (hex != null) {
-		//			Graphics2D g2 = (Graphics2D)cn.getGraphics();
-		//			hex.drawHex(g2, cn.getGameInstance().getBoard().getTile(realM, realN), 1);
-		//		}
+			// Aktivno samo ako treba discardati
+			if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
 
-		if (cn.getGameInstance().getTurnPhase() == TurnPhase.TILE_PLACED) {
-			// ako klikne desno, rotira ga desno
-			// ako klikne lijevo, rotira ga lijevo
+				Integer clickedTile = getClickedDrawnTile(cn, ev);
 
-			// ako klikne na njega, tile se sprema na board tako kako je okrenut
-			cn.getGameInstance().getBoard().addTile(
-					(BoardTile)tileSelected,
-					tileLocation.getX(),
-					tileLocation.getY(),
-					tileAngle
-					);
+				if (clickedTile != null) {
+					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
+					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+					cn.repaint();
+				}
+			}
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent ev) {
 
-		if (cn.getGameInstance().getTurnPhase() == TurnPhase.TILES_DRAWN) {
-			Integer clickedTileNo = getClickedDrawnTile(cn, ev);
+		if (listenerOn) {
 
-			this.tileSelected = cn.getGameInstance().getCurrentPlayerGameDeck().getDrawnTile(clickedTileNo-1);
-			cn.getGameInstance().setTurnPhase(TurnPhase.TILE_PLACED);
+			if (cn.getGameInstance().getTurnPhase() == TurnPhase.TILES_DRAWN) {
+				this.clickedTileNo = getClickedDrawnTile(cn, ev);
+				if (clickedTileNo == null) {
+					return;
+				}
 
-			// ako je BoardTile, promijeni kursor u onaj za rotaciju
+				this.tileSelected = cn.getGameInstance().getCurrentPlayerGameDeck().getDrawnTile(clickedTileNo-1);
 
+				cn.getGameInstance().setTurnPhase(TurnPhase.TILE_PLACED);
+
+			}
 		}
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent ev) {
 
-		if (tileSelected != null) {
+		if (listenerOn) {
 
-			Pair tilePos = getClickedTile(cn, ev);
+			if (tileSelected != null) {
 
-			if (tilePos != null && Math.abs(tilePos.getX()) < 2 && Math.abs(tilePos.getY()) < 2) { // urediti moguæe koordinate
+				Pair tilePos = getClickedTile(cn, ev);
 
-				if (cn.getGameInstance().getBoard().getTile(tilePos.getX(), tilePos.getY()) == null) {
+				if (tileSelected instanceof BoardTile && tilePos != null && Math.abs(tilePos.getX()) < 3 && Math.abs(tilePos.getY()) < 3) { // urediti moguæe koordinate
 
-					if (tileSelected instanceof BoardTile) {
+					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
+
+					if (cn.getGameInstance().getBoard().getTile(tilePos.getX(), tilePos.getY()) == null) {
+
 						// if tile is board tile
-						trma.setRotatedTile((BoardTile)tileSelected);
+						((BoardTile) tileSelected).setX(tilePos.getX());
+						((BoardTile) tileSelected).setY(tilePos.getY());
+
+						trma.setSelectedTile((BoardTile)tileSelected);
 						cn.setDraggedHexagon(new Hexagon(
 								tilePos.getX(),
 								tilePos.getY(),
@@ -113,51 +117,70 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 								));
 
 						cn.repaint();
-						cn.removeMouseListener(this);
-						cn.removeMouseMotionListener(this);
-						cn.addMouseListener(trma);
-						cn.addMouseMotionListener(trma);
+						this.listenerOn = false;
+						trma.setListenerOn(true);
+					}
+				} else {
+					if (tilePos == null) {
+						cn.setDraggedHexagon(null);
+						tileSelected = null;
+					}
 
-					} else {
-						// if tile is action tile
+					ActionTileResolver atr = new ActionTileResolver();
+					if (atr.resolve((ActionTile) tileSelected, ev, cn)) {
+						cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
+						cn.getTpma().setTileSelected(null);
+						cn.setDraggedHexagon(null);
+						cn.repaint();
 					}
 				}
+			} else {
+				if (cn.getGameInstance().getTurnPhase() != TurnPhase.DISCARD_PHASE) {
+					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+				}
+				cn.setDraggedHexagon(null);
+				cn.repaint();
 			}
 
+			//this.tileSelected = null;
+			cn.repaint();
 		}
-		//this.tileSelected = null;
-		cn.repaint();
-
 	}
+
+
 
 	@Override
 	public void mouseMoved(MouseEvent ev) {
-		anchorPoint = ev.getPoint();
+		if (listenerOn) {
+			anchorPoint = ev.getPoint();
+		}
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent ev) {
+		if (listenerOn) {
 
-		if (tileSelected != null) {
-			if (cn.getDraggedHexagon() != null) {
-				cn.setDraggedHexagon(null);
+			if (tileSelected != null) {
+				if (cn.getDraggedHexagon() != null) {
+					cn.setDraggedHexagon(null);
+				}
+
+				cn.setDraggedHexagon(new Hexagon(-5, -5, ev.getX(), ev.getY(), cn.getHexSize()));
+
+				int anchorX = anchorPoint.x;
+				int anchorY = anchorPoint.y;
+
+				Point parentOnScreen = ev.getComponent().getLocationOnScreen();
+				Point mouseOnScreen = ev.getLocationOnScreen();
+				Point position = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
+
+				cn.getDraggedHexagon().setLocation(position);
+				//System.out.println("X,Y: "+cn.draggedHexagon.getX()+", "+cn.draggedHexagon.getY());
+				cn.repaint();
+				//cn.repaintComponentPart(cn.getGraphics(), tileSelected, position.x, position.y);
+				//cn.paintComponent(cn.getGraphics());
+
 			}
-
-			cn.setDraggedHexagon(new Hexagon(-5, -5, ev.getX(), ev.getY(), cn.getHexSize()));
-
-			int anchorX = anchorPoint.x;
-			int anchorY = anchorPoint.y;
-
-			Point parentOnScreen = ev.getComponent().getLocationOnScreen();
-			Point mouseOnScreen = ev.getLocationOnScreen();
-			Point position = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
-
-			cn.getDraggedHexagon().setLocation(position);
-			//System.out.println("X,Y: "+cn.draggedHexagon.getX()+", "+cn.draggedHexagon.getY());
-			cn.repaint();
-			//cn.repaintComponentPart(cn.getGraphics(), tileSelected, position.x, position.y);
-			//cn.paintComponent(cn.getGraphics());
-
 		}
 
 	}
@@ -170,7 +193,7 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 		this.trma = trma;
 	}
 
-	public Pair getClickedTile(NeuroshimaCanvas cn, MouseEvent ev) {
+	public static Pair getClickedTile(NeuroshimaCanvas cn, MouseEvent ev) {
 
 		// pairO je pair koordinata središta, pairU i pairV su vektori baze
 		Position pairO = new Position(cn.getWidth()/2, cn.getHeight()/2);
@@ -268,8 +291,16 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 
 	}
 
+	public void setListenerOn(boolean listenerOn) {
+		this.listenerOn = listenerOn;
+	}
+
 	public Tile getTileSelected() {
 		return tileSelected;
+	}
+
+	public void setTileSelected(Tile tileSelected) {
+		this.tileSelected = tileSelected;
 	}
 
 }

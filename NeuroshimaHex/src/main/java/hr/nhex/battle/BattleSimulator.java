@@ -208,7 +208,7 @@ public class BattleSimulator implements IBasicBoard {
 	 * engl. <i>Netter</i>) te ukoliko je netko od njih ima
 	 */
 
-	private void updateAfterEffects() {
+	public void updateAfterEffects() {
 
 		List<BoardTile> deadTiles = new ArrayList<BoardTile>();
 

@@ -1,5 +1,7 @@
 package hr.nhex.decks;
 
+import hr.nhex.game.Game;
+import hr.nhex.game.TurnPhase;
 import hr.nhex.model.Tile;
 
 import java.util.Collections;
@@ -31,12 +33,13 @@ public class GameDeck {
 
 	}
 
-	public void drawNew() {
+	public void drawNew(Game gameInstance) {
 		for (int i = 0; i < 3; i++) {
 			if (drawnTiles[i] == null) {
 				drawnTiles[i] = this.gameTiles.pop();
 			}
 		}
+		gameInstance.setTurnPhase(TurnPhase.DISCARD_PHASE);
 	}
 
 	public Tile getDrawnTile(int numberOfTile) {
@@ -49,6 +52,10 @@ public class GameDeck {
 
 	public void discardTile(int numberOfTile) {
 		drawnTiles[numberOfTile] = null;
+	}
+
+	public void discardAllTiles() {
+		drawnTiles = new Tile[3];
 	}
 
 	public String getDeckName() {

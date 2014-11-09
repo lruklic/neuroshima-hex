@@ -34,7 +34,8 @@ public class Board implements IBasicBoard {
 	private List<BoardTile> tiles = new ArrayList<>();
 
 	/**
-	 * Metoda koja dodaje polje na ploèu.
+	 * ***experimental method***
+	 * used for adding tiles to board without graphic interface
 	 * 
 	 * @param tile polje koje se dodaje na ploèu
 	 */
@@ -55,6 +56,17 @@ public class Board implements IBasicBoard {
 		addNettedToTile(tile, x, y);
 	}
 
+	/**
+	 * Method that adds tile to board and checks for tile netting.
+	 * 
+	 * @param tile tile that is being added to the board
+	 */
+	public void addTile(BoardTile tile) {
+		tile.setOnBoard();
+		tiles.add(tile);
+
+		addNettedToTile(tile, tile.getX(), tile.getY());
+	}
 	/**
 	 * Metoda koja provjerava da li je dodano (odnosno pomaknuto ili pogurnuto) polje došlo na poziciju
 	 * gdje je aktivan net. Ukoliko je, polje nema efekta, inaèe se u listu polja pod mrežom dodaje polje ili

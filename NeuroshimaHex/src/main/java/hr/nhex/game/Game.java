@@ -47,6 +47,22 @@ public class Game {
 		}
 	}
 
+	public void nextPlayerTurn() {
+		String playerName = currentPlayer.getPlayerName();
+		int deckNo = 0;
+		for (Player p : players) {
+			if (p.getPlayerName().equals(playerName)) {
+				break;
+			}
+			deckNo++;
+		}
+		if (deckNo == players.size()-1) {
+			this.currentPlayer = players.get(0);
+		} else {
+			this.currentPlayer = players.get(deckNo+1);
+		}
+	}
+
 	public GameDeck getCurrentPlayerGameDeck() {
 		String currentPlayerDeckName = currentPlayer.getPlayerDeck().getDeckName();
 		for (GameDeck deck : decks) {

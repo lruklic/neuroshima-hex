@@ -1,19 +1,23 @@
 package hr.nhex.graphic.hexagon;
 
 import hr.nhex.board.BoardTile;
+import hr.nhex.generic.Pair;
 import hr.nhex.graphic.imagecache.ImageCache;
 import hr.nhex.model.Player;
 import hr.nhex.model.Tile;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.Stroke;
 import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
@@ -75,10 +79,9 @@ public class Hexagon extends JComponent {
 	 * @param xC x coordinate of hexagon center
 	 * @param yC y coordinate of hexagon center
 	 * @param flatOrientation is hexagon rotated to flat side up
-	 * @return instance of polygon that is hexagon
 	 */
 
-	public Polygon createHex(int xC, int yC, boolean flatOrientation) {
+	public Polygon createHex(int xC, int yC) {
 
 		int[] arrayX = null;
 		int[] arrayY = null;
@@ -110,9 +113,14 @@ public class Hexagon extends JComponent {
 	//					img2 = op.filter(image, null);
 
 
-	public void drawHex(Graphics2D g2, ImageCache cache, Tile t, Player currentPlayer) {
+	public void drawHex(Graphics2D g2, ImageCache cache, Tile t, Player currentPlayer, List<Pair> specialHex) {
 
-		Polygon poly = createHex(xC,yC,false);
+		// odluèiti kako se šalje podatak u drawHex koji da heksagoni budu iscrtani drugom bojom
+		// kod movementa ili pusha
+		// opcije: slati Canvas pa u njemu neku listu/mapu s koordinatama i bojom u koju se iscrtava
+		// ili slati samo tu listu/mapu
+
+		Polygon poly = createHex(xC,yC);
 
 		String imageName = null;
 		BufferedImage image = null;
@@ -191,10 +199,27 @@ public class Hexagon extends JComponent {
 
 		g2.fillPolygon(poly);
 
-		g2.setColor(Color.BLACK);
-		g2.drawPolygon(poly);
+		if (specialHex != null && specialHex.contains(new Pair(this.tileX, this.tileY))) {
+			Stroke oldStroke = g2.getStroke();
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(Color.RED);
+			g2.drawPolygon(poly);
+			g2.setStroke(oldStroke);
+		} else {
+			g2.setColor(Color.BLACK);
+			g2.drawPolygon(poly);
+		}
+
+
+
 	}
 
+	/**
+	 * Method that crops given picture to adjust its size for board hexagons.
+	 * 
+	 * @param src picture that is being cropped
+	 * @return cropped picture
+	 */
 	private BufferedImage cropImage(BufferedImage src) {
 		//System.out.println("dimension: "+src.getWidth() + ", "+src.getHeight());
 		BufferedImage dest = src.getSubimage(0, 0, 230, 270);

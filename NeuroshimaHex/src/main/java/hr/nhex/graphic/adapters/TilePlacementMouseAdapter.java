@@ -7,7 +7,6 @@ import hr.nhex.generic.Pair;
 import hr.nhex.generic.Position;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
-import hr.nhex.graphic.timer.TileAttackTimer;
 import hr.nhex.model.Tile;
 import hr.nhex.model.action.ActionTile;
 
@@ -25,10 +24,15 @@ import java.awt.event.MouseEvent;
  *
  */
 
-public class TilePlacementMouseAdapter extends MouseAdapter {
+public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAdapter {
 
+	/**
+	 * Variable that defines whether the listener is listening or not (is it on or off).
+	 */
 	private boolean listenerOn = true;
-
+	/**
+	 * Top level container that uses this listener.
+	 */
 	private NeuroshimaCanvas cn;
 
 	private Tile tileSelected = null;
@@ -37,6 +41,7 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 	private Point anchorPoint;
 
 	private TileRotateMouseAdapter trma;
+	private TileMovementMouseAdapter tmma;
 
 	public TilePlacementMouseAdapter(NeuroshimaCanvas cn) {
 		this.cn = cn;
@@ -47,13 +52,13 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 
 		if (listenerOn) {
 
-			// probno
-			Pair tilePos = getClickedTile(cn, ev);
-
-			TileAttackTimer tat = new TileAttackTimer(cn);
-			if (tilePos != null) {
-				tat.animateAttack(tilePos);
-			}
+			//			// probno
+			//			Pair tilePos = getClickedTile(cn, ev);
+			//
+			//			TileAttackTimer tat = new TileAttackTimer(cn);
+			//			if (tilePos != null) {
+			//				tat.animateAttack(tilePos, AttackDirection.E);
+			//			}
 
 			// Aktivno samo ako treba discardati
 			if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
@@ -117,8 +122,9 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 								));
 
 						cn.repaint();
-						this.listenerOn = false;
-						trma.setListenerOn(true);
+
+						cn.mouseListenerActivate(trma);
+
 					}
 				} else {
 					if (tilePos == null) {
@@ -131,7 +137,6 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 						cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
 						cn.getTpma().setTileSelected(null);
 						cn.setDraggedHexagon(null);
-						cn.repaint();
 					}
 				}
 			} else {
@@ -146,8 +151,6 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 			cn.repaint();
 		}
 	}
-
-
 
 	@Override
 	public void mouseMoved(MouseEvent ev) {
@@ -191,6 +194,24 @@ public class TilePlacementMouseAdapter extends MouseAdapter {
 
 	public void setTrma(TileRotateMouseAdapter trma) {
 		this.trma = trma;
+	}
+
+	public TileMovementMouseAdapter getTmma() {
+		return tmma;
+	}
+
+	public void setTmma(TileMovementMouseAdapter tmma) {
+		this.tmma = tmma;
+	}
+
+	@Override
+	public void setListenerOn() {
+		this.listenerOn = true;
+	}
+
+	@Override
+	public void setListenerOff() {
+		this.listenerOn = false;
 	}
 
 	public static Pair getClickedTile(NeuroshimaCanvas cn, MouseEvent ev) {

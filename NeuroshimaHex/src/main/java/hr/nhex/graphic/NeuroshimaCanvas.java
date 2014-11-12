@@ -5,7 +5,10 @@ import hr.nhex.board.BoardTile;
 import hr.nhex.decks.implementation.BorgoDeck;
 import hr.nhex.decks.implementation.HegemonyDeck;
 import hr.nhex.game.Game;
+import hr.nhex.generic.Pair;
 import hr.nhex.graphic.adapters.CanvasResizeComponentAdapter;
+import hr.nhex.graphic.adapters.IMouseAdapter;
+import hr.nhex.graphic.adapters.TileMovementMouseAdapter;
 import hr.nhex.graphic.adapters.TilePlacementMouseAdapter;
 import hr.nhex.graphic.adapters.TileRotateMouseAdapter;
 import hr.nhex.graphic.hexagon.Hexagon;
@@ -20,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +37,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Class that represents canvas that contains NHex playing board.
+ * Class that represents top level container for NHex playing board.
  * 
  * @author Luka Rukliæ
  * @author Marin Bužanèiæ
@@ -57,22 +61,33 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private List<Hexagon> hexagonSideList = new ArrayList<>();
 
-	private BufferedImage img;
+	private BufferedImage backgroundImage;
 
 	private ImageCache cache = new ImageCache();
 
-	private TilePlacementMouseAdapter tpma = new TilePlacementMouseAdapter(this);
-	private TileRotateMouseAdapter trma = new TileRotateMouseAdapter(this);
+	private List<IMouseAdapter> mouseAdapters = new ArrayList<>();
 
 	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
 
 		addComponentListener(new CanvasResizeComponentAdapter());
 
-		tpma.setTrma(trma);
-		trma.setTpma(tpma);
+		mouseAdapters.add(new TileRotateMouseAdapter(this));
+		mouseAdapters.add(new TilePlacementMouseAdapter(this));
+		mouseAdapters.add(new TileMovementMouseAdapter(this));
 
-		addMouseListener(tpma);
-		addMouseMotionListener(tpma);
+		for (IMouseAdapter ma : mouseAdapters) {
+			if (ma instanceof MouseAdapter) {
+				addMouseListener((MouseAdapter) ma);
+				addMouseMotionListener((MouseAdapter) ma);
+			}
+		}
+
+		getTpma().setTrma(getTrma());
+		getTpma().setTmma(getTmma());
+
+		getTrma().setTpma(getTpma());
+
+		getTmma().setTrma(getTrma());
 
 		addBtn();
 
@@ -134,14 +149,14 @@ public class NeuroshimaCanvas extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		super.paintComponent(g2);
 
-		if (this.img == null) {
+		if (this.backgroundImage == null) {
 			try {
-				img = ImageIO.read(new File("background.jpg"));
+				backgroundImage = ImageIO.read(new File("background.jpg"));
 			} catch (IOException e) {
 				System.out.println("Background image not found.");
 			}
 		}
-		g2.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+		g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
 		// Calculating hexagon size from window height and width
 		int windowHeight = this.getHeight();
@@ -154,23 +169,32 @@ public class NeuroshimaCanvas extends JPanel {
 			fillEmptyHexagonLists(windowHeight, windowWidth, hexSize);
 		}
 
+		// ovdje je moguæe dodati boju ili debljinu crte tako da se Pair zamijeni s custom razredom
+		List<Pair> specialHex = this.getTmma().getSpecialHex();
+
 		// Draw hexagons that are in hexagon lists
 		for (Hexagon h : hexagonList) {
 			BoardTile t = this.gameInstance.getBoard().getTile(h.getTileX(), h.getTileY());		// just boardTile drawing
-			h.drawHex(g2, cache, t, null);
+			h.drawHex(g2, cache, t, null, specialHex);
 		}
 		List<Tile> currentDrawnTiles = Arrays.asList(getGameInstance().getCurrentPlayerGameDeck().getDrawnTiles());
 		int tileNo = 0;
 
 		for (Hexagon h : hexagonSideList) {
 			if (currentDrawnTiles.size() > tileNo) {
-				h.drawHex(g2, cache, currentDrawnTiles.get(tileNo), gameInstance.getCurrentPlayer());
+				h.drawHex(g2, cache, currentDrawnTiles.get(tileNo), gameInstance.getCurrentPlayer(), specialHex);
 			}
 			tileNo++;
 		}
 
 		if (draggedHexagon != null) {
-			draggedHexagon.drawHex(g2, cache, tpma.getTileSelected(), gameInstance.getCurrentPlayer());
+			Tile t;
+			if (this.getTpma().getTileSelected() != null) {
+				t = this.getTpma().getTileSelected();
+			} else {
+				t = this.getTrma().getSelectedTile();
+			}
+			draggedHexagon.drawHex(g2, cache, t, gameInstance.getCurrentPlayer(), specialHex);
 		}
 
 	}
@@ -274,12 +298,51 @@ public class NeuroshimaCanvas extends JPanel {
 		this.draggedTile = draggedTile;
 	}
 
+	/**
+	 * Method that return TilePlacementMouseAdapter for canvas registered adapter if it exists.
+	 * 
+	 * @return TilePlacementMouseAdapter if it exists, <code>null</code> otherwise
+	 */
 	public TilePlacementMouseAdapter getTpma() {
-		return tpma;
+		for (IMouseAdapter ma : mouseAdapters) {
+			if (ma instanceof TilePlacementMouseAdapter) {
+				return (TilePlacementMouseAdapter) ma;
+			}
+		}
+		return null;
 	}
 
 	public TileRotateMouseAdapter getTrma() {
-		return trma;
+		for (IMouseAdapter ma : mouseAdapters) {
+			if (ma instanceof TileRotateMouseAdapter) {
+				return (TileRotateMouseAdapter) ma;
+			}
+		}
+		return null;
+	}
+
+	public TileMovementMouseAdapter getTmma() {
+		for (IMouseAdapter ma : mouseAdapters) {
+			if (ma instanceof TileMovementMouseAdapter) {
+				return (TileMovementMouseAdapter) ma;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Method that receives listener instance and turns that listener on and all the other listeners off.
+	 * 
+	 * @param MouseAdapter instance of the one of MouseAdapter subclasses
+	 */
+	public void mouseListenerActivate(MouseAdapter adapter) {
+		for (IMouseAdapter a : mouseAdapters) {
+			if (a.getClass().equals(adapter.getClass())) {
+				a.setListenerOn();
+			} else {
+				a.setListenerOff();
+			}
+		}
 	}
 
 }

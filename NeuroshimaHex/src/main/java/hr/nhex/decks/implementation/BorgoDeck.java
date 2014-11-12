@@ -19,7 +19,7 @@ import java.util.List;
 
 public class BorgoDeck extends Deck implements IBasicDeck {
 
-	private static final int MOVE_NUMBER = 4;
+	private static final int MOVE_NUMBER = 8; // 4
 	private static final int BATTLE_NUMBER = 6;
 	private static final int GRENADE_NUMBER = 1;
 

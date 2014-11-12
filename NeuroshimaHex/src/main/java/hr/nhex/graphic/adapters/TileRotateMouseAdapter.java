@@ -12,8 +12,19 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class TileRotateMouseAdapter extends MouseAdapter {
+/**
+ * Class that represents mouse listener that is used when tile need to be
+ * rotated in the game.
+ * 
+ * @author Luka Rukliæ
+ *
+ */
 
+public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapter{
+
+	/**
+	 * Variable that defines whether the listener is listening or not (is it on or off).
+	 */
 	private boolean listenerOn = false;
 
 	private NeuroshimaCanvas cn;
@@ -43,7 +54,6 @@ public class TileRotateMouseAdapter extends MouseAdapter {
 			if (ev.getX() < (cn.getDraggedHexagon().getxC()-cn.getHexSize())) {
 				// ako je kliknuto lijevo, rotiraj lijevo
 				selectedTile.setAngle(selectedTile.getAngle()-1);
-				System.out.println("Kut: "+selectedTile.getAngle());
 				cn.repaint();
 
 			} else if (ev.getX() > (cn.getDraggedHexagon().getxC()+cn.getHexSize())) {
@@ -55,15 +65,19 @@ public class TileRotateMouseAdapter extends MouseAdapter {
 				// ako je kliknuto na tile, vrati na drugi adapter
 				cn.setCursor(Cursor.getDefaultCursor());
 
-				selectedTile.setPlayer(cn.getGameInstance().getCurrentPlayer());
-				cn.getGameInstance().getBoard().addTile(selectedTile);
+				// If tile is already filled, then don't add new tile to board
+				if (!cn.getGameInstance().getBoard().isFilled(selectedTile.getX(), selectedTile.getY())) {
+					selectedTile.setPlayer(cn.getGameInstance().getCurrentPlayer());
+					cn.getGameInstance().getBoard().addTile(selectedTile);
+				}
+
 				tpma.setTileSelected(null);
 				cn.setDraggedHexagon(null);
 				cn.repaint();
 
 				cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
-				this.listenerOn = false;
-				tpma.setListenerOn(true);
+
+				cn.mouseListenerActivate(tpma);
 			}
 
 		}
@@ -78,7 +92,7 @@ public class TileRotateMouseAdapter extends MouseAdapter {
 			int tileX = cn.getDraggedHexagon().getTileX();
 			int tileY = cn.getDraggedHexagon().getTileY();
 
-			Pair p = tpma.getClickedTile(cn, ev);
+			Pair p = TilePlacementMouseAdapter.getClickedTile(cn, ev);
 			if (p != null && p.getX() == tileX && p.getY() == tileY) {
 				cn.setCursor(Cursor.getDefaultCursor());
 			} else {
@@ -97,12 +111,22 @@ public class TileRotateMouseAdapter extends MouseAdapter {
 		this.tpma = tpma;
 	}
 
+	public BoardTile getSelectedTile() {
+		return selectedTile;
+	}
+
 	public void setSelectedTile(BoardTile selectedTile) {
 		this.selectedTile = selectedTile;
 	}
 
-	public void setListenerOn(boolean listenerOn) {
-		this.listenerOn = listenerOn;
+	@Override
+	public void setListenerOn() {
+		this.listenerOn = true;
+	}
+
+	@Override
+	public void setListenerOff() {
+		this.listenerOn = false;
 	}
 
 }

@@ -99,18 +99,18 @@ public class NeuroshimaCanvas extends JPanel {
 		players.add(player1);
 		players.add(player2);
 
-		BorgoDeck deck = new BorgoDeck();
-		for (Tile tile : deck.getTiles()) {
-			if (tile instanceof BoardTile) {
-				((BoardTile)tile).setPlayer(player1);
-			}
-		}
-
+		//		BorgoDeck deck = new BorgoDeck();
+		//		for (Tile tile : deck.getTiles()) {
+		//			if (tile instanceof BoardTile) {
+		//				((BoardTile)tile).setPlayer(player1);
+		//			}
+		//		}
+		//
 		Board board = new Board();
-
-		board.addTile((BoardTile)deck.getTileByName("Assassin"), 0, 0, 0);
-		board.addTile((BoardTile)deck.getTileByName("Scout"), 0, 1, 0);
-		board.addTile((BoardTile)deck.getTileByName("Butcher"), 1, 0, 2);
+		//
+		//		board.addTile((BoardTile)deck.getTileByName("Assassin"), 0, 0, 0);
+		//		board.addTile((BoardTile)deck.getTileByName("Scout"), 0, 1, 0);
+		//		board.addTile((BoardTile)deck.getTileByName("Butcher"), 1, 0, 2);
 
 		this.gameInstance = new Game(board, players);
 

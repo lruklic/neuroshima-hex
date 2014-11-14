@@ -179,7 +179,7 @@ public class Hexagon extends JComponent {
 		}
 		else if (tex != null && t instanceof BoardTile && ((BoardTile)t).getAngle() != 0) {
 
-			double theta = (Math.PI/3)*((BoardTile)t).getAngle();
+			double theta = (-Math.PI/3)*((BoardTile)t).getAngle();
 
 			AffineTransform texture = new AffineTransform();
 			texture.rotate(theta, image.getWidth()/2, image.getHeight()/2);

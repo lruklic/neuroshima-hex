@@ -18,7 +18,7 @@ public class TileAttackTimer {
 	/**
 	 * Constant that defines speed of attack animation in miliseconds for each pixel movement.
 	 */
-	private static final int ANIMATION_ATTACK_SPEED = 15;
+	private static final int ANIMATION_ATTACK_SPEED = 35;
 
 	/**
 	 * Top level container.
@@ -42,19 +42,16 @@ public class TileAttackTimer {
 	 * @param ad directions in which he attacks, can be multiple
 	 */
 	// potrebno je urediti ulogu directiona kod napada (Marin!), kao i omoguæiti napade u više smjerova
-	// razmisliti o animaciji ranged napada (nova metoda ili nešto drugo)
 
-	public void animateAttack(Pair tilePosition, AttackDirection... ad) {
+	public void animateAttack(Pair attackerPos, Pair hitPos) {
 
-		for (Hexagon h : cn.getHexagonList()) {
-			if (h.getTileX() == tilePosition.getX() && h.getTileY() == tilePosition.getY()) {
-				// promijeniti
-				Hexagon hitHex = cn.getHexagon(h.getTileX()+1, h.getTileY());
-				Timer timer = new Timer(ANIMATION_ATTACK_SPEED, new TileAttackAnimation(h, hitHex, cn));
-				timer.start();
-				cn.getTpma().setListenerOff();
+		Hexagon attackingHex = cn.getHexagon(attackerPos.getX(), attackerPos.getY());
+		Hexagon hitHex = cn.getHexagon(hitPos.getX(), hitPos.getY());
 
-			}
-		}
+		// promijeniti
+		Timer timer = new Timer(ANIMATION_ATTACK_SPEED, new TileAttackAnimation(attackingHex, hitHex, cn));
+		timer.start();
+		cn.getTpma().setListenerOff();
+
 	}
 }

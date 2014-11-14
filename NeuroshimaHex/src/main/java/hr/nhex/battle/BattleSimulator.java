@@ -15,6 +15,7 @@ import hr.nhex.model.unit.Attack;
 import hr.nhex.model.unit.AttackType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,6 +33,10 @@ public class BattleSimulator implements IBasicBoard {
 	private Board board;
 
 	private List<BattleTile> boardBattleTiles = new ArrayList<>();
+
+	private StringBuilder battleEvents = new StringBuilder();
+
+	private Integer currentInitiative = null;
 
 	private static final int MAXSHIFT_SMALL_BOARD = 4;
 
@@ -64,7 +69,7 @@ public class BattleSimulator implements IBasicBoard {
 	}
 
 	/**
-	 * Metoda simulatora borbe koja izvrï¿½ava borbu.
+	 * Metoda simulatora borbe koja izvršava borbu.
 	 */
 	public void executeBattle() {
 		applyModuleBonus();
@@ -72,10 +77,30 @@ public class BattleSimulator implements IBasicBoard {
 		for (int currentSpeed = defineHighestSpeed(); currentSpeed >= 0; currentSpeed--) {
 			//applyInstant();
 			executeBattleInitiative(currentSpeed);
-			updateAfterEffects();
+			//updateAfterEffects();
 			if (currentSpeed != 0) {
 				applyModuleBonus();
 			}
+		}
+
+	}
+
+	public boolean executeNextRound() {
+
+		battleEvents.setLength(0);
+		applyModuleBonus();
+
+		if (currentInitiative == null) {
+			this.currentInitiative = defineHighestSpeed();
+		}
+
+		executeBattleInitiative(currentInitiative);
+		currentInitiative--;
+
+		if (currentInitiative == 0) {
+			return true;
+		} else {
+			return false;
 		}
 
 	}
@@ -115,10 +140,11 @@ public class BattleSimulator implements IBasicBoard {
 	private void executeAttacks(Unit unit) {
 		for (Attack attack : unit.getAttacks()) {
 			if (attack.getType() == AttackType.MELEE) {
-				int pointsToTileX = unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6];
+				int pointsToTileX = unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6];	// vjerojatno se % 6 može maknuti
 				int pointsToTileY = unit.getY() + angleY[(attack.getPointsTo() + unit.getAngle()) % 6];
 				BattleTile attacked = getBattleTile(pointsToTileX, pointsToTileY);
 				if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer())) {
+					addBattleEvent("attack", unit, attacked);
 					attack.getType().attack(attacked, attack.getValue(), attack.getType());
 				}
 			}
@@ -143,6 +169,7 @@ public class BattleSimulator implements IBasicBoard {
 							} else {
 								attack.getType().attack(attacked, attack.getValue(), attack.getType());
 							}
+							addBattleEvent("rattack", unit, attacked);
 							break;
 						}
 						if (attacked.getTile() instanceof Module) {
@@ -153,6 +180,7 @@ public class BattleSimulator implements IBasicBoard {
 							} else {
 								attack.getType().attack(attacked, attack.getValue(), attack.getType());
 							}
+							addBattleEvent("rattack", unit, attacked);
 							break;
 						}
 
@@ -162,6 +190,10 @@ public class BattleSimulator implements IBasicBoard {
 
 			}
 		}
+	}
+
+	private void addBattleEvent(String eventType, Unit unit, BattleTile attacked) {
+		this.battleEvents.append(eventType+" "+unit.getX()+" "+unit.getY()+" "+attacked.getX()+" "+attacked.getY()+"\n");
 	}
 
 	/**
@@ -249,6 +281,10 @@ public class BattleSimulator implements IBasicBoard {
 	public Tile getTile(int x, int y) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<String> getBattleEvents() {
+		return Arrays.asList(battleEvents.toString().split("\n"));
 	}
 
 	/**

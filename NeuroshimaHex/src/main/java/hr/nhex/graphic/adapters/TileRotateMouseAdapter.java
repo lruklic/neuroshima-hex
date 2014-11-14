@@ -53,12 +53,13 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 			if (ev.getX() < (cn.getDraggedHexagon().getxC()-cn.getHexSize())) {
 				// ako je kliknuto lijevo, rotiraj lijevo
-				selectedTile.setAngle(selectedTile.getAngle()-1);
+				selectedTile.setAngle(selectedTile.getAngle()+1);
+				//System.out.println("Kut: "+selectedTile.getAngle());
 				cn.repaint();
 
 			} else if (ev.getX() > (cn.getDraggedHexagon().getxC()+cn.getHexSize())) {
 				// ako je kliknuto desno, rotiraj desno
-				selectedTile.setAngle(selectedTile.getAngle()+1);
+				selectedTile.setAngle(selectedTile.getAngle()-1);
 				//System.out.println("Kut: "+selectedTile.getAngle());
 				cn.repaint();
 			} else {

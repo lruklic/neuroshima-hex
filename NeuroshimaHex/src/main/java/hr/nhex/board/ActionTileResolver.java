@@ -5,6 +5,8 @@ import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.adapters.TilePlacementMouseAdapter;
+import hr.nhex.graphic.timer.BattleTimer;
+import hr.nhex.graphic.timer.TileAttackTimer;
 import hr.nhex.model.action.ActionTile;
 import hr.nhex.model.action.ActionType;
 
@@ -31,7 +33,19 @@ public class ActionTileResolver {
 
 		Pair tilePos = TilePlacementMouseAdapter.getClickedTile(cn, ev);
 		Game game = cn.getGameInstance();
-		if (tilePos != null && at.getActionType() == ActionType.SNIPER) {
+
+		if (at.getActionType() == ActionType.BATTLE) {
+			BattleSimulator bs = new BattleSimulator(game.getBoard());
+
+			TileAttackTimer tat = new TileAttackTimer(cn);
+			BattleTimer bt = new BattleTimer(cn, bs, tat);
+			bt.animateBattle();
+
+			System.out.println("Borba: \n"+bs.getBattleEvents());
+
+			return true;
+
+		} else if (tilePos != null && at.getActionType() == ActionType.SNIPER) {
 
 			BoardTile tileTarget = game.getBoard().getTile(tilePos.getX(), tilePos.getY());
 			if (tileTarget != null && tileTarget.getPlayer() != game.getCurrentPlayer()) {
@@ -42,8 +56,7 @@ public class ActionTileResolver {
 				}
 				return true;
 			}
-		}
-		else if (tilePos != null && at.getActionType() == ActionType.MOVE) {
+		} else if (tilePos != null && at.getActionType() == ActionType.MOVE) {
 
 			BoardTile tileTarget = game.getBoard().getTile(tilePos.getX(), tilePos.getY());
 			if (tileTarget != null && tileTarget.getPlayer() == game.getCurrentPlayer()) {
@@ -59,7 +72,6 @@ public class ActionTileResolver {
 				}
 				return true;
 			}
-
 
 		}
 

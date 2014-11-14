@@ -1,5 +1,6 @@
 package hr.nhex.graphic.timer;
 
+import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
 
@@ -13,6 +14,7 @@ import javax.swing.Timer;
  * Action listener that implements methods for animating tile attack on the board.
  * 
  * @author Luka Rukliæ
+ * @author Marin Bužanèiæ
  *
  */
 
@@ -56,15 +58,20 @@ public class TileAttackAnimation implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		AttackDirection ad = getAttackDirection(
+				new Pair(attackingHex.getTileX(), attackingHex.getTileY()),
+				new Pair(hitHex.getTileX(), hitHex.getTileY())
+				);
+
 		if (moved < ATTACK_MOVE_PIXEL) {
 			// attacking movement of attackingHex
 			attackingHex.setLocation(new Point(attackingHex.getxC(), attackingHex.getyC()));
-			attackingHex.setxC(attackingHex.getxC()+1);
+			setHexLocation(attackingHex, ad);
 			moved++;
 		} else if (moved >= ATTACK_MOVE_PIXEL && moved < 2*ATTACK_MOVE_PIXEL) {
 			// retreat movement of attackingHex
 			attackingHex.setLocation(new Point(attackingHex.getxC(), attackingHex.getyC()));
-			attackingHex.setxC(attackingHex.getxC()-1);
+			setHexLocation(attackingHex, ad.oppositeDirection());
 
 			// shatter movement of hitHex
 			hitHex.setLocation(new Point(hitHex.getxC(), hitHex.getyC()));
@@ -88,6 +95,60 @@ public class TileAttackAnimation implements ActionListener {
 		}
 		cn.repaint();
 
+	}
+
+	private void setHexLocation(Hexagon attackingHex, AttackDirection ad) {
+
+		if (ad == AttackDirection.E) {
+			attackingHex.setxC(attackingHex.getxC()+1);
+		} else if (ad == AttackDirection.W) {
+			attackingHex.setxC(attackingHex.getxC()-1);
+		} else if (ad == AttackDirection.NE) {
+			attackingHex.setxC(attackingHex.getxC()+1);
+			attackingHex.setyC(attackingHex.getyC()-1);
+		} else if (ad == AttackDirection.SW) {
+			attackingHex.setxC(attackingHex.getxC()-1);
+			attackingHex.setyC(attackingHex.getyC()+1);
+		} else if (ad == AttackDirection.NW) {
+			attackingHex.setxC(attackingHex.getxC()-1);
+			attackingHex.setyC(attackingHex.getyC()-1);
+		} else if (ad == AttackDirection.SE) {
+			attackingHex.setxC(attackingHex.getxC()+1);
+			attackingHex.setyC(attackingHex.getyC()+1);
+		}
+	}
+
+	/**
+	 * Method that detects in which geographic direction is the attacker tile attacking.
+	 * 
+	 * @param attackerPos pair that contains attacker coordinates
+	 * @param hitPos pair that contains coordinates of hit tile
+	 * @return direction in which attacker is attacking
+	 */
+
+	private AttackDirection getAttackDirection(Pair attackerPos, Pair hitPos) {
+		int x = hitPos.getX() - attackerPos.getX();
+		int y = hitPos.getY() - attackerPos.getY();
+
+		if (y == 0) {
+			if (x > 0) {
+				return AttackDirection.E;
+			} else {
+				return AttackDirection.W;
+			}
+		} else if (x == 0) {
+			if (y > 0) {
+				return AttackDirection.NE;
+			} else {
+				return AttackDirection.SW;
+			}
+		} else {
+			if (y > 0) {
+				return AttackDirection.NW;
+			} else {
+				return AttackDirection.SE;
+			}
+		}
 	}
 
 }

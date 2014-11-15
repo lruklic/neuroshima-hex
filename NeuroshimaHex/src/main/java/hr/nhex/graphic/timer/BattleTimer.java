@@ -5,6 +5,13 @@ import hr.nhex.graphic.NeuroshimaCanvas;
 
 import javax.swing.Timer;
 
+/**
+ * Class
+ *
+ * @author ZEUS
+ *
+ */
+
 public class BattleTimer {
 
 	private static final int EVENT_ANIMATION_TIME = 2500;

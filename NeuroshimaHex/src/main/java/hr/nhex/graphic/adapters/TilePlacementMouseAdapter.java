@@ -53,7 +53,8 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 		if (listenerOn) {
 
 			//			// probno
-			//			Pair tilePos = getClickedTile(cn, ev);
+			Pair tilePos = getClickedTile(cn, ev);
+			System.out.println("Stisnut je: "+tilePos.getX()+", "+tilePos.getY());
 			//
 			//			TileAttackTimer tat = new TileAttackTimer(cn);
 			//			if (tilePos != null) {
@@ -61,16 +62,16 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 			//			}
 
 			// Aktivno samo ako treba discardati
-			if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
-
-				Integer clickedTile = getClickedDrawnTile(cn, ev);
-
-				if (clickedTile != null) {
-					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
-					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
-					cn.repaint();
-				}
-			}
+			//			if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
+			//
+			//				Integer clickedTile = getClickedDrawnTile(cn, ev);
+			//
+			//				if (clickedTile != null) {
+			//					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
+			//					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+			//					cn.repaint();
+			//				}
+			//			}
 		}
 	}
 

@@ -15,12 +15,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * 
+ *
  * Class that represents mouse listener that responds to mouse events in that
  * occur in the game.
- * 
- * @author Luka Rukliæ
- * @author Marin Bužanèiæ
+ *
+ * @author Luka Ruklic
+ * @author Marin Buzancic
  *
  */
 
@@ -48,30 +48,21 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 	}
 
 	@Override
-	public void mouseClicked(final MouseEvent ev) {
+	public void mouseClicked(MouseEvent ev) {
 
 		if (listenerOn) {
 
-			//			// probno
-			Pair tilePos = getClickedTile(cn, ev);
-			System.out.println("Stisnut je: "+tilePos.getX()+", "+tilePos.getY());
-			//
-			//			TileAttackTimer tat = new TileAttackTimer(cn);
-			//			if (tilePos != null) {
-			//				tat.animateAttack(tilePos, AttackDirection.E);
-			//			}
-
 			// Aktivno samo ako treba discardati
-			//			if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
-			//
-			//				Integer clickedTile = getClickedDrawnTile(cn, ev);
-			//
-			//				if (clickedTile != null) {
-			//					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
-			//					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
-			//					cn.repaint();
-			//				}
-			//			}
+			if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
+
+				Integer clickedTile = getClickedDrawnTile(cn, ev);
+
+				if (clickedTile != null) {
+					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
+					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+					cn.repaint();
+				}
+			}
 		}
 	}
 
@@ -103,7 +94,7 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 
 				Pair tilePos = getClickedTile(cn, ev);
 
-				if (tileSelected instanceof BoardTile && tilePos != null && Math.abs(tilePos.getX()) < 3 && Math.abs(tilePos.getY()) < 3) { // urediti moguæe koordinate
+				if (tileSelected instanceof BoardTile && tilePos != null && Math.abs(tilePos.getX()) < 3 && Math.abs(tilePos.getY()) < 3) { // urediti moguï¿½e koordinate
 
 					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
 
@@ -217,51 +208,70 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 
 	public static Pair getClickedTile(NeuroshimaCanvas cn, MouseEvent ev) {
 
-		// pairO je pair koordinata središta, pairU i pairV su vektori baze
+		// pairO je pair koordinata sredista, pairU i pairV su vektori baze
 		Position pairO = new Position(cn.getWidth()/2, cn.getHeight()/2);
 		Position pairU = new Position((Math.sqrt(3))*(cn.getHexSize()+0.5*cn.HEX_GAP), 0);
 		Position pairV = new Position((Math.sqrt(3)/2)*(cn.getHexSize()+0.5*cn.HEX_GAP), (-1.5)*(cn.getHexSize()+0.5*cn.HEX_GAP));
 
-		//pairT æe biti pair koordinata koje su pritisnute
+		// pairT ce biti pair koordinata koje su pritisnute
 		Position pairT = new Position(ev.getX(), ev.getY());
 
-		//tražimo m i n koji su rješenje sustava m * pairU + n * pairV = (pairT - pairO)
+		// trazimo m i n koji su rjesenje sustava m * pairU + n * pairV = (pairT - pairO)
 		double m = ( (pairT.getX()-pairO.getX())*(pairV.getY()) - (pairT.getY()-pairO.getY())*(pairV.getX()) )
 				/( (pairU.getX())*(pairV.getY()) - (pairV.getX())*(pairU.getY()) );
 
 		double n = ( (pairU.getX())*(pairT.getY()-pairO.getY()) - (pairU.getY())*(pairT.getX()-pairO.getX()) )
 				/( (pairU.getX())*(pairV.getY()) - (pairV.getX())*(pairU.getY()) );
 
-		//trenutno je kandidat tile na mjestu (round(m), round(n))
-		//gledamo koordinatni sustav s novim središtem  i novim vektorima baze
+		// primijetimo da lin. komb. m * pairU + n * pairV mozemo zapisati na sljedeca tri nacina:
+		// ( m ) * (pairU - pairV) + ( m+n ) * pairV
+		// ( -n ) * (pairU - pairV) + ( -m-n ) * ( -pairU )
+		// ( -m ) * ( -pairU ) + ( n ) * pairV
+		// stoga, zaokruzivanjem koef. m, n, m+n dobivamo najvise tri kandidata za tile
+		// trazimo onaj s najblizim sredistem
+
+		double tm = Math.abs(Math.round(m) - m);
+		double tn = Math.abs(Math.round(n) - n);
+		double tmn = Math.abs(Math.round(m+n) - (m+n));
+		//System.out.println("m: "+m+" tm: "+tm+" round(m): "+Math.round(m));
+		//System.out.println("n: "+n+" tn: "+tn+" round(n): "+Math.round(n));
+		//System.out.println("m+n: "+(m+n)+" tmn: "+tmn+" round(m+n): "+Math.round(m+n));
+
+		double tMax = Math.max(Math.max(tm, tn), tmn);
+
+		if (tMax == tmn) {
+			//System.out.println("tmn");
+			m = Math.round(m);
+			n = Math.round(n);
+		} else if (tMax == tn) {
+			//System.out.println("tn");
+			n = Math.round(m+n) - Math.round(m);
+			m = Math.round(m);
+		} else {
+			//System.out.println("tm");
+			m = Math.round(m+n) - Math.round(n);
+			n = Math.round(n);
+		}
+
+		//trenutno je jedini kandidat tile na mjestu (m,n)
+		//gledamo koordinatni sustav s novim srediÅ¡tem i provjeravamo trigonometrijski
 
 		pairO = new Position(
-				pairO.getX() + Math.round(m)*pairU.getX() + Math.round(n)*pairV.getX(),
-				pairO.getY() + Math.round(m)*pairU.getY() + Math.round(n)*pairV.getY()
+				pairO.getX() + m*pairU.getX() + n*pairV.getX(),
+				pairO.getY() + m*pairU.getY() + n*pairV.getY()
 				);
 
-		pairU = new Position(
-				(Math.sqrt(3))*cn.getHexSize(),
-				0
-				);
+		double angle = Math.atan2((-1)*(pairT.getY() - pairO.getY()), pairT.getX() - pairO.getX());
+		angle = Math.abs(Math.abs(Math.abs(Math.abs(Math.PI*8/6 - (angle + Math.PI)) - Math.PI*4/6) - Math.PI*2/6) - Math.PI*1/6);
 
-		pairV = new Position(
-				(Math.sqrt(3)/2)*cn.getHexSize(),
-				(-1.5)*cn.getHexSize()
-				);
-
-		//tražimo p i q koji su rješenje sustava p * pairU + q * pairV = (pairT - pairO)
-
-		double p = ( (pairT.getX()-pairO.getX())*(pairV.getY()) - (pairT.getY()-pairO.getY())*(pairV.getX()) )
-				/( (pairU.getX())*(pairV.getY()) - (pairV.getX())*(pairU.getY()) );
-
-		double q = ( (pairU.getX())*(pairT.getY()-pairO.getY()) - (pairU.getY())*(pairT.getX()-pairO.getX()) )
-				/( (pairU.getX())*(pairV.getY()) - (pairV.getX())*(pairU.getY()) );
-
-		//ako su p i q dovoljno blizu nuli, onda je stvarno stisnut tile
-		if ((Math.round(p) == 0) && (Math.round(q) == 0)) {
-			//System.out.println("Stisnut je: " + Math.round(m) + ", "+ Math.round(n));
-			return new Pair((int)Math.round(m), (int)Math.round(n));
+		if ((Math.abs(m+n) <= 2) && ((Math.abs(m) <= 2) && (Math.abs(n) <= 2))) {
+			if (Math.sqrt(Math.pow(pairT.getX() - pairO.getX(),2) + Math.pow(pairT.getY() - pairO.getY(),2)) < cn.getHexSize()*Math.sin(Math.PI*1/3)/Math.sin(Math.PI*2/3-angle)) {
+				//System.out.println("Stisnut je: " + Math.round(m) + ", "+ Math.round(n));
+				return new Pair((int) m, (int) n);
+			}
+			else {
+				return null;
+			}
 		} else {
 			//System.out.println("Nista nije stisnuto");
 			return null;
@@ -271,7 +281,7 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 
 	/**
 	 * Method that returns which of three side tiles was clicked. If none was clicked, this methods returns null.
-	 * 
+	 *
 	 * @param cn instance of canvas where game is displayed
 	 * @param ev click mouse event that occured
 	 * @return Integer 1,2 or 3 which identifies a tile that was clicked,

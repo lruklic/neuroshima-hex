@@ -8,8 +8,8 @@ import javax.swing.Timer;
 
 /**
  * Class that executes graphics for unit attacks while battle is happening.
- * 
- * @author Luka Rukliæ
+ *
+ * @author Luka Rukliï¿½
  *
  */
 
@@ -27,7 +27,7 @@ public class TileAttackTimer {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param cn top level container
 	 */
 	public TileAttackTimer (NeuroshimaCanvas cn) {
@@ -37,11 +37,10 @@ public class TileAttackTimer {
 	/**
 	 * Method that is invoked when unit attacks. Uses timer and TileAttackAnimation class to animate
 	 * melee attacks.
-	 * 
+	 *
 	 * @param tilePosition tile that is attacking
 	 * @param ad directions in which he attacks, can be multiple
 	 */
-	// potrebno je urediti ulogu directiona kod napada (Marin!), kao i omoguæiti napade u više smjerova
 
 	public void animateAttack(Pair attackerPos, Pair hitPos) {
 

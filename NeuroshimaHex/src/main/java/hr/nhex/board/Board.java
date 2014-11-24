@@ -4,6 +4,7 @@ import hr.nhex.exception.BoardException;
 import hr.nhex.generic.Pair;
 import hr.nhex.model.Netter;
 import hr.nhex.model.Player;
+import hr.nhex.model.Tile;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.ability.AbilityType;
 
@@ -32,6 +33,9 @@ public class Board implements IBasicBoard {
 	 * Polja na ploèi spremljena u obliku liste.
 	 */
 	private List<BoardTile> tiles = new ArrayList<>();
+
+	private List<Tile> sideTiles = new ArrayList<>();
+	private Tile selectedTile;
 
 	/**
 	 * ***experimental method***
@@ -118,6 +122,14 @@ public class Board implements IBasicBoard {
 
 	public List<BoardTile> getTiles() {
 		return tiles;
+	}
+
+	public Tile getSelectedTile() {
+		return selectedTile;
+	}
+
+	public void setSelectedTile(Tile selectedTile) {
+		this.selectedTile = selectedTile;
 	}
 
 	public boolean isLegal(int x, int y) {

@@ -2,16 +2,13 @@ package hr.nhex.graphic.hexagon;
 
 import hr.nhex.board.BoardTile;
 import hr.nhex.game.Game;
-import hr.nhex.generic.Pair;
 import hr.nhex.graphic.imagecache.ImageCache;
 import hr.nhex.model.Player;
 import hr.nhex.model.Tile;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.Stroke;
 import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -68,17 +65,17 @@ public class BoardDrawer {
 		}
 	}
 
-	private void drawDraggedHex() {
-		if (hlc.getDraggedHexagon() != null) {
-			Tile t;
-			if (this.getTpma().getTileSelected() != null) {
-				t = this.getTpma().getTileSelected();
-			} else {
-				t = this.getTrma().getSelectedTile();
-			}
-			hlc.getDraggedHexagon().drawHex(hlc.getDraggedHexagon(), game.getCurrentPlayer(), hlc.getSpecialHexList());
-		}
-	}
+	//	private void drawDraggedHex() {
+	//		if (hlc.getDraggedHexagon() != null) {
+	//			Tile t;
+	//			if (this.getTpma().getTileSelected() != null) {
+	//				t = this.getTpma().getTileSelected();
+	//			} else {
+	//				t = this.getTrma().getSelectedTile();
+	//			}
+	//			hlc.getDraggedHexagon().drawHex(hlc.getDraggedHexagon(), game.getCurrentPlayer(), hlc.getSpecialHexList());
+	//		}
+	//	}
 
 	public void drawHex(Hexagon h, Tile t, Player currentPlayer) {
 
@@ -165,17 +162,17 @@ public class BoardDrawer {
 
 
 		g2.fillPolygon(poly);
-
-		if (specialHex != null && specialHex.contains(new Pair(h.getTileX(), h.getTileY()))) {
-			Stroke oldStroke = g2.getStroke();
-			g2.setStroke(new BasicStroke(2));
-			g2.setColor(Color.RED);
-			g2.drawPolygon(poly);
-			g2.setStroke(oldStroke);
-		} else {
-			g2.setColor(Color.BLACK);
-			g2.drawPolygon(poly);
-		}
+		//
+		//		if (specialHex != null && specialHex.contains(new Pair(h.getTileX(), h.getTileY()))) {
+		//			Stroke oldStroke = g2.getStroke();
+		//			g2.setStroke(new BasicStroke(2));
+		//			g2.setColor(Color.RED);
+		//			g2.drawPolygon(poly);
+		//			g2.setStroke(oldStroke);
+		//		} else {
+		//			g2.setColor(Color.BLACK);
+		//			g2.drawPolygon(poly);
+		//		}
 
 	}
 

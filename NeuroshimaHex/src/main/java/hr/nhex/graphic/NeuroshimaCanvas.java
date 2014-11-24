@@ -38,9 +38,9 @@ import javax.swing.JPanel;
 
 /**
  * Class that represents top level container for NHex playing board.
- * 
- * @author Luka Rukliæ
- * @author Marin Bužanèiæ
+ *
+ * @author Luka Rukliï¿½
+ * @author Marin Buï¿½anï¿½iï¿½
  *
  */
 
@@ -71,7 +71,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 		addComponentListener(new CanvasResizeComponentAdapter());
 
-		mouseAdapters.add(new TileRotateMouseAdapter(this));
+		mouseAdapters.add(new TileRotateMouseAdapter(this, null));
 		mouseAdapters.add(new TilePlacementMouseAdapter(this));
 		mouseAdapters.add(new TileMovementMouseAdapter(this));
 
@@ -169,7 +169,7 @@ public class NeuroshimaCanvas extends JPanel {
 			fillEmptyHexagonLists(windowHeight, windowWidth, hexSize);
 		}
 
-		// ovdje je moguæe dodati boju ili debljinu crte tako da se Pair zamijeni s custom razredom
+		// ovdje je moguï¿½e dodati boju ili debljinu crte tako da se Pair zamijeni s custom razredom
 		List<Pair> specialHex = this.getTmma().getSpecialHex();
 
 		// Draw hexagons that are in hexagon lists
@@ -201,7 +201,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 	/**
 	 * Method that calculates hexagon size on tile board from window height and width.
-	 * 
+	 *
 	 * @param windowHeight window height
 	 * @param windowWidth window width
 	 * @return calculated hexagon size in pixels
@@ -241,7 +241,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 	/**
 	 * Method that fills empty hexagon lists that represents board tiles and drawn tiles.
-	 * 
+	 *
 	 * @param windowHeight window height
 	 * @param windowWidth window width
 	 * @param hexSize hexagon size
@@ -300,7 +300,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 	/**
 	 * Method that return TilePlacementMouseAdapter for canvas registered adapter if it exists.
-	 * 
+	 *
 	 * @return TilePlacementMouseAdapter if it exists, <code>null</code> otherwise
 	 */
 	public TilePlacementMouseAdapter getTpma() {
@@ -332,7 +332,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 	/**
 	 * Method that receives listener instance and turns that listener on and all the other listeners off.
-	 * 
+	 *
 	 * @param MouseAdapter instance of the one of MouseAdapter subclasses
 	 */
 	public void mouseListenerActivate(MouseAdapter adapter) {

@@ -2,25 +2,24 @@ package hr.nhex.model;
 
 /**
  * Razred koji predstavlja polje (engl. <i>Tile</i>) u igri Neuroshima Hex.
- * 
+ *
  * @author Luka Ruklić
  *
  */
 
-public class Tile {
+public abstract class Tile {
 
 	/**
-	 * Naziv polja.
+	 * Tile name.
 	 */
 	protected String name;
-
 	/**
-	 * Binarna vrijednost koja određuje da li je polje na ploči.
+	 * Binary value that determines whether the tile is on board or not.
 	 */
 	private boolean onBoard;
 
 	/**
-	 * Prazan konstruktor.
+	 * Empty constructor.
 	 */
 	public Tile() {
 
@@ -41,6 +40,9 @@ public class Tile {
 	public void setOnBoard() {
 		this.onBoard = true;
 	}
+
+	public abstract int getAngle();
+	public abstract Player getPlayer();
 
 
 

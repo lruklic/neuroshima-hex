@@ -4,7 +4,6 @@ import hr.nhex.exception.BoardException;
 import hr.nhex.generic.Pair;
 import hr.nhex.model.Netter;
 import hr.nhex.model.Player;
-import hr.nhex.model.Tile;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.ability.AbilityType;
 
@@ -13,9 +12,9 @@ import java.util.List;
 
 /**
  * Class that represents playing board in Neuroshima Hex game.
- * 
- * @author Luka Rukliæ
- * @author Marin Bužanèiæ
+ *
+ * @author Luka Rukliï¿½
+ * @author Marin Buï¿½anï¿½iï¿½
  *
  */
 
@@ -30,18 +29,15 @@ public class Board implements IBasicBoard {
 	int[] angleY = {0, 1, 1, 0, -1, -1};
 
 	/**
-	 * Polja na ploèi spremljena u obliku liste.
+	 * Polja na ploï¿½i spremljena u obliku liste.
 	 */
 	private List<BoardTile> tiles = new ArrayList<>();
-
-	private List<Tile> sideTiles = new ArrayList<>();
-	private Tile selectedTile;
 
 	/**
 	 * ***experimental method***
 	 * used for adding tiles to board without graphic interface
-	 * 
-	 * @param tile polje koje se dodaje na ploèu
+	 *
+	 * @param tile polje koje se dodaje na ploï¿½u
 	 */
 	public void addTile(BoardTile tile, int x, int y, int angle) {
 
@@ -62,7 +58,7 @@ public class Board implements IBasicBoard {
 
 	/**
 	 * Method that adds tile to board and checks for tile netting.
-	 * 
+	 *
 	 * @param tile tile that is being added to the board
 	 */
 	public void addTile(BoardTile tile) {
@@ -72,11 +68,11 @@ public class Board implements IBasicBoard {
 		addNettedToTile(tile, tile.getX(), tile.getY());
 	}
 	/**
-	 * Metoda koja provjerava da li je dodano (odnosno pomaknuto ili pogurnuto) polje došlo na poziciju
-	 * gdje je aktivan net. Ukoliko je, polje nema efekta, inaèe se u listu polja pod mrežom dodaje polje ili
+	 * Metoda koja provjerava da li je dodano (odnosno pomaknuto ili pogurnuto) polje doï¿½lo na poziciju
+	 * gdje je aktivan net. Ukoliko je, polje nema efekta, inaï¿½e se u listu polja pod mreï¿½om dodaje polje ili
 	 * polja na koje jedinica pokazuje.
-	 * 
-	 * @param tile polje koje dolazi na ploèu
+	 *
+	 * @param tile polje koje dolazi na ploï¿½u
 	 * @param x koordinata x na koju dolazi polje
 	 * @param y koordinata y na koju dolazi polje
 	 */
@@ -95,7 +91,7 @@ public class Board implements IBasicBoard {
 				if (ability.getType() == AbilityType.NET) {
 					int pointsToTileX = unit.getX() + angleX[(ability.getPointsTo() + unit.getAngle()) % 6];
 					int pointsToTileY = unit.getY() + angleY[(ability.getPointsTo() + unit.getAngle()) % 6];
-					if (isFilled(pointsToTileX, pointsToTileY)) { // i ne sadrži mrežu usmjerenu prema meni
+					if (isFilled(pointsToTileX, pointsToTileY)) { // i ne sadrï¿½i mreï¿½u usmjerenu prema meni
 
 					}
 					unit.addNettedTile(new Pair(pointsToTileX, pointsToTileY));
@@ -107,14 +103,26 @@ public class Board implements IBasicBoard {
 	public List<Pair> getAdjecantTiles (int x, int y) {
 		List<Pair> pairList = new ArrayList<>();
 
-		if (isLegal(x,y+1)) pairList.add(new Pair(x, y+1));
-		if (isLegal(x+1,y)) pairList.add(new Pair(x+1, y));
+		if (isLegal(x,y+1)) {
+			pairList.add(new Pair(x, y+1));
+		}
+		if (isLegal(x+1,y)) {
+			pairList.add(new Pair(x+1, y));
+		}
 
-		if (isLegal(x,y-1)) pairList.add(new Pair(x, y-1));
-		if (isLegal(x-1,y)) pairList.add(new Pair(x-1, y));
+		if (isLegal(x,y-1)) {
+			pairList.add(new Pair(x, y-1));
+		}
+		if (isLegal(x-1,y)) {
+			pairList.add(new Pair(x-1, y));
+		}
 
-		if (isLegal(x-1,y+1)) pairList.add(new Pair(x-1, y+1));
-		if (isLegal(x+1,y-1)) pairList.add(new Pair(x+1, y-1));
+		if (isLegal(x-1,y+1)) {
+			pairList.add(new Pair(x-1, y+1));
+		}
+		if (isLegal(x+1,y-1)) {
+			pairList.add(new Pair(x+1, y-1));
+		}
 
 		return pairList;
 
@@ -122,14 +130,6 @@ public class Board implements IBasicBoard {
 
 	public List<BoardTile> getTiles() {
 		return tiles;
-	}
-
-	public Tile getSelectedTile() {
-		return selectedTile;
-	}
-
-	public void setSelectedTile(Tile selectedTile) {
-		this.selectedTile = selectedTile;
 	}
 
 	public boolean isLegal(int x, int y) {

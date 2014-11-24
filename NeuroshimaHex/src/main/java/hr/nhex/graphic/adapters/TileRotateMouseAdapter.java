@@ -4,6 +4,7 @@ import hr.nhex.board.BoardTile;
 import hr.nhex.game.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
+import hr.nhex.graphic.hexagon.HexagonListContainer;
 
 import java.awt.Cursor;
 import java.awt.Image;
@@ -15,8 +16,8 @@ import java.awt.event.MouseEvent;
 /**
  * Class that represents mouse listener that is used when tile need to be
  * rotated in the game.
- * 
- * @author Luka Rukliæ
+ *
+ * @author Luka Rukliï¿½
  *
  */
 
@@ -31,12 +32,15 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 	private TilePlacementMouseAdapter tpma;
 
+	private HexagonListContainer hlc;
+
 	private BoardTile selectedTile;
 
 	private Cursor c;
 
-	public TileRotateMouseAdapter(NeuroshimaCanvas cn) {
+	public TileRotateMouseAdapter(NeuroshimaCanvas cn, HexagonListContainer hlc) {
 		this.cn = cn;
+		this.hlc = hlc;
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image rotateImage = toolkit.getImage("icons/rotate.png");

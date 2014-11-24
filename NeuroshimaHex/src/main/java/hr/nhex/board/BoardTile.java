@@ -4,9 +4,9 @@ import hr.nhex.model.Player;
 import hr.nhex.model.Tile;
 
 /**
- * Razred koji predstavlja polje na ploèi.
- * 
- * @author Luka Rukliæ
+ * Razred koji predstavlja polje na ploï¿½i.
+ *
+ * @author Luka Rukliï¿½
  *
  */
 
@@ -31,21 +31,21 @@ public class BoardTile extends Tile {
 
 	protected Player player;
 
-	protected int hitPoints;
-
 	protected int x;
 
 	protected int y;
+
+	protected int hitPoints;
 
 	protected int angle;
 
 	protected boolean isNetted;
 
 	/**
-	 * Metoda koja kopira polje na ploèi. Implementacija kod razreda BoardTile ne radi ništa, no pregažena je u odgovarajuæim
+	 * Metoda koja kopira polje na ploï¿½i. Implementacija kod razreda BoardTile ne radi niï¿½ta, no pregaï¿½ena je u odgovarajuï¿½im
 	 * podrazredima.
-	 * 
-	 * @return kopija polja nad kojim se metoda izvršava
+	 *
+	 * @return kopija polja nad kojim se metoda izvrï¿½ava
 	 */
 	public BoardTile copy() {
 		return null;
@@ -105,17 +105,22 @@ public class BoardTile extends Tile {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		BoardTile other = (BoardTile) obj;
-		if (x != other.x)
+		if (x != other.x) {
 			return false;
-		if (y != other.y)
+		}
+		if (y != other.y) {
 			return false;
+		}
 		return true;
 	}
 

@@ -2,6 +2,7 @@ package hr.nhex.board;
 
 import hr.nhex.exception.BoardException;
 import hr.nhex.generic.Pair;
+import hr.nhex.model.HQ;
 import hr.nhex.model.Netter;
 import hr.nhex.model.Player;
 import hr.nhex.model.ability.Ability;
@@ -139,6 +140,16 @@ public class Board implements IBasicBoard {
 		else {
 			return true;
 		}
+	}
+
+	public int numberOfHQ() {
+		int hqNumber = 0;
+		for (BoardTile t : tiles) {
+			if (t instanceof HQ) {
+				hqNumber++;
+			}
+		}
+		return hqNumber;
 	}
 
 	@Override

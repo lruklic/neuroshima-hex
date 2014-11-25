@@ -1,6 +1,7 @@
 package hr.nhex.graphic.adapters;
 
 import hr.nhex.board.BoardTile;
+import hr.nhex.game.Game;
 import hr.nhex.game.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
@@ -34,13 +35,14 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 	private HexagonListContainer hlc;
 
-	private BoardTile selectedTile;
+	private Game game;
 
 	private Cursor c;
 
 	public TileRotateMouseAdapter(NeuroshimaCanvas cn, HexagonListContainer hlc) {
 		this.cn = cn;
 		this.hlc = hlc;
+		this.game = cn.getGameInstance();
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image rotateImage = toolkit.getImage("icons/rotate.png");
@@ -53,17 +55,19 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 		if (listenerOn) {
 
+			BoardTile bt = ((BoardTile)game.getSelectedTile());
+
 			// ovaj dio treba urediti, dogovor oko toga gdje se klikovi priznaju u odnosu na heksagon
 
-			if (ev.getX() < (cn.getDraggedHexagon().getxC()-cn.getHexSize())) {
+			if (ev.getX() < (hlc.getDraggedHexagon().getxC()-cn.getHexSize())) {
 				// ako je kliknuto lijevo, rotiraj lijevo
-				selectedTile.setAngle(selectedTile.getAngle()+1);
+				bt.setAngle(game.getSelectedTile().getAngle() + 1);
 				//System.out.println("Kut: "+selectedTile.getAngle());
 				cn.repaint();
 
-			} else if (ev.getX() > (cn.getDraggedHexagon().getxC()+cn.getHexSize())) {
+			} else if (ev.getX() > (hlc.getDraggedHexagon().getxC()+cn.getHexSize())) {
 				// ako je kliknuto desno, rotiraj desno
-				selectedTile.setAngle(selectedTile.getAngle()-1);
+				bt.setAngle(game.getSelectedTile().getAngle() - 1);
 				//System.out.println("Kut: "+selectedTile.getAngle());
 				cn.repaint();
 			} else {
@@ -71,16 +75,17 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 				cn.setCursor(Cursor.getDefaultCursor());
 
 				// If tile is already filled, then don't add new tile to board
-				if (!cn.getGameInstance().getBoard().isFilled(selectedTile.getX(), selectedTile.getY())) {
-					selectedTile.setPlayer(cn.getGameInstance().getCurrentPlayer());
-					cn.getGameInstance().getBoard().addTile(selectedTile);
+				// Else add it to the board
+				if (!game.getBoard().isFilled(bt.getX(), bt.getY())) {
+					bt.setPlayer(game.getCurrentPlayer());
+					game.getBoard().addTile(bt);
 				}
 
-				tpma.setTileSelected(null);
-				cn.setDraggedHexagon(null);
+				game.setSelectedTile(null);
+				hlc.setDraggedHexagon(null);
 				cn.repaint();
 
-				cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+				game.setTurnPhase(TurnPhase.TILES_DRAWN);
 
 				cn.mouseListenerActivate(tpma);
 			}
@@ -94,8 +99,8 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 		if (listenerOn) {
 
-			int tileX = cn.getDraggedHexagon().getTileX();
-			int tileY = cn.getDraggedHexagon().getTileY();
+			int tileX = hlc.getDraggedHexagon().getTileX();
+			int tileY = hlc.getDraggedHexagon().getTileY();
 
 			Pair p = TilePlacementMouseAdapter.getClickedTile(cn, ev);
 			if (p != null && p.getX() == tileX && p.getY() == tileY) {
@@ -114,14 +119,6 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 	public void setTpma(TilePlacementMouseAdapter tpma) {
 		this.tpma = tpma;
-	}
-
-	public BoardTile getSelectedTile() {
-		return selectedTile;
-	}
-
-	public void setSelectedTile(BoardTile selectedTile) {
-		this.selectedTile = selectedTile;
 	}
 
 	@Override

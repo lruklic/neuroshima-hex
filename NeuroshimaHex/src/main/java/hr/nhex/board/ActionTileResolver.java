@@ -5,6 +5,8 @@ import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.adapters.TilePlacementMouseAdapter;
+import hr.nhex.graphic.hexagon.HexagonListContainer;
+import hr.nhex.graphic.hexagon.SpecialHex;
 import hr.nhex.graphic.timer.BattleTimer;
 import hr.nhex.graphic.timer.TileAttackTimer;
 import hr.nhex.model.action.ActionTile;
@@ -33,6 +35,7 @@ public class ActionTileResolver {
 
 		Pair tilePos = TilePlacementMouseAdapter.getClickedTile(cn, ev);
 		Game game = cn.getGameInstance();
+		HexagonListContainer hlc = cn.getHlc();
 
 		if (at.getActionType() == ActionType.BATTLE) {
 			BattleSimulator bs = new BattleSimulator(game.getBoard());
@@ -61,13 +64,13 @@ public class ActionTileResolver {
 			BoardTile tileTarget = game.getBoard().getTile(tilePos.getX(), tilePos.getY());
 			if (tileTarget != null && tileTarget.getPlayer() == game.getCurrentPlayer()) {
 
-				for (Pair p : cn.getGameInstance().getBoard().getAdjecantTiles(tileTarget.getX(), tileTarget.getY())) {
-					if (!cn.getGameInstance().getBoard().isFilled(p.getX(), p.getY())) {
-						cn.getTmma().addToSpecialHex(p.getX(), p.getY());
+				for (Pair p : game.getBoard().getAdjecantTiles(tileTarget.getX(), tileTarget.getY())) {
+					if (!game.getBoard().isFilled(p.getX(), p.getY())) {
+						hlc.getSpecialHexList().add(new SpecialHex(new Pair(p.getX(), p.getY()), game.getCurrentPlayer().getPlayerColor()));
 					}
 				}
-				if (!cn.getTmma().getSpecialHex().isEmpty()) {
-					cn.getTmma().setSelectedTile(tileTarget);
+				if (!hlc.getSpecialHexList().isEmpty()) {
+					game.setSelectedTile(tileTarget);
 					cn.mouseListenerActivate(cn.getTmma());
 				}
 				return true;

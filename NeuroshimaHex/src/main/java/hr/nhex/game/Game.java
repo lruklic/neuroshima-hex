@@ -3,6 +3,7 @@ package hr.nhex.game;
 import hr.nhex.board.Board;
 import hr.nhex.decks.GameDeck;
 import hr.nhex.model.Player;
+import hr.nhex.model.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,13 @@ public class Game {
 	 */
 	private List<GameDeck> decks = new ArrayList<>();
 
-	private GamePhase gamePhase;
+	private GamePhase gamePhase = GamePhase.GAME_START;
 
 	private TurnPhase turnPhase = TurnPhase.DISCARD_PHASE;
 
 	private Board board;
+
+	private Tile selectedTile;
 
 
 	public Game(Board board, List<Player> players) {
@@ -71,6 +74,18 @@ public class Game {
 			}
 		}
 		return null;
+	}
+
+	public int getNumberOfPlayers() {
+		return players.size();
+	}
+
+	public Tile getSelectedTile() {
+		return selectedTile;
+	}
+
+	public void setSelectedTile(Tile selectedTile) {
+		this.selectedTile = selectedTile;
 	}
 
 	public Player getCurrentPlayer() {

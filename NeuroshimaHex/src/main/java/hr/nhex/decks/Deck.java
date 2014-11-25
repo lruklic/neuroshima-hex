@@ -1,13 +1,12 @@
 package hr.nhex.decks;
 
+import hr.nhex.board.BoardTile;
 import hr.nhex.model.Tile;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.unit.Attack;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class that represents deck of tiles.
@@ -17,7 +16,7 @@ import java.util.Set;
  */
 
 public class Deck {
-	
+
 	/**
 	 * Number of sides on one NHex tile.
 	 */
@@ -34,11 +33,13 @@ public class Deck {
 	 * List of tiles that are contained in a deck.
 	 */
 	private List<Tile> tiles = new ArrayList<>();
-	
+
+	private BoardTile hq;
+
 	public GameDeck createGameDeck() {
 		return new GameDeck(this);
 	}
-	
+
 	public List<Tile> getTiles() {
 		return tiles;
 	}
@@ -55,8 +56,14 @@ public class Deck {
 		this.deckName = deckName;
 	}
 
-	
-	
+	public BoardTile getHq() {
+		return hq;
+	}
+
+	public void setHq(BoardTile hq) {
+		this.hq = hq;
+	}
+
 	/**
 	 * Metoda koja mi�e sve elemente iz primljenih listi.
 	 * 

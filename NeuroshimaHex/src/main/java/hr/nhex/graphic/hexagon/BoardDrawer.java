@@ -42,9 +42,13 @@ public class BoardDrawer {
 		this.g2 = g2;
 		this.cache = cache;
 		this.game = game;
+		this.hlc = hlc;
 	}
 
 	public void drawAllHex() {
+		drawBoardHex();
+		drawSideHex();
+		drawDraggedHex();
 
 	}
 
@@ -67,29 +71,12 @@ public class BoardDrawer {
 		}
 	}
 
-	//	private void drawDraggedHex() {
-	//		if (hlc.getDraggedHexagon() != null) {
-	//			Tile t;
-	//			if (this.getTpma().getTileSelected() != null) {
-	//				t = this.getTpma().getTileSelected();
-	//			} else {
-	//				t = this.getTrma().getSelectedTile();
-	//			}
-	//			drawHex(hlc.getDraggedHexagon(), t);
-	//		}
-	//	}
-
-	//	private void drawDraggedHex() {
-	//		if (hlc.getDraggedHexagon() != null) {
-	//			Tile t;
-	//			if (this.getTpma().getTileSelected() != null) {
-	//				t = this.getTpma().getTileSelected();
-	//			} else {
-	//				t = this.getTrma().getSelectedTile();
-	//			}
-	//			hlc.getDraggedHexagon().drawHex(hlc.getDraggedHexagon(), game.getCurrentPlayer(), hlc.getSpecialHexList());
-	//		}
-	//	}
+	private void drawDraggedHex() {
+		if (hlc.getDraggedHexagon() != null) {
+			Tile t = game.getSelectedTile();
+			drawHex(hlc.getDraggedHexagon(), t);
+		}
+	}
 
 	public void drawHex(Hexagon h, Tile t) {
 
@@ -169,10 +156,12 @@ public class BoardDrawer {
 
 		g2.fillPolygon(poly);
 
-		if (hlc.getSpecialHexList() != null && hlc.getSpecialHexList().contains(new Pair(h.getTileX(), h.getTileY()))) {
+		SpecialHex specialHexPair = new SpecialHex(new Pair(h.getTileX(), h.getTileY()), null);
+		if (hlc.getSpecialHexList() != null && hlc.getSpecialHexList().contains(specialHexPair)) {
+			SpecialHex sh = hlc.getSpecialHexList().get(hlc.getSpecialHexList().indexOf(specialHexPair));
 			Stroke oldStroke = g2.getStroke();
 			g2.setStroke(new BasicStroke(2));
-			g2.setColor(Color.RED);
+			g2.setColor(sh.getColor());
 			g2.drawPolygon(poly);
 			g2.setStroke(oldStroke);
 		} else {

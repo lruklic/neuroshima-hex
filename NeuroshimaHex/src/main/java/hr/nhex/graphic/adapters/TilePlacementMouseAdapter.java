@@ -2,12 +2,13 @@ package hr.nhex.graphic.adapters;
 
 import hr.nhex.board.ActionTileResolver;
 import hr.nhex.board.BoardTile;
+import hr.nhex.game.Game;
 import hr.nhex.game.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.generic.Position;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
-import hr.nhex.model.Tile;
+import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.model.action.ActionTile;
 
 import java.awt.Point;
@@ -35,7 +36,9 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 	 */
 	private NeuroshimaCanvas cn;
 
-	private Tile tileSelected = null;
+	private Game game;
+	private HexagonListContainer hlc;
+
 	private Integer clickedTileNo;
 
 	private Point anchorPoint;
@@ -43,8 +46,10 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 	private TileRotateMouseAdapter trma;
 	private TileMovementMouseAdapter tmma;
 
-	public TilePlacementMouseAdapter(NeuroshimaCanvas cn) {
+	public TilePlacementMouseAdapter(NeuroshimaCanvas cn, HexagonListContainer hlc) {
 		this.cn = cn;
+		this.hlc = hlc;
+		this.game = cn.getGameInstance();
 	}
 
 	@Override
@@ -53,13 +58,13 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 		if (listenerOn) {
 
 			// Aktivno samo ako treba discardati
-			if (cn.getGameInstance().getTurnPhase() == TurnPhase.DISCARD_PHASE) {
+			if (game.getTurnPhase() == TurnPhase.DISCARD_PHASE) {
 
 				Integer clickedTile = getClickedDrawnTile(cn, ev);
 
 				if (clickedTile != null) {
-					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(clickedTile-1);
-					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+					game.getCurrentPlayerGameDeck().discardTile(clickedTile-1);
+					game.setTurnPhase(TurnPhase.TILES_DRAWN);
 					cn.repaint();
 				}
 			}
@@ -71,15 +76,15 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 
 		if (listenerOn) {
 
-			if (cn.getGameInstance().getTurnPhase() == TurnPhase.TILES_DRAWN) {
+			if (game.getTurnPhase() == TurnPhase.TILES_DRAWN) {
 				this.clickedTileNo = getClickedDrawnTile(cn, ev);
 				if (clickedTileNo == null) {
 					return;
 				}
 
-				this.tileSelected = cn.getGameInstance().getCurrentPlayerGameDeck().getDrawnTile(clickedTileNo-1);
+				game.setSelectedTile(game.getCurrentPlayerGameDeck().getDrawnTile(clickedTileNo-1));
 
-				cn.getGameInstance().setTurnPhase(TurnPhase.TILE_PLACED);
+				game.setTurnPhase(TurnPhase.TILE_PLACED);
 
 			}
 		}
@@ -90,22 +95,23 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 
 		if (listenerOn) {
 
-			if (tileSelected != null) {
+			if (game.getSelectedTile() != null) {
 
 				Pair tilePos = getClickedTile(cn, ev);
 
-				if (tileSelected instanceof BoardTile && tilePos != null && Math.abs(tilePos.getX()) < 3 && Math.abs(tilePos.getY()) < 3) { // urediti mogu�e koordinate
+				if (game.getSelectedTile() instanceof BoardTile && tilePos != null && Math.abs(tilePos.getX()) < 3 && Math.abs(tilePos.getY()) < 3) { // urediti mogu�e koordinate
 
-					cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
+					game.getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
 
-					if (cn.getGameInstance().getBoard().getTile(tilePos.getX(), tilePos.getY()) == null) {
+					if (game.getBoard().getTile(tilePos.getX(), tilePos.getY()) == null) {
 
 						// if tile is board tile
-						((BoardTile) tileSelected).setX(tilePos.getX());
-						((BoardTile) tileSelected).setY(tilePos.getY());
+						BoardTile bt = ((BoardTile) cn.getGameInstance().getSelectedTile());
+						bt.setX(tilePos.getX());
+						bt.setY(tilePos.getY());
 
-						trma.setSelectedTile((BoardTile)tileSelected);
-						cn.setDraggedHexagon(new Hexagon(
+						game.setSelectedTile(bt);
+						hlc.setDraggedHexagon(new Hexagon(
 								tilePos.getX(),
 								tilePos.getY(),
 								cn.getHexagon(tilePos.getX(), tilePos.getY()).getxC(),
@@ -120,22 +126,21 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 					}
 				} else {
 					if (tilePos == null) {
-						cn.setDraggedHexagon(null);
-						tileSelected = null;
+						hlc.setDraggedHexagon(null);
+						game.setSelectedTile(null);
 					}
 
 					ActionTileResolver atr = new ActionTileResolver();
-					if (atr.resolve((ActionTile) tileSelected, ev, cn)) {
-						cn.getGameInstance().getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
-						cn.getTpma().setTileSelected(null);
-						cn.setDraggedHexagon(null);
+					if (atr.resolve((ActionTile) game.getSelectedTile(), ev, cn)) {
+						game.getCurrentPlayerGameDeck().discardTile(this.clickedTileNo-1);
+						hlc.setDraggedHexagon(null);
 					}
 				}
 			} else {
-				if (cn.getGameInstance().getTurnPhase() != TurnPhase.DISCARD_PHASE) {
-					cn.getGameInstance().setTurnPhase(TurnPhase.TILES_DRAWN);
+				if (game.getTurnPhase() != TurnPhase.DISCARD_PHASE) {
+					game.setTurnPhase(TurnPhase.TILES_DRAWN);
 				}
-				cn.setDraggedHexagon(null);
+				hlc.setDraggedHexagon(null);
 				cn.repaint();
 			}
 
@@ -155,12 +160,12 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 	public void mouseDragged(MouseEvent ev) {
 		if (listenerOn) {
 
-			if (tileSelected != null) {
-				if (cn.getDraggedHexagon() != null) {
-					cn.setDraggedHexagon(null);
+			if (game.getSelectedTile() != null) {
+				if (hlc.getDraggedHexagon() != null) {
+					hlc.setDraggedHexagon(null);
 				}
 
-				cn.setDraggedHexagon(new Hexagon(-5, -5, ev.getX(), ev.getY(), cn.getHexSize()));
+				hlc.setDraggedHexagon(new Hexagon(-5, -5, ev.getX(), ev.getY(), cn.getHexSize()));
 
 				int anchorX = anchorPoint.x;
 				int anchorY = anchorPoint.y;
@@ -169,7 +174,7 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 				Point mouseOnScreen = ev.getLocationOnScreen();
 				Point position = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
 
-				cn.getDraggedHexagon().setLocation(position);
+				hlc.getDraggedHexagon().setLocation(position);
 				//System.out.println("X,Y: "+cn.draggedHexagon.getX()+", "+cn.draggedHexagon.getY());
 				cn.repaint();
 				//cn.repaintComponentPart(cn.getGraphics(), tileSelected, position.x, position.y);
@@ -325,14 +330,6 @@ public class TilePlacementMouseAdapter extends MouseAdapter implements IMouseAda
 
 	public void setListenerOn(boolean listenerOn) {
 		this.listenerOn = listenerOn;
-	}
-
-	public Tile getTileSelected() {
-		return tileSelected;
-	}
-
-	public void setTileSelected(Tile tileSelected) {
-		this.tileSelected = tileSelected;
 	}
 
 }

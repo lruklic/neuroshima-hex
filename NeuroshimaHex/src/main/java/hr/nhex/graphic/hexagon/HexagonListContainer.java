@@ -1,24 +1,35 @@
 package hr.nhex.graphic.hexagon;
 
-import hr.nhex.generic.Pair;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class HexagonListContainer {
 
-	private List<Hexagon> hexagonList;
-	private List<Hexagon> hexagonSideList;
+	private List<Hexagon> hexagonList = new ArrayList<>();
+	private List<Hexagon> hexagonSideList = new ArrayList<>();
 
 	private Hexagon draggedHexagon;
 
-	private List<Pair> specialHexList;
+	private List<SpecialHex> specialHexList = new ArrayList<>();
+
+	public HexagonListContainer() {
+
+	}
 
 	public HexagonListContainer(List<Hexagon> hexagonList, List<Hexagon> hexagonSideList, Hexagon draggedHexagon,
-			List<Pair> specialHexList) {
+			List<SpecialHex> specialHexList) {
 		this.hexagonList = hexagonList;
 		this.hexagonSideList = hexagonSideList;
 		this.draggedHexagon = draggedHexagon;
 		this.specialHexList = specialHexList;
+	}
+
+	/**
+	 * Method that clears all hexagon lists.
+	 */
+	public void clearHexagonLists() {
+		hexagonList.clear();
+		hexagonSideList.clear();
 	}
 
 	public List<Hexagon> getHexagonList() {
@@ -45,11 +56,11 @@ public class HexagonListContainer {
 		this.draggedHexagon = draggedHexagon;
 	}
 
-	public List<Pair> getSpecialHexList() {
+	public List<SpecialHex> getSpecialHexList() {
 		return specialHexList;
 	}
 
-	public void setSpecialHexList(List<Pair> specialHexList) {
+	public void setSpecialHexList(List<SpecialHex> specialHexList) {
 		this.specialHexList = specialHexList;
 	}
 

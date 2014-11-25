@@ -4,6 +4,7 @@ import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
 import hr.nhex.board.IBasicBoard;
 import hr.nhex.generic.Pair;
+import hr.nhex.model.HQ;
 import hr.nhex.model.Module;
 import hr.nhex.model.Netter;
 import hr.nhex.model.Player;
@@ -40,7 +41,7 @@ public class BattleSimulator implements IBasicBoard {
 
 	private static final int MAXSHIFT_SMALL_BOARD = 4;
 
-	int[] angleX = {1, 0, -1, -1, 0, 1};	// zakomentiraj
+	int[] angleX = {1, 0, -1, -1, 0, 1};	// objasni komentarom
 	int[] angleY = {0, 1, 1, 0, -1, -1};
 
 	/**
@@ -77,7 +78,7 @@ public class BattleSimulator implements IBasicBoard {
 		for (int currentSpeed = defineHighestSpeed(); currentSpeed >= 0; currentSpeed--) {
 			//applyInstant();
 			executeBattleInitiative(currentSpeed);
-			//updateAfterEffects();
+			updateAfterEffects();
 			if (currentSpeed != 0) {
 				applyModuleBonus();
 			}
@@ -139,11 +140,11 @@ public class BattleSimulator implements IBasicBoard {
 
 	private void executeAttacks(Unit unit) {
 		for (Attack attack : unit.getAttacks()) {
-			if (attack.getType() == AttackType.MELEE) {
+			if (attack.getType() == AttackType.MELEE || attack.getType() == AttackType.HQ_MELEE) {
 				int pointsToTileX = unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6];	// vjerojatno se % 6 može maknuti
 				int pointsToTileY = unit.getY() + angleY[(attack.getPointsTo() + unit.getAngle()) % 6];
 				BattleTile attacked = getBattleTile(pointsToTileX, pointsToTileY);
-				if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer())) {
+				if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer()) && !(unit instanceof HQ && attacked.getTile() instanceof HQ)) {
 					addBattleEvent("attack", unit, attacked);
 					attack.getType().attack(attacked, attack.getValue(), attack.getType());
 				}

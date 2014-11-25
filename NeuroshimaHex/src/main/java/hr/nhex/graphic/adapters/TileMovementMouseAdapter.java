@@ -3,14 +3,15 @@ package hr.nhex.graphic.adapters;
 import hr.nhex.battle.BattleSimulator;
 import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
+import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
+import hr.nhex.graphic.hexagon.HexagonListContainer;
+import hr.nhex.graphic.hexagon.SpecialHex;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileMovementMouseAdapter extends MouseAdapter implements IMouseAdapter {
 
@@ -22,14 +23,10 @@ public class TileMovementMouseAdapter extends MouseAdapter implements IMouseAdap
 	 * Top level container.
 	 */
 	private NeuroshimaCanvas cn;
-	/**
-	 * Tile that is selected to perform movement.
-	 */
-	private BoardTile selectedTile;
-	/**
-	 * List that contains tile coordinates where selected tile could move.
-	 */
-	private List<Pair> specialHex = new ArrayList<>();
+
+	private HexagonListContainer hlc;
+
+	private Game game;
 
 	private TileRotateMouseAdapter trma;
 
@@ -38,8 +35,10 @@ public class TileMovementMouseAdapter extends MouseAdapter implements IMouseAdap
 	 * 
 	 * @param cn top level container
 	 */
-	public TileMovementMouseAdapter(NeuroshimaCanvas cn) {
+	public TileMovementMouseAdapter(NeuroshimaCanvas cn, HexagonListContainer hlc) {
 		this.cn = cn;
+		this.hlc = hlc;
+		this.game = cn.getGameInstance();
 	}
 
 	@Override
@@ -47,22 +46,22 @@ public class TileMovementMouseAdapter extends MouseAdapter implements IMouseAdap
 
 		if (listenerOn) {
 			Pair tilePos = TilePlacementMouseAdapter.getClickedTile(cn, ev);
-			if (specialHex.contains(tilePos) || (tilePos.getX() == selectedTile.getX() && tilePos.getY() == selectedTile.getY())) {
+			int specialTilePos = hlc.getSpecialHexList().lastIndexOf(new SpecialHex(tilePos, null));
+			BoardTile bt = (BoardTile) game.getSelectedTile();
+			if (specialTilePos != -1 || (tilePos.getX() == bt.getX() && tilePos.getY() == bt.getY())) {
 
-				trma.setSelectedTile(selectedTile);
+				if (!(tilePos.getX() == bt.getX() && tilePos.getY() == bt.getY())) {
 
-				if (!(tilePos.getX() == selectedTile.getX() && tilePos.getY() == selectedTile.getY())) {
-
-					Board board = cn.getGameInstance().getBoard();
-					board.getTile(selectedTile.getX(), selectedTile.getY()).setX(tilePos.getX());
-					board.getTile(selectedTile.getX(), selectedTile.getY()).setY(tilePos.getY());
+					Board board = game.getBoard();
+					board.getTile(bt.getX(), bt.getY()).setX(tilePos.getX());
+					board.getTile(bt.getX(), bt.getY()).setY(tilePos.getY());
 
 					BattleSimulator bs = new BattleSimulator(board);
 					bs.updateAfterEffects();
 
 				}
 
-				cn.setDraggedHexagon(new Hexagon(
+				hlc.setDraggedHexagon(new Hexagon(
 						tilePos.getX(),
 						tilePos.getY(),
 						cn.getHexagon(tilePos.getX(), tilePos.getY()).getxC(),
@@ -71,7 +70,7 @@ public class TileMovementMouseAdapter extends MouseAdapter implements IMouseAdap
 						));
 			}
 
-			specialHex.clear();
+			hlc.getSpecialHexList().clear();
 
 			cn.mouseListenerActivate(trma);
 			cn.repaint();
@@ -87,18 +86,6 @@ public class TileMovementMouseAdapter extends MouseAdapter implements IMouseAdap
 	@Override
 	public void setListenerOff() {
 		this.listenerOn = false;
-	}
-
-	public List<Pair> getSpecialHex() {
-		return specialHex;
-	}
-
-	public void addToSpecialHex(int x, int y) {
-		specialHex.add(new Pair(x,y));
-	}
-
-	public void setSelectedTile(BoardTile selectedTile) {
-		this.selectedTile = selectedTile;
 	}
 
 	public TileRotateMouseAdapter getTrma() {

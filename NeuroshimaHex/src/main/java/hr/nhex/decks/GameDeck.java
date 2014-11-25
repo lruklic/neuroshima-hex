@@ -29,8 +29,13 @@ public class GameDeck {
 		Collections.shuffle(deck.getTiles(), new Random(seed));
 		this.gameTiles = new Stack<>();
 		this.gameTiles.addAll(deck.getTiles());
+		this.gameTiles.add(deck.getHq());
 		this.deckName = deck.getDeckName();
 
+	}
+
+	public void drawHQ(Game gameInstance) {
+		drawnTiles[2] = this.gameTiles.pop();
 	}
 
 	public void drawNew(Game gameInstance) {

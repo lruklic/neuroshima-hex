@@ -8,7 +8,7 @@ import java.awt.event.ComponentEvent;
 /**
  * Component adapter for window resizing.
  * 
- * @author Luka Rukliæ
+ * @author Luka Ruklic
  *
  */
 
@@ -17,14 +17,14 @@ public class CanvasResizeComponentAdapter extends ComponentAdapter {
 	@Override
 	public void componentMoved(ComponentEvent e) {
 		NeuroshimaCanvas cn = ((NeuroshimaCanvas)e.getComponent());
-		cn.clearHexagonLists();
+		cn.getHlc().clearHexagonLists();
 		e.getComponent().repaint();
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
 		NeuroshimaCanvas cn = ((NeuroshimaCanvas)e.getComponent());
-		cn.clearHexagonLists();
+		cn.getHlc().clearHexagonLists();
 		e.getComponent().repaint();
 	}
 

@@ -63,12 +63,13 @@ public class BorgoDeck extends Deck implements IBasicDeck {
 			abilities.add(new Ability(j, AbilityType.PLUS_ONE_SPEED));
 		}
 
-		this.addTileToDeck(new HQ(
+		this.setHq(new HQ(
 				"Borgo HQ",
 				STANDARD_HQ_HIT_POINTS,
 				new ArrayList<>(speed),
 				new ArrayList<>(attacks),
-				new ArrayList<>(abilities)));
+				new ArrayList<>(abilities))
+				);
 
 	}
 

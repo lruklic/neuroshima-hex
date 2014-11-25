@@ -5,9 +5,9 @@ import hr.nhex.board.BoardTile;
 import hr.nhex.model.HQ;
 
 /**
- * Enumeracija koja predstavlja tipove napada.
+ * Enum that represents attack types.
  * 
- * @author Luka Ruklić
+ * @author Luka Ruklic
  *
  */
 

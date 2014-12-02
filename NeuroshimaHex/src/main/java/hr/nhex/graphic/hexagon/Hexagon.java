@@ -3,8 +3,8 @@ package hr.nhex.graphic.hexagon;
 import hr.nhex.board.BoardTile;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.imagecache.ImageCache;
-import hr.nhex.model.Player;
-import hr.nhex.model.Tile;
+import hr.nhex.model.AbstractTile;
+import hr.nhex.model.player.Player;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -25,8 +25,8 @@ import javax.swing.JComponent;
 /**
  * Class that represents graphical interpretation of hexagon on the NHex board.
  * 
- * @author Luka Rukliæ
- * @author Marin Bužanèiæ
+ * @author Luka Rukliï¿½
+ * @author Marin Buï¿½anï¿½iï¿½
  *
  */
 
@@ -113,9 +113,9 @@ public class Hexagon extends JComponent {
 	//					img2 = op.filter(image, null);
 
 
-	public void drawHex(Graphics2D g2, ImageCache cache, Tile t, Player currentPlayer, List<Pair> specialHex) {
+	public void drawHex(Graphics2D g2, ImageCache cache, AbstractTile t, Player currentPlayer, List<Pair> specialHex) {
 
-		// odluèiti kako se šalje podatak u drawHex koji da heksagoni budu iscrtani drugom bojom
+		// odluï¿½iti kako se ï¿½alje podatak u drawHex koji da heksagoni budu iscrtani drugom bojom
 		// kod movementa ili pusha
 		// opcije: slati Canvas pa u njemu neku listu/mapu s koordinatama i bojom u koju se iscrtava
 		// ili slati samo tu listu/mapu

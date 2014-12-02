@@ -1,7 +1,7 @@
 package hr.nhex.model.action;
 
-import hr.nhex.model.Player;
-import hr.nhex.model.Tile;
+import hr.nhex.model.AbstractTile;
+import hr.nhex.model.player.Player;
 
 /**
  * Razred koji predstavlja polje akcije unutar igre Neuroshima hex.
@@ -10,14 +10,12 @@ import hr.nhex.model.Tile;
  *
  */
 
-public class ActionTile extends Tile {
+public class ActionTile extends AbstractTile {
 
 	/**
 	 * Vrsta akcije.
 	 */
 	private ActionType actionType;
-
-	private Player player;
 
 	/**
 	 * Konstruktor.
@@ -45,6 +43,7 @@ public class ActionTile extends Tile {
 		this.actionType = actionType;
 	}
 
+	@Override
 	public Player getPlayer() {
 		return player;
 	}

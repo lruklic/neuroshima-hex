@@ -19,7 +19,7 @@ import java.util.List;
 
 public class BorgoDeck extends Deck implements IBasicDeck {
 
-	private static final int MOVE_NUMBER = 8; // 4
+	private static final int MOVE_NUMBER = 12; // 4
 	private static final int BATTLE_NUMBER = 6;
 	private static final int GRENADE_NUMBER = 1;
 
@@ -39,10 +39,10 @@ public class BorgoDeck extends Deck implements IBasicDeck {
 
 		this.setDeckName("Borgo");
 
-		hqTileCreation();
 		actionTileCreation();
 		unitTileCreation();
 		moduleTileCreation();
+		hqTileCreation();
 
 	}
 
@@ -63,7 +63,7 @@ public class BorgoDeck extends Deck implements IBasicDeck {
 			abilities.add(new Ability(j, AbilityType.PLUS_ONE_SPEED));
 		}
 
-		this.setHq(new HQ(
+		this.addTileToDeck(new HQ(
 				"Borgo HQ",
 				STANDARD_HQ_HIT_POINTS,
 				new ArrayList<>(speed),

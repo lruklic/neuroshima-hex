@@ -7,11 +7,11 @@ import hr.nhex.generic.Pair;
 import hr.nhex.model.HQ;
 import hr.nhex.model.Module;
 import hr.nhex.model.Netter;
-import hr.nhex.model.Player;
-import hr.nhex.model.Tile;
+import hr.nhex.model.AbstractTile;
 import hr.nhex.model.Unit;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.ability.AbilityType;
+import hr.nhex.model.player.Player;
 import hr.nhex.model.unit.Attack;
 import hr.nhex.model.unit.AttackType;
 
@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * Class that represents battle simulator in Neuroshima Hex board game.
  * 
- * @author Luka Rukliæ
- * @author Marin Bužanèiæ
+ * @author Luka Rukliï¿½
+ * @author Marin Buï¿½anï¿½iï¿½
  *
  */
 
@@ -70,7 +70,7 @@ public class BattleSimulator implements IBasicBoard {
 	}
 
 	/**
-	 * Metoda simulatora borbe koja izvršava borbu.
+	 * Metoda simulatora borbe koja izvrï¿½ava borbu.
 	 */
 	public void executeBattle() {
 		applyModuleBonus();
@@ -141,7 +141,7 @@ public class BattleSimulator implements IBasicBoard {
 	private void executeAttacks(Unit unit) {
 		for (Attack attack : unit.getAttacks()) {
 			if (attack.getType() == AttackType.MELEE || attack.getType() == AttackType.HQ_MELEE) {
-				int pointsToTileX = unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6];	// vjerojatno se % 6 može maknuti
+				int pointsToTileX = unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6];	// vjerojatno se % 6 moï¿½e maknuti
 				int pointsToTileY = unit.getY() + angleY[(attack.getPointsTo() + unit.getAngle()) % 6];
 				BattleTile attacked = getBattleTile(pointsToTileX, pointsToTileY);
 				if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer()) && !(unit instanceof HQ && attacked.getTile() instanceof HQ)) {
@@ -279,7 +279,7 @@ public class BattleSimulator implements IBasicBoard {
 	}
 
 	@Override
-	public Tile getTile(int x, int y) {
+	public AbstractTile getTile(int x, int y) {
 		// TODO Auto-generated method stub
 		return null;
 	}

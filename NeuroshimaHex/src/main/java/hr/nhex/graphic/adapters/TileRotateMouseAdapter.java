@@ -1,7 +1,6 @@
 package hr.nhex.graphic.adapters;
 
 import hr.nhex.board.BoardTile;
-import hr.nhex.game.Game;
 import hr.nhex.game.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
@@ -11,38 +10,26 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
  * Class that represents mouse listener that is used when tile need to be
  * rotated in the game.
  *
- * @author Luka Rukli�
+ * @author Luka Ruklic
  *
  */
 
-public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapter{
-
-	/**
-	 * Variable that defines whether the listener is listening or not (is it on or off).
-	 */
-	private boolean listenerOn = false;
-
-	private NeuroshimaCanvas cn;
-
-	private TilePlacementMouseAdapter tpma;
-
-	private HexagonListContainer hlc;
-
-	private Game game;
+public class TileRotateMouseAdapter extends AbstractMouseAdapter {
 
 	private Cursor c;
 
-	public TileRotateMouseAdapter(NeuroshimaCanvas cn, HexagonListContainer hlc) {
+	public TileRotateMouseAdapter(NeuroshimaCanvas cn) {
 		this.cn = cn;
-		this.hlc = hlc;
 		this.game = cn.getGameInstance();
+		this.hlc = HexagonListContainer.getInstance();
+		this.type = AdapterType.ROTATE;
+		this.setListenerOff();
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image rotateImage = toolkit.getImage("icons/rotate.png");
@@ -59,13 +46,13 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 			// ovaj dio treba urediti, dogovor oko toga gdje se klikovi priznaju u odnosu na heksagon
 
-			if (ev.getX() < (hlc.getDraggedHexagon().getxC()-cn.getHexSize())) {
+			if (ev.getX() < (hlc.getDraggedHexagon().getxC()-hlc.getHexSize())) {
 				// ako je kliknuto lijevo, rotiraj lijevo
 				bt.setAngle(game.getSelectedTile().getAngle() + 1);
 				//System.out.println("Kut: "+selectedTile.getAngle());
 				cn.repaint();
 
-			} else if (ev.getX() > (hlc.getDraggedHexagon().getxC()+cn.getHexSize())) {
+			} else if (ev.getX() > (hlc.getDraggedHexagon().getxC()+hlc.getHexSize())) {
 				// ako je kliknuto desno, rotiraj desno
 				bt.setAngle(game.getSelectedTile().getAngle() - 1);
 				//System.out.println("Kut: "+selectedTile.getAngle());
@@ -87,7 +74,7 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 				game.setTurnPhase(TurnPhase.TILES_DRAWN);
 
-				cn.mouseListenerActivate(tpma);
+				cn.getMac().mouseListenerActivate(AdapterType.PLACEMENT);
 			}
 
 		}
@@ -102,7 +89,7 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 			int tileX = hlc.getDraggedHexagon().getTileX();
 			int tileY = hlc.getDraggedHexagon().getTileY();
 
-			Pair p = TilePlacementMouseAdapter.getClickedTile(cn, ev);
+			Pair p = getClickedTile(cn, ev);
 			if (p != null && p.getX() == tileX && p.getY() == tileY) {
 				cn.setCursor(Cursor.getDefaultCursor());
 			} else {
@@ -113,22 +100,5 @@ public class TileRotateMouseAdapter extends MouseAdapter implements IMouseAdapte
 
 	}
 
-	public TilePlacementMouseAdapter getTpma() {
-		return tpma;
-	}
-
-	public void setTpma(TilePlacementMouseAdapter tpma) {
-		this.tpma = tpma;
-	}
-
-	@Override
-	public void setListenerOn() {
-		this.listenerOn = true;
-	}
-
-	@Override
-	public void setListenerOff() {
-		this.listenerOn = false;
-	}
 
 }

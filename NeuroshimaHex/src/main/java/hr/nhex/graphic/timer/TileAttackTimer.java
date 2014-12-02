@@ -3,6 +3,7 @@ package hr.nhex.graphic.timer;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
+import hr.nhex.graphic.hexagon.HexagonListContainer;
 
 import javax.swing.Timer;
 
@@ -44,13 +45,13 @@ public class TileAttackTimer {
 
 	public void animateAttack(Pair attackerPos, Pair hitPos) {
 
-		Hexagon attackingHex = cn.getHexagon(attackerPos.getX(), attackerPos.getY());
-		Hexagon hitHex = cn.getHexagon(hitPos.getX(), hitPos.getY());
+		Hexagon attackingHex = HexagonListContainer.getInstance().getHexagon(attackerPos.getX(), attackerPos.getY());
+		Hexagon hitHex = HexagonListContainer.getInstance().getHexagon(hitPos.getX(), hitPos.getY());
 
 		// promijeniti
 		Timer timer = new Timer(ANIMATION_ATTACK_SPEED, new TileAttackAnimation(attackingHex, hitHex, cn));
 		timer.start();
-		cn.getTpma().setListenerOff();
+		cn.getMac().deactivateAll();
 
 	}
 }

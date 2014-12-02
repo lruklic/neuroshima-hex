@@ -7,16 +7,11 @@ import hr.nhex.game.Game;
 import hr.nhex.game.GamePhase;
 import hr.nhex.game.TurnPhase;
 import hr.nhex.graphic.adapters.CanvasResizeComponentAdapter;
-import hr.nhex.graphic.adapters.IMouseAdapter;
-import hr.nhex.graphic.adapters.TileMovementMouseAdapter;
-import hr.nhex.graphic.adapters.TilePlacementMouseAdapter;
-import hr.nhex.graphic.adapters.TileRotateMouseAdapter;
+import hr.nhex.graphic.adapters.MouseAdapterContainer;
 import hr.nhex.graphic.hexagon.BoardDrawer;
-import hr.nhex.graphic.hexagon.Hexagon;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.imagecache.ImageCache;
-import hr.nhex.model.Player;
-import hr.nhex.model.Tile;
+import hr.nhex.model.player.Player;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,7 +20,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -49,16 +43,8 @@ import javax.swing.JPanel;
 public class NeuroshimaCanvas extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	public final int HEX_GAP = 10;
 
 	private Game gameInstance;
-
-	private int hexSize;
-
-	private Tile draggedTile;
-	private int draggedNo;
-
-	private HexagonListContainer hlc;
 
 	/**
 	 * TEST LABEL
@@ -69,11 +55,9 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private ImageCache cache = new ImageCache();
 
-	private List<IMouseAdapter> mouseAdapters = new ArrayList<>();
+	private MouseAdapterContainer mac = new MouseAdapterContainer();
 
 	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
-
-		this.hlc = new HexagonListContainer();
 
 		addBtn();
 
@@ -88,46 +72,16 @@ public class NeuroshimaCanvas extends JPanel {
 		players.add(player1);
 		players.add(player2);
 
-		//		BorgoDeck deck = new BorgoDeck();
-		//		for (Tile tile : deck.getTiles()) {
-		//			if (tile instanceof BoardTile) {
-		//				((BoardTile)tile).setPlayer(player1);
-		//			}
-		//		}
-		//
 		Board board = new Board();
-		//
-		//		board.addTile((BoardTile)deck.getTileByName("Assassin"), 0, 0, 0);
-		//		board.addTile((BoardTile)deck.getTileByName("Scout"), 0, 1, 0);
-		//		board.addTile((BoardTile)deck.getTileByName("Butcher"), 1, 0, 2);
 
 		this.gameInstance = new Game(board, players);
-
 		addMouseAdapters();
 
 	}
 
 	private void addMouseAdapters() {
-		// Register adapters
 		addComponentListener(new CanvasResizeComponentAdapter());
-
-		mouseAdapters.add(new TileRotateMouseAdapter(this, hlc));
-		mouseAdapters.add(new TilePlacementMouseAdapter(this, hlc));
-		mouseAdapters.add(new TileMovementMouseAdapter(this, hlc));
-
-		for (IMouseAdapter ma : mouseAdapters) {
-			if (ma instanceof MouseAdapter) {
-				addMouseListener((MouseAdapter) ma);
-				addMouseMotionListener((MouseAdapter) ma);
-			}
-		}
-
-		getTpma().setTrma(getTrma());
-		getTpma().setTmma(getTmma());
-
-		getTrma().setTpma(getTpma());
-
-		getTmma().setTrma(getTrma());
+		mac.registerAll(this);
 	}
 
 	private void addBtn() {
@@ -142,9 +96,11 @@ public class NeuroshimaCanvas extends JPanel {
 					game.setGamePhase(GamePhase.HQ_SETUP);
 					game.setTurnPhase(TurnPhase.TILES_DRAWN);
 				} else if (game.getGamePhase() == GamePhase.HQ_SETUP) {
-					game.getCurrentPlayerGameDeck().drawHQ(gameInstance);
+					game.getCurrentPlayerDeck().drawHQ();
 				} else {
-					game.getCurrentPlayerGameDeck().drawNew(gameInstance);
+					game.getCurrentPlayerDeck().shuffleDeck();
+					game.getCurrentPlayerDeck().drawNew();
+					gameInstance.setTurnPhase(TurnPhase.DISCARD_PHASE);
 				}
 				repaint();
 			}
@@ -188,176 +144,25 @@ public class NeuroshimaCanvas extends JPanel {
 		int windowHeight = this.getHeight();
 		int windowWidth = this.getWidth();
 
-		this.hexSize = calculateHexSize(windowHeight, windowWidth);
-
-		// Fill out hexagon lists if they are empty
-		if (hlc.getHexagonList().isEmpty() || hlc.getHexagonSideList().isEmpty()) {
-			fillEmptyHexagonLists(windowHeight, windowWidth, hexSize);
-		}
-
 		// ovdje je moguce dodati boju ili debljinu crte tako da se Pair zamijeni s custom razredom
 		//List<Pair> specialHex = this.getTmma().getSpecialHex();
 
-		BoardDrawer bd = new BoardDrawer(g2, cache, gameInstance, hlc);
+		BoardDrawer bd = new BoardDrawer(g2, cache, gameInstance, HexagonListContainer.getInstance().prepareHexagonContainer(windowHeight, windowWidth));
 
 		bd.drawAllHex();
-		// Draw hexagons that are in hexagon lists
-		//		for (Hexagon h : hexagonList) {
-		//			BoardTile t = this.gameInstance.getBoard().getTile(h.getTileX(), h.getTileY());		// just boardTile drawing
-		//			h.drawHex(g2, cache, t, null, specialHex);
-		//		}
-		//		List<Tile> currentDrawnTiles = Arrays.asList(getGameInstance().getCurrentPlayerGameDeck().getDrawnTiles());
-		//		int tileNo = 0;
-		//
-		//		for (Hexagon h : hexagonSideList) {
-		//			if (currentDrawnTiles.size() > tileNo) {
-		//				h.drawHex(g2, cache, currentDrawnTiles.get(tileNo), gameInstance.getCurrentPlayer(), specialHex);
-		//			}
-		//			tileNo++;
-		//		}
 
-		//		if (draggedHexagon != null) {
-		//			Tile t;
-		//			if (this.getGameInstance().getSelectedTile() != null) {
-		//				t = this.getGameInstance().getSelectedTile();
-		//			}
-		//			drawHex(g2, cache, t, gameInstance.getCurrentPlayer(), specialHex);
-		//		}
-
-	}
-
-	/**
-	 * Method that calculates hexagon size on tile board from window height and width.
-	 *
-	 * @param windowHeight window height
-	 * @param windowWidth window width
-	 * @return calculated hexagon size in pixels
-	 */
-	private int calculateHexSize(int windowHeight, int windowWidth) {
-
-		int hexSizeX = windowHeight / 12;		// numbers have to be adjusted
-		int hexSizeY = (int) (windowWidth / (12*(Math.sqrt(3)/2)));
-
-		if (hexSizeX < hexSizeY) {
-			return hexSizeX;
-		} else {
-			return hexSizeY;
-		}
 	}
 
 	public Game getGameInstance() {
 		return gameInstance;
 	}
 
-	public int getHexSize() {
-		return hexSize;
-	}
+	//	public HexagonListContainer getHlc() {
+	//		return hlc;
+	//	}
 
-	public Hexagon getHexagon(int x, int y) {
-		for (Hexagon hex : hlc.getHexagonList()) {
-			if (hex.getTileX() == x && hex.getTileY() == y) {
-				return hex;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Method that fills empty hexagon lists that represents board tiles and drawn tiles.
-	 *
-	 * @param windowHeight window height
-	 * @param windowWidth window width
-	 * @param hexSize hexagon size
-	 */
-	private void fillEmptyHexagonLists(int windowHeight, int windowWidth, int hexSize) {
-
-		hlc.clearHexagonLists();
-		for (int m = -2; m <= 2; m++) {
-			for (int n = -2; n <= 2; n++) {
-				if (Math.abs(m + n) <= 2) {
-
-					double x = (windowWidth/2) + (Math.sqrt(3)*(hexSize+(HEX_GAP/2))*m+((Math.sqrt(3)/2)*(hexSize+(HEX_GAP/2)))*n);
-					double y = (windowHeight/2) + ((-1.5)*(hexSize+(HEX_GAP/2)))*n;
-
-					hlc.getHexagonList().add(new Hexagon(m, n, (int)x,(int)y,hexSize));
-				}
-			}
-		}
-
-		hlc.getHexagonSideList().add(new Hexagon(3, 0, (int)(windowWidth - Math.sqrt(3)/2*hexSize), windowHeight - hexSize, hexSize));
-		hlc.getHexagonSideList().add(new Hexagon(3, 1, (int)(windowWidth - Math.sqrt(3)/2*hexSize), windowHeight - 3*hexSize, hexSize));
-		hlc.getHexagonSideList().add(new Hexagon(3, 2, (int)(windowWidth - Math.sqrt(3)/2*hexSize), windowHeight - 5*hexSize, hexSize));
-	}
-
-	public int getDraggedNo() {
-		return draggedNo;
-	}
-
-	public void setDraggedNo(int draggedNo) {
-		this.draggedNo = draggedNo;
-	}
-
-	public Tile getDraggedTile() {
-		return draggedTile;
-	}
-
-	public void setDraggedTile(Tile draggedTile) {
-		this.draggedTile = draggedTile;
-	}
-
-	public Tile getSelectedTile(Tile t) {
-		return gameInstance.getSelectedTile();
-	}
-
-	public HexagonListContainer getHlc() {
-		return hlc;
-	}
-
-	/**
-	 * Method that return TilePlacementMouseAdapter for canvas registered adapter if it exists.
-	 *
-	 * @return TilePlacementMouseAdapter if it exists, <code>null</code> otherwise
-	 */
-	public TilePlacementMouseAdapter getTpma() {
-		for (IMouseAdapter ma : mouseAdapters) {
-			if (ma instanceof TilePlacementMouseAdapter) {
-				return (TilePlacementMouseAdapter) ma;
-			}
-		}
-		return null;
-	}
-
-	public TileRotateMouseAdapter getTrma() {
-		for (IMouseAdapter ma : mouseAdapters) {
-			if (ma instanceof TileRotateMouseAdapter) {
-				return (TileRotateMouseAdapter) ma;
-			}
-		}
-		return null;
-	}
-
-	public TileMovementMouseAdapter getTmma() {
-		for (IMouseAdapter ma : mouseAdapters) {
-			if (ma instanceof TileMovementMouseAdapter) {
-				return (TileMovementMouseAdapter) ma;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Method that receives listener instance and turns that listener on and all the other listeners off.
-	 *
-	 * @param MouseAdapter instance of the one of MouseAdapter subclasses
-	 */
-	public void mouseListenerActivate(MouseAdapter adapter) {
-		for (IMouseAdapter a : mouseAdapters) {
-			if (a.getClass().equals(adapter.getClass())) {
-				a.setListenerOn();
-			} else {
-				a.setListenerOff();
-			}
-		}
+	public MouseAdapterContainer getMac() {
+		return mac;
 	}
 
 }

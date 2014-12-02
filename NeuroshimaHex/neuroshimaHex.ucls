@@ -1,721 +1,841 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.6" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+<class-diagram version="1.1.7" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="hr.nhex.battle.BattlePresenter" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/battle/BattlePresenter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="105" y="235"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="hr.nhex.battle.BattleSimulator" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/battle/BattleSimulator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="110" y="143"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="3" language="java" name="hr.nhex.battle.BattleTile" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/battle/BattleTile.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="231" y="142"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="hr.nhex.board.Board" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/board/Board.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="122" y="44"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="hr.nhex.board.BoardTile" project="NeuroshimaHex" 
+  <class id="1" language="java" name="hr.nhex.board.BoardTile" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/board/BoardTile.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="597" y="151"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="935" y="45"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <interface id="6" language="java" name="hr.nhex.board.IBasicBoard" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/board/IBasicBoard.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="269" y="43"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </interface>  
-  <class id="7" language="java" name="hr.nhex.model.Tile" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/model/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="681" y="46"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="8" language="java" name="hr.nhex.model.Unit" project="NeuroshimaHex" 
+  <class id="2" language="java" name="hr.nhex.model.Unit" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/Unit.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="572" y="230"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="893" y="124"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="hr.nhex.model.Netter" project="NeuroshimaHex" 
+  <class id="3" language="java" name="hr.nhex.model.Netter" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/Netter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="645" y="334"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="983" y="228"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="hr.nhex.model.Module" project="NeuroshimaHex" 
+  <class id="4" language="java" name="hr.nhex.model.Module" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/Module.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="662" y="230"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="990" y="123"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="hr.nhex.model.HQ" project="NeuroshimaHex" 
+  <class id="5" language="java" name="hr.nhex.model.HQ" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/HQ.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="735" y="334"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="1073" y="228"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="hr.nhex.model.action.ActionTile" project="NeuroshimaHex" 
+  <class id="6" language="java" name="hr.nhex.model.action.ActionTile" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/action/ActionTile.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="732" y="151"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="1070" y="45"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="hr.nhex.model.unit.Attack" project="NeuroshimaHex" 
+  <class id="7" language="java" name="hr.nhex.model.unit.Attack" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/unit/Attack.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="475" y="318"/>    
-    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="813" y="212"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <enumeration id="14" language="java" name="hr.nhex.model.unit.AttackType" project="NeuroshimaHex" 
+  <enumeration id="8" language="java" name="hr.nhex.model.unit.AttackType" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/unit/AttackType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="464" y="350"/>    
-    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="802" y="244"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </enumeration>  
-  <enumeration id="15" language="java" name="hr.nhex.model.action.ActionType" project="NeuroshimaHex" 
+  <enumeration id="9" language="java" name="hr.nhex.model.action.ActionType" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/action/ActionType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="831" y="202"/>    
-    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="1120" y="100"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </enumeration>  
-  <class id="16" language="java" name="hr.nhex.model.ability.Ability" project="NeuroshimaHex" 
+  <class id="10" language="java" name="hr.nhex.model.ability.Ability" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/ability/Ability.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="539" y="318"/>    
-    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="877" y="212"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <enumeration id="17" language="java" name="hr.nhex.model.ability.AbilityType" project="NeuroshimaHex" 
+  <enumeration id="11" language="java" name="hr.nhex.model.ability.AbilityType" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/model/ability/AbilityType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="552" y="350"/>    
-    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="890" y="244"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </enumeration>  
-  <class id="18" language="java" name="hr.nhex.decks.Deck" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/decks/Deck.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="869" y="58"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="19" language="java" name="hr.nhex.decks.GameDeck" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/decks/GameDeck.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="548" y="47"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="20" language="java" name="hr.nhex.decks.implementation.BorgoDeck" project="NeuroshimaHex" 
+  <class id="12" language="java" name="hr.nhex.decks.implementation.BorgoDeck" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/decks/implementation/BorgoDeck.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1005" y="57"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="1524" y="-48"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="hr.nhex.decks.implementation.HegemonyDeck" project="NeuroshimaHex" 
+  <class id="13" language="java" name="hr.nhex.decks.implementation.HegemonyDeck" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/decks/implementation/HegemonyDeck.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1005" y="114"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="1525" y="8"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="hr.nhex.graphic.NeuroshimaCanvas" project="NeuroshimaHex" 
+  <class id="14" language="java" name="hr.nhex.graphic.NeuroshimaCanvas" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/NeuroshimaCanvas.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="253" y="361"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="773" y="490"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="hr.nhex.graphic.NeuroshimaHex" project="NeuroshimaHex" 
+  <class id="15" language="java" name="hr.nhex.graphic.NeuroshimaHex" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/NeuroshimaHex.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="73" y="362"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="970" y="489"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="hr.nhex.game.Game" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/game/Game.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="388" y="182"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+  <class id="16" language="java" name="hr.nhex.board.Board" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/board/Board.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="617" y="140"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <enumeration id="25" language="java" name="hr.nhex.game.GamePhase" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/game/GamePhase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="292" y="227"/>    
-    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+  <class id="17" language="java" name="hr.nhex.battle.BattleSimulator" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/battle/BattleSimulator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="424" y="141"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
-  </enumeration>  
-  <enumeration id="26" language="java" name="hr.nhex.game.TurnPhase" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/game/TurnPhase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="288" y="252"/>    
-    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </enumeration>  
-  <interface id="27" language="java" name="hr.nhex.graphic.adapters.IMouseAdapter" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/IMouseAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="431" y="614"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+  </class>  
+  <interface id="18" language="java" name="hr.nhex.board.IBasicBoard" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/board/IBasicBoard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="420" y="45"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </interface>  
-  <class id="28" language="java" name="hr.nhex.graphic.adapters.TileMovementMouseAdapter" project="NeuroshimaHex" 
+  <class id="19" language="java" name="hr.nhex.battle.BattlePresenter" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/battle/BattlePresenter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="220" y="142"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="20" language="java" name="hr.nhex.decks.IBasicDeck" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/decks/IBasicDeck.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1670" y="-39"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <enumeration id="21" language="java" name="hr.nhex.game.GamePhase" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/game/GamePhase.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="504" y="273"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="22" language="java" name="hr.nhex.game.TurnPhase" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/game/TurnPhase.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="505" y="297"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="23" language="java" name="hr.nhex.graphic.adapters.TileMovementMouseAdapter" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/TileMovementMouseAdapter.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="422" y="453"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="493" y="767"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="29" language="java" name="hr.nhex.graphic.adapters.TilePlacementMouseAdapter" project="NeuroshimaHex" 
+  <class id="24" language="java" name="hr.nhex.graphic.adapters.TilePlacementMouseAdapter" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/TilePlacementMouseAdapter.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="231" y="534"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="683" y="767"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="30" language="java" name="hr.nhex.graphic.adapters.TileRotateMouseAdapter" project="NeuroshimaHex" 
+  <class id="25" language="java" name="hr.nhex.graphic.adapters.MouseAdapterContainer" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/MouseAdapterContainer.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="873" y="665"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="hr.nhex.graphic.adapters.TileRotateMouseAdapter" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/TileRotateMouseAdapter.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="596" y="535"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="862" y="767"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="31" language="java" name="hr.nhex.graphic.hexagon.Hexagon" project="NeuroshimaHex" 
+  <class id="27" language="java" name="hr.nhex.graphic.adapters.CanvasResizeComponentAdapter" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/CanvasResizeComponentAdapter.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="863" y="825"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="28" language="java" name="hr.nhex.graphic.adapters.AdapterType" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/AdapterType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="493" y="668"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="29" language="java" name="hr.nhex.battle.BattleTile" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/battle/BattleTile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="617" y="45"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="hr.nhex.board.ActionTileResolver" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/board/ActionTileResolver.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="685" y="825"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="hr.nhex.decks.Deck" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/decks/Deck.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1226" y="-48"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="hr.nhex.model.AbstractTile" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/model/AbstractTile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1005" y="-48"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="hr.nhex.model.player.Player" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/model/player/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1225" y="42"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="hr.nhex.game.Game" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/game/Game.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="677" y="278"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="hr.nhex.graphic.adapters.AbstractMouseAdapter" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/adapters/AbstractMouseAdapter.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="676" y="666"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="hr.nhex.graphic.hexagon.Hexagon" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/hexagon/Hexagon.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="59" y="559"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="143" y="796"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="32" language="java" name="hr.nhex.graphic.hexagon.BoardDrawer" project="NeuroshimaHex" 
-    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/hexagon/BoardDrawer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="62" y="483"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="33" language="java" name="hr.nhex.graphic.hexagon.HexagonListContainer" project="NeuroshimaHex" 
+  <class id="37" language="java" name="hr.nhex.graphic.hexagon.HexagonListContainer" project="NeuroshimaHex" 
     file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/hexagon/HexagonListContainer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="223" y="605"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
+    <position height="-1" width="-1" x="193" y="722"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <association id="34">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="35" name="tiles"/>      
-      <multiplicity id="36" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <realization id="37">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="27"/>  
+  <class id="38" language="java" name="hr.nhex.graphic.hexagon.SpecialHex" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/hexagon/SpecialHex.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="258" y="796"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="hr.nhex.graphic.hexagon.BoardDrawer" project="NeuroshimaHex" 
+    file="/NeuroshimaHex/src/main/java/hr/nhex/graphic/hexagon/BoardDrawer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="194" y="652"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <generalization id="40">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <realization id="41">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="20"/>  
   </realization>  
-  <association id="38">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="39" name="abilities"/>      
-      <multiplicity id="40" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <generalization id="41">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
   <association id="42">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="43" name="game"/>      
-      <multiplicity id="44" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="46" name="trma"/>      
-      <multiplicity id="47" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="30" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="48">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="49" name="turnPhase"/>      
-      <multiplicity id="50" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="26" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="51">    
-    <end type="SOURCE" refId="30" navigable="false">      
-      <attribute id="52" name="game"/>      
-      <multiplicity id="53" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <generalization id="54">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="55">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="56" name="hlc"/>      
-      <multiplicity id="57" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="58">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="59" name="drawnTiles"/>      
-      <multiplicity id="60" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="61">    
-    <end type="SOURCE" refId="28" navigable="false">      
-      <attribute id="62" name="game"/>      
-      <multiplicity id="63" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="64">    
-    <end type="SOURCE" refId="23" navigable="false">      
-      <attribute id="65" name="canvas"/>      
-      <multiplicity id="66" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="67">    
-    <end type="SOURCE" refId="22" navigable="false">      
-      <attribute id="68" name="gameInstance"/>      
-      <multiplicity id="69" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="70">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="71" name="type"/>      
-      <multiplicity id="72" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="43" name="cn">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="44" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="73">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="74" name="attacks"/>      
-      <multiplicity id="75" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="76">    
-    <end type="SOURCE" refId="33" navigable="false">      
-      <attribute id="77" name="hexagonSideList"/>      
-      <multiplicity id="78" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="31" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="79">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="80" name="tiles">        
-        <position height="18" width="27" x="354" y="76"/>      
+  <association id="45">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="46" name="hlc">        
+        <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="81" minimum="0" maximum="2147483647">        
-        <position height="16" width="21" x="392" y="87"/>      
+      <multiplicity id="47" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="82">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="83" name="hlc"/>      
-      <multiplicity id="84" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
+    <end type="TARGET" refId="37" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="85">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="86" name="tile">        
-        <position height="18" width="21" x="289" y="123"/>      
+  <realization id="48">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="20"/>  
+  </realization>  
+  <association id="49">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="50" name="game">        
+        <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="87" minimum="0" maximum="1">        
-        <position height="16" width="23" x="320" y="126"/>      
+      <multiplicity id="51" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
   </association>  
-  <generalization id="88">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="5"/>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
   </generalization>  
-  <association id="89">    
+  <association id="53">    
     <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="90" name="type"/>      
-      <multiplicity id="91" minimum="0" maximum="1"/>    
+      <attribute id="54" name="tiles">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="56">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="57" name="game">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="58" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="59">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="60" name="bs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="61" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="92">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="93" name="board"/>      
-      <multiplicity id="94" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="95">    
-    <end type="SOURCE" refId="33" navigable="false">      
-      <attribute id="96" name="draggedHexagon"/>      
-      <multiplicity id="97" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="31" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="98">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="99" name="boardBattleTiles">        
-        <position height="18" width="85" x="167" y="173"/>      
+  <association id="62">    
+    <bendpoint x="123" y="766"/>    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="63" name="hexagonList">        
+        <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="100" minimum="0" maximum="2147483647">        
-        <position height="16" width="21" x="256" y="173"/>      
+      <multiplicity id="64" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="101">    
-    <bendpoint x="520" y="420"/>    
-    <end type="SOURCE" refId="30" navigable="false">      
-      <attribute id="102" name="cn"/>      
-      <multiplicity id="103" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
+    <end type="TARGET" refId="36" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="104">    
-    <end type="SOURCE" refId="30" navigable="false">      
-      <attribute id="105" name="tpma"/>      
-      <multiplicity id="106" minimum="0" maximum="1"/>    
+  <generalization id="65">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="32"/>  
+  </generalization>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <association id="67">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="68" name="type">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </attribute>      
+      <multiplicity id="69" minimum="0" maximum="1">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="70">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="71" name="gameInstance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="72" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="73">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="74" name="boardBattleTiles">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="75" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="29" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="107">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="108" name="bs"/>      
-      <multiplicity id="109" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="110">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="111" name="board">        
-        <position height="18" width="36" x="38" y="20"/>      
+  <association id="76">    
+    <bendpoint x="1225" y="278"/>    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="77" name="players">        
+        <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="112" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="113">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="114" name="gameTiles"/>      
-      <multiplicity id="115" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="116">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="117" name="game"/>      
-      <multiplicity id="118" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <generalization id="119">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <association id="120">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="121" name="gamePhase"/>      
-      <multiplicity id="122" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="25" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="123">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="124" name="hq"/>      
-      <multiplicity id="125" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <generalization id="126">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <association id="127">    
-    <end type="SOURCE" refId="28" navigable="false">      
-      <attribute id="128" name="trma"/>      
-      <multiplicity id="129" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="30" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="130">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="131" name="tmma"/>      
-      <multiplicity id="132" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="28" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <association id="133">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="134" name="decks"/>      
-      <multiplicity id="135" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
-    <display labels="false" multiplicity="false"/>  
-  </association>  
-  <generalization id="136">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <realization id="137">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="27"/>  
-  </realization>  
-  <realization id="138">    
-    <end type="SOURCE" refId="28"/>    
-    <end type="TARGET" refId="27"/>  
-  </realization>  
-  <association id="139">    
-    <end type="SOURCE" refId="30" navigable="false">      
-      <attribute id="140" name="hlc"/>      
-      <multiplicity id="141" minimum="0" maximum="1"/>    
+      <multiplicity id="78" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="33" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="142">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="143" name="actionType"/>      
-      <multiplicity id="144" minimum="0" maximum="1"/>    
+  <association id="79">    
+    <bendpoint x="105" y="766"/>    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="80" name="hexagonSideList">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="81" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
+    <end type="TARGET" refId="36" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <generalization id="145">    
-    <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <association id="146">    
-    <end type="SOURCE" refId="22" navigable="false">      
-      <attribute id="147" name="draggedTile"/>      
-      <multiplicity id="148" minimum="0" maximum="1"/>    
+  <association id="82">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="83" name="abilities">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </attribute>      
+      <multiplicity id="84" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <realization id="149">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="6"/>  
-  </realization>  
-  <association id="150">    
-    <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="151" name="cn"/>      
-      <multiplicity id="152" minimum="0" maximum="1"/>    
+  <association id="85">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="86" name="type">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </attribute>      
+      <multiplicity id="87" minimum="0" maximum="1">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="153">    
-    <end type="SOURCE" refId="28" navigable="false">      
-      <attribute id="154" name="hlc"/>      
-      <multiplicity id="155" minimum="0" maximum="1"/>    
+  <association id="88">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="89" name="canvas">        
+        <position height="0" width="0" x="153" y="-66"/>      
+      </attribute>      
+      <multiplicity id="90" minimum="0" maximum="1">        
+        <position height="0" width="0" x="153" y="-66"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
+    <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="156">    
-    <end type="SOURCE" refId="22" navigable="false">      
-      <attribute id="157" name="mouseAdapters"/>      
-      <multiplicity id="158" minimum="0" maximum="2147483647"/>    
+  <association id="91">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="92" name="specialHexList">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="93" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="27" navigable="true"/>    
+    <end type="TARGET" refId="38" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="159">    
-    <end type="SOURCE" refId="22" navigable="false">      
-      <attribute id="160" name="hlc"/>      
-      <multiplicity id="161" minimum="0" maximum="1"/>    
+  <association id="94">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="95" name="abilities">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </attribute>      
+      <multiplicity id="96" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="162">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="163" name="abilities"/>      
-      <multiplicity id="164" minimum="0" maximum="2147483647"/>    
+  <association id="97">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="98" name="board">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="99" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="16" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <generalization id="165">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="166">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="167" name="selectedTile"/>      
-      <multiplicity id="168" minimum="0" maximum="1"/>    
+  <association id="100">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="101" name="gamePhase">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="102" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <realization id="169">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="6"/>  
+  <association id="103">    
+    <bendpoint x="141" y="766"/>    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="104" name="draggedHexagon">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="105" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="106">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="18"/>  
   </realization>  
-  <association id="170">    
-    <end type="SOURCE" refId="28" navigable="false">      
-      <attribute id="171" name="cn"/>      
-      <multiplicity id="172" minimum="0" maximum="1"/>    
+  <association id="107">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="108" name="turnPhase">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="109" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="22" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
-  <association id="173">    
+  <realization id="110">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="18"/>  
+  </realization>  
+  <generalization id="111">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="32"/>  
+  </generalization>  
+  <association id="112">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="113" name="player">        
+        <position height="0" width="0" x="426" y="127"/>      
+      </attribute>      
+      <multiplicity id="114" minimum="0" maximum="1">        
+        <position height="0" width="0" x="426" y="127"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="115">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="116">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="117" name="attacks">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </attribute>      
+      <multiplicity id="118" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="338" y="-106"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="119">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="120" name="tiles">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="121" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="122">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <association id="123">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="124" name="mac">        
+        <position height="0" width="0" x="479" y="108"/>      
+      </attribute>      
+      <multiplicity id="125" minimum="0" maximum="1">        
+        <position height="0" width="0" x="479" y="108"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="126">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="127" name="mouseAdapters">        
+        <position height="0" width="0" x="-20" y="1"/>      
+      </attribute>      
+      <multiplicity id="128" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-20" y="1"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="129">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <association id="130">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="131" name="actionType">        
+        <position height="0" width="0" x="289" y="-102"/>      
+      </attribute>      
+      <multiplicity id="132" minimum="0" maximum="1">        
+        <position height="0" width="0" x="289" y="-102"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="133">    
+    <bendpoint x="914" y="-42"/>    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="134" name="selectedTile">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="135" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="136">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="137" name="type">        
+        <position height="0" width="0" x="-20" y="1"/>      
+      </attribute>      
+      <multiplicity id="138" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-20" y="1"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="139">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="140" name="tile">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="141" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="142">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="143">    
     <end type="SOURCE" refId="33" navigable="false">      
-      <attribute id="174" name="hexagonList"/>      
-      <multiplicity id="175" minimum="0" maximum="2147483647"/>    
+      <attribute id="144" name="playerDeck">        
+        <position height="0" width="0" x="-24" y="1"/>      
+      </attribute>      
+      <multiplicity id="145" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-24" y="1"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="31" navigable="true"/>    
     <display labels="false" multiplicity="false"/>  
   </association>  
+  <association id="146">    
+    <bendpoint x="1133" y="-64"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="147" name="drawnTiles">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="148" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="149">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="150" name="board">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="151" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="152">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="153">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <association id="154">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="155" name="hlc">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="156" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-    accessors="true" visibility="true">    
+    sort-features="false" accessors="true" visibility="true">    
     <attributes public="false" package="false" protected="false" private="false" static="false"/>    
     <operations public="false" package="false" protected="false" private="false" static="false"/>  
   </classifier-display>  

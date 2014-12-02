@@ -1,7 +1,7 @@
 package hr.nhex.board;
 
-import hr.nhex.model.Player;
-import hr.nhex.model.Tile;
+import hr.nhex.model.AbstractTile;
+import hr.nhex.model.player.Player;
 
 /**
  * Razred koji predstavlja polje na plo�i.
@@ -10,7 +10,7 @@ import hr.nhex.model.Tile;
  *
  */
 
-public class BoardTile extends Tile {
+public class BoardTile extends AbstractTile {
 
 	/**
 	 * Prazan konstruktor.
@@ -28,8 +28,6 @@ public class BoardTile extends Tile {
 		this.angle = angle;
 		this.isNetted = isNetted;
 	}
-
-	protected Player player;
 
 	protected int x;
 
@@ -51,6 +49,7 @@ public class BoardTile extends Tile {
 		return null;
 	}
 
+	@Override
 	public Player getPlayer() {
 		return player;
 	}
@@ -83,6 +82,7 @@ public class BoardTile extends Tile {
 		this.y = y;
 	}
 
+	@Override
 	public int getAngle() {
 		return angle;
 	}

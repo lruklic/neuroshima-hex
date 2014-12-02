@@ -1,17 +1,18 @@
 package hr.nhex.decks;
 
-import hr.nhex.board.BoardTile;
-import hr.nhex.model.Tile;
+import hr.nhex.model.AbstractTile;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.unit.Attack;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.Stack;
 
 /**
  * Class that represents deck of tiles.
- * 
- * @author Luka Rukliæ
+ *
+ * @author Luka Rukliï¿½
  *
  */
 
@@ -32,19 +33,40 @@ public class Deck {
 	/**
 	 * List of tiles that are contained in a deck.
 	 */
-	private List<Tile> tiles = new ArrayList<>();
+	private Stack<AbstractTile> tiles = new Stack<>();
 
-	private BoardTile hq;
+	private AbstractTile[] drawnTiles = new AbstractTile[3];
 
-	public GameDeck createGameDeck() {
-		return new GameDeck(this);
+	public void shuffleDeck() {
+		long seed = System.nanoTime();
+		Collections.shuffle(tiles, new Random(seed));
 	}
 
-	public List<Tile> getTiles() {
-		return tiles;
+	public void drawHQ() {
+		drawnTiles[2] = tiles.pop();
 	}
 
-	public void addTileToDeck(Tile tile) {
+	public void drawNew() {
+		for (int i = 0; i < 3; i++) {
+			if (drawnTiles[i] == null) {
+				drawnTiles[i] = tiles.pop();
+			}
+		}
+	}
+
+	public AbstractTile getDrawnTile(int numberOfTile) {
+		if (numberOfTile > 2) {
+			return null;
+		} else {
+			return drawnTiles[numberOfTile];
+		}
+	}
+
+	public void discardTile(int numberOfTile) {
+		drawnTiles[numberOfTile] = null;
+	}
+
+	public void addTileToDeck(AbstractTile tile) {
 		tiles.add(tile);
 	}
 
@@ -52,21 +74,17 @@ public class Deck {
 		return deckName;
 	}
 
-	public void setDeckName(String deckName) {
+	protected void setDeckName(String deckName) {
 		this.deckName = deckName;
 	}
 
-	public BoardTile getHq() {
-		return hq;
-	}
-
-	public void setHq(BoardTile hq) {
-		this.hq = hq;
+	public AbstractTile[] getDrawnTiles() {
+		return drawnTiles;
 	}
 
 	/**
 	 * Metoda koja miï¿½e sve elemente iz primljenih listi.
-	 * 
+	 *
 	 * @param speed lista brzina jedinice koja se prazni
 	 * @param attacks lista napada jedinice koja se prazni
 	 * @param abilities lista sposobnosti jedinice koja se prazni
@@ -80,12 +98,12 @@ public class Deck {
 
 	/**
 	 * Metoda koja prema primljenom imenu vraï¿½a polje s tim imenom iz ï¿½pila.
-	 * 
+	 *
 	 * @param name naziv polja
 	 * @return polje ukoliko postoji, <code>null</code> inaï¿½e
 	 */
-	public Tile getTileByName(String name) {
-		for (Tile tile : tiles) {
+	public AbstractTile getTileByName(String name) {
+		for (AbstractTile tile : tiles) {
 			if (tile.getName().equals(name) && !tile.isOnBoard()) {
 				return tile;
 			}

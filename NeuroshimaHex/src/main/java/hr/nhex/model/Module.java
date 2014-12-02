@@ -2,30 +2,31 @@ package hr.nhex.model;
 
 import hr.nhex.board.BoardTile;
 import hr.nhex.model.ability.Ability;
+import hr.nhex.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Razred koji predstavlja modul u igri Neuroshima Hex. Sadrži listu sa sposobnostima danog modula te nasljeðuje svojstva
+ * Razred koji predstavlja modul u igri Neuroshima Hex. Sadrï¿½i listu sa sposobnostima danog modula te nasljeï¿½uje svojstva
  * od razreda Tile.
  * 
- * @author Luka Rukliæ
+ * @author Luka Rukliï¿½
  *
  */
 
 public class Module extends BoardTile {
 
 	/**
-	 * Lista sa sposobnostima odreðenog modula.
+	 * Lista sa sposobnostima odreï¿½enog modula.
 	 */
 	private List<Ability> abilities = new ArrayList<>();
 
 	/**
-	 * Konstruktor za razred Module. Zanemaruje konstruktore u nadklasama BoardTile i Tile. Koristi se za postavljanje modula u špil.
+	 * Konstruktor za razred Module. Zanemaruje konstruktore u nadklasama BoardTile i Tile. Koristi se za postavljanje modula u ï¿½pil.
 	 * 
 	 * @param name naziv modula
-	 * @param hitPoints životni bodovi modula
+	 * @param hitPoints ï¿½ivotni bodovi modula
 	 * @param abilities lista sa sposobnostima modula
 	 */
 
@@ -37,15 +38,15 @@ public class Module extends BoardTile {
 
 	/**
 	 * 
-	 * Konstruktor koji stvara èitavi modul, zajedno s vrijednostima varijabli iz njegovih nadklasa BoardTile i Tile.
+	 * Konstruktor koji stvara ï¿½itavi modul, zajedno s vrijednostima varijabli iz njegovih nadklasa BoardTile i Tile.
 	 * 
 	 * @param name ime modula
-	 * @param player instance igraèa koja sadrži ime i boju igraèa te kontrolira modula
-	 * @param x x-koordinata modula na ploèi
-	 * @param y y-koordinata modula na ploèi
-	 * @param hitPoints životni bodovi
+	 * @param player instance igraï¿½a koja sadrï¿½i ime i boju igraï¿½a te kontrolira modula
+	 * @param x x-koordinata modula na ploï¿½i
+	 * @param y y-koordinata modula na ploï¿½i
+	 * @param hitPoints ï¿½ivotni bodovi
 	 * @param angle kut za koji je modul rotiran
-	 * @param isNetted <code>boolean</code> vrijednost koja govori da li je modul pod mrežom
+	 * @param isNetted <code>boolean</code> vrijednost koja govori da li je modul pod mreï¿½om
 	 * @param abilities lista sa sposobnostima modula
 	 */
 

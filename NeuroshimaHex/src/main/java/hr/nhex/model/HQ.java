@@ -2,6 +2,7 @@ package hr.nhex.model;
 
 import hr.nhex.board.BoardTile;
 import hr.nhex.model.ability.Ability;
+import hr.nhex.model.player.Player;
 import hr.nhex.model.unit.Attack;
 
 import java.util.ArrayList;

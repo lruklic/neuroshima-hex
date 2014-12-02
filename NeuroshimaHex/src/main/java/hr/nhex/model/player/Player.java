@@ -1,13 +1,13 @@
-package hr.nhex.model;
+package hr.nhex.model.player;
 
 import hr.nhex.decks.Deck;
 
 import java.awt.Color;
 
 /**
- * Razred koji predstavlja igraèa u igri Neuroshima Hex. Svaki igraè je predstavljen jedinstvenim imenom te bojom.
- * 
- * @author Luka Rukliæ
+ * Razred koji predstavlja igraï¿½a u igri Neuroshima Hex. Svaki igraï¿½ je predstavljen jedinstvenim imenom te bojom.
+ *
+ * @author Luka Ruklic
  *
  */
 
@@ -25,10 +25,10 @@ public class Player {
 	 * Deck that player uses.
 	 */
 	private Deck playerDeck;
-	
+
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param playerName name of the player
 	 * @param playerColor color of the player
 	 */
@@ -54,7 +54,7 @@ public class Player {
 	public void setPlayerColor(Color playerColor) {
 		this.playerColor = playerColor;
 	}
-	
+
 	public Deck getPlayerDeck() {
 		return playerDeck;
 	}
@@ -74,18 +74,23 @@ public class Player {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Player other = (Player) obj;
 		if (playerColor == null) {
-			if (other.playerColor != null)
+			if (other.playerColor != null) {
 				return false;
-		} else if (!playerColor.equals(other.playerColor))
+			}
+		} else if (!playerColor.equals(other.playerColor)) {
 			return false;
+		}
 		return true;
 	}
 

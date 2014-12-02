@@ -1,5 +1,7 @@
 package hr.nhex.model;
 
+import hr.nhex.model.player.Player;
+
 /**
  * Razred koji predstavlja polje (engl. <i>Tile</i>) u igri Neuroshima Hex.
  *
@@ -7,12 +9,15 @@ package hr.nhex.model;
  *
  */
 
-public abstract class Tile {
+public abstract class AbstractTile {
 
 	/**
 	 * Tile name.
 	 */
 	protected String name;
+
+	protected Player player;
+
 	/**
 	 * Binary value that determines whether the tile is on board or not.
 	 */
@@ -21,11 +26,11 @@ public abstract class Tile {
 	/**
 	 * Empty constructor.
 	 */
-	public Tile() {
+	public AbstractTile() {
 
 	}
 
-	public Tile(String name) {
+	public AbstractTile(String name) {
 		this.name = name;
 	}
 

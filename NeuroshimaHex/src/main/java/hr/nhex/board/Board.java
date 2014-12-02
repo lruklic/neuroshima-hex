@@ -4,9 +4,9 @@ import hr.nhex.exception.BoardException;
 import hr.nhex.generic.Pair;
 import hr.nhex.model.HQ;
 import hr.nhex.model.Netter;
-import hr.nhex.model.Player;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.ability.AbilityType;
+import hr.nhex.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

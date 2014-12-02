@@ -4,7 +4,7 @@ import hr.nhex.board.BoardTile;
 import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.imagecache.ImageCache;
-import hr.nhex.model.Tile;
+import hr.nhex.model.AbstractTile;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -60,7 +60,7 @@ public class BoardDrawer {
 	}
 
 	private void drawSideHex() {
-		List<Tile> currentDrawnTiles = Arrays.asList(game.getCurrentPlayerGameDeck().getDrawnTiles());
+		List<AbstractTile> currentDrawnTiles = Arrays.asList(game.getCurrentPlayerDeck().getDrawnTiles());
 		int tileNo = 0;
 
 		for (Hexagon h : hlc.getHexagonSideList()) {
@@ -73,12 +73,12 @@ public class BoardDrawer {
 
 	private void drawDraggedHex() {
 		if (hlc.getDraggedHexagon() != null) {
-			Tile t = game.getSelectedTile();
+			AbstractTile t = game.getSelectedTile();
 			drawHex(hlc.getDraggedHexagon(), t);
 		}
 	}
 
-	public void drawHex(Hexagon h, Tile t) {
+	public void drawHex(Hexagon h, AbstractTile t) {
 
 		// odlu�iti kako se �alje podatak u drawHex koji da heksagoni budu iscrtani drugom bojom
 		// kod movementa ili pusha
@@ -160,7 +160,7 @@ public class BoardDrawer {
 		if (hlc.getSpecialHexList() != null && hlc.getSpecialHexList().contains(specialHexPair)) {
 			SpecialHex sh = hlc.getSpecialHexList().get(hlc.getSpecialHexList().indexOf(specialHexPair));
 			Stroke oldStroke = g2.getStroke();
-			g2.setStroke(new BasicStroke(2));
+			g2.setStroke(new BasicStroke(4));
 			g2.setColor(sh.getColor());
 			g2.drawPolygon(poly);
 			g2.setStroke(oldStroke);

@@ -2,6 +2,7 @@ package hr.nhex.graphic.timer;
 
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
+import hr.nhex.graphic.adapters.AdapterType;
 import hr.nhex.graphic.hexagon.Hexagon;
 
 import java.awt.Point;
@@ -12,9 +13,9 @@ import javax.swing.Timer;
 
 /**
  * Action listener that implements methods for animating tile attack on the board.
- * 
- * @author Luka Rukliæ
- * @author Marin Bužanèiæ
+ *
+ * @author Luka Ruklic
+ * @author Marin Buzancic
  *
  */
 
@@ -44,7 +45,7 @@ public class TileAttackAnimation implements ActionListener {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param attackingHex instance of hexagon that is attacking
 	 * @param hitHex instance of hexagon that is being hit
 	 * @param cn top level containter; canvas
@@ -91,7 +92,7 @@ public class TileAttackAnimation implements ActionListener {
 			moved++;
 		} else {
 			((Timer)e.getSource()).stop();
-			cn.mouseListenerActivate(cn.getTpma());
+			cn.getMac().mouseListenerActivate(AdapterType.PLACEMENT);
 		}
 		cn.repaint();
 
@@ -120,7 +121,7 @@ public class TileAttackAnimation implements ActionListener {
 
 	/**
 	 * Method that detects in which geographic direction is the attacker tile attacking.
-	 * 
+	 *
 	 * @param attackerPos pair that contains attacker coordinates
 	 * @param hitPos pair that contains coordinates of hit tile
 	 * @return direction in which attacker is attacking

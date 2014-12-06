@@ -56,10 +56,9 @@ public class TileMovementMouseAdapter extends AbstractMouseAdapter {
 						);
 			}
 
-			hlc.getSpecialHexList().clear();
-
+			clearAndRepaint();
 			cn.getMac().mouseListenerActivate(AdapterType.ROTATE);
-			cn.repaint();
+
 		}
 
 	}

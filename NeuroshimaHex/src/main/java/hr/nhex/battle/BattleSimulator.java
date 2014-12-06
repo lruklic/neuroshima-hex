@@ -4,10 +4,10 @@ import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
 import hr.nhex.board.IBasicBoard;
 import hr.nhex.generic.Pair;
+import hr.nhex.model.AbstractTile;
 import hr.nhex.model.HQ;
 import hr.nhex.model.Module;
 import hr.nhex.model.Netter;
-import hr.nhex.model.AbstractTile;
 import hr.nhex.model.Unit;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.ability.AbilityType;
@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * Class that represents battle simulator in Neuroshima Hex board game.
- * 
+ *
  * @author Luka Rukli�
  * @author Marin Bu�an�i�
  *
@@ -35,9 +35,9 @@ public class BattleSimulator implements IBasicBoard {
 
 	private List<BattleTile> boardBattleTiles = new ArrayList<>();
 
-	private StringBuilder battleEvents = new StringBuilder();
+	public StringBuilder battleEvents = new StringBuilder();
 
-	private Integer currentInitiative = null;
+	public Integer currentInitiative = null;
 
 	private static final int MAXSHIFT_SMALL_BOARD = 4;
 
@@ -46,7 +46,7 @@ public class BattleSimulator implements IBasicBoard {
 
 	/**
 	 * Konstruktor koji popunjava listu s poljima koja �e se koristiti prilikom borbe.
-	 * 
+	 *
 	 * @param listTiles lista s poljima trenutno na plo�i
 	 */
 	public BattleSimulator(Board board) {
@@ -59,7 +59,7 @@ public class BattleSimulator implements IBasicBoard {
 	/**
 	 * Metoda koja obavlja funkciju konstruktora razreda BattleSimulator na na�in da kopira �itavu plo�u
 	 * odnosno sva njezina polja u razred <code>BattleSimulator</code>.
-	 * 
+	 *
 	 * @param listTiles lista s poljima
 	 */
 	public void reloadBoardToBattle(List<BoardTile> listTiles) {
@@ -98,18 +98,17 @@ public class BattleSimulator implements IBasicBoard {
 		executeBattleInitiative(currentInitiative);
 		currentInitiative--;
 
-		if (currentInitiative == 0) {
+		if (currentInitiative == -1) {
 			return true;
 		} else {
 			return false;
 		}
-
 	}
 
 	/**
 	 * Metoda koja izvr�ava fazu borbe odre�enu ulaznom varijablom <code>currentSpeed</code> koja
 	 * predstavlja trenutnu inicijativu.
-	 * 
+	 *
 	 * @param currentSpeed trenutna inicijativa
 	 */
 
@@ -130,11 +129,11 @@ public class BattleSimulator implements IBasicBoard {
 
 	/**
 	 * <p>Metoda koja pretražuje napade odre�ene jedinice primljene u metodu preko varijable <code>unit</code> i te iste napade izvr�ava.
-	 * 
+	 *
 	 * <p>Ako je riječ o napadu prsa-o-prsa (engl. <i>melee</i>), napad se izvr�ava nad jedinicom na polju na koje je napad usmjeren.
 	 * Ukoliko je pak riječ o napadu na daljinu (engl. <i>ranged</i>), napad se izvr�ava nad svim poljima u liniji smjera napada, dok ne
 	 * do�e do protivničke jedinice. Napad na daljinu je mogu�e oslabiti �titom (engl. <i>block</i>).
-	 * 
+	 *
 	 * @param unit jedinica �iji se napadi izvr�avaju
 	 */
 

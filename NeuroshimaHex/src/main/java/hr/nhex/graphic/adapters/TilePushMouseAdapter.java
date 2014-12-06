@@ -3,6 +3,7 @@ package hr.nhex.graphic.adapters;
 import hr.nhex.battle.BattleSimulator;
 import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
+import hr.nhex.game.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
@@ -38,12 +39,12 @@ public class TilePushMouseAdapter extends AbstractMouseAdapter {
 				if (specialTilePos != -1) {
 
 					hlc.clearHexSpecialList();
+					List<Pair> pusherAdjecantTiles = game.getBoard().getAdjecantTiles(tilePusher.getX(), tilePusher.getY());
 					List<Pair> pusheeAdjecantTiles = game.getBoard().getAdjecantTiles(tilePusheePos.getX(), tilePusheePos.getY());
 					List<Pair> possiblePushPos = new ArrayList<Pair>();
 
 					for (Pair pusheeAdj : pusheeAdjecantTiles) {
-						if (!game.getBoard().isFilled(pusheeAdj.getX(), pusheeAdj.getY())
-								&& (Math.abs(pusheeAdj.getX() - tilePusher.getX()) > 1 || Math.abs(pusheeAdj.getY() - tilePusher.getY()) > 1)) {
+						if (!game.getBoard().isFilled(pusheeAdj.getX(), pusheeAdj.getY()) && !(pusherAdjecantTiles.contains(pusheeAdj))) {
 							possiblePushPos.add(pusheeAdj);
 						}
 					}
@@ -55,10 +56,16 @@ public class TilePushMouseAdapter extends AbstractMouseAdapter {
 						BoardTile pushee = board.getTile(tilePusheePos.getX(), tilePusheePos.getY());
 						pushee.setX(newPosition.getX());
 						pushee.setY(newPosition.getY());
+
 						BattleSimulator bs = new BattleSimulator(board);
 						bs.updateAfterEffects();
 
-						cn.repaint();
+						clearAndRepaint();
+						game.setSelectedTile(null);
+						hlc.setDraggedHexagon(null);
+
+						game.setTurnPhase(TurnPhase.TILES_DRAWN);
+						cn.getMac().mouseListenerActivate(AdapterType.PLACEMENT);
 
 					} else { // if possiblePushPos > 1
 						for (Pair p : possiblePushPos) {
@@ -71,7 +78,9 @@ public class TilePushMouseAdapter extends AbstractMouseAdapter {
 									)
 									);
 							game.setSelectedTile(tilePushee);
+							pusherTurn = false;
 						}
+						cn.repaint();
 					}
 
 				}
@@ -79,13 +88,27 @@ public class TilePushMouseAdapter extends AbstractMouseAdapter {
 			} else {
 
 				BoardTile tilePushee = (BoardTile) game.getSelectedTile();
-				Pair tilePusheePos = getClickedTile(cn, ev);
-				int specialTilePos = hlc.getSpecialHexList().lastIndexOf(new SpecialHex(tilePusheePos, null));
+				Pair newPosition = getClickedTile(cn, ev);
+				int specialTilePos = hlc.getSpecialHexList().lastIndexOf(new SpecialHex(newPosition, null));
 
 				if (specialTilePos != -1) {
 
-				}
+					Board board = game.getBoard();
+					tilePushee.setX(newPosition.getX());
+					tilePushee.setY(newPosition.getY());
 
+					BattleSimulator bs = new BattleSimulator(board);
+					bs.updateAfterEffects();
+
+					pusherTurn = true;
+					clearAndRepaint();
+					game.setSelectedTile(null);
+					hlc.setDraggedHexagon(null);
+
+					game.setTurnPhase(TurnPhase.TILES_DRAWN);
+					cn.getMac().mouseListenerActivate(AdapterType.PLACEMENT);
+
+				}
 
 			}
 

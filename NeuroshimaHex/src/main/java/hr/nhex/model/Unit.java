@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Razred koji predstavlja jedinicu u igri Neuroshima Hex. Sadrži listu s brzinama, listu s napadima te listu
  * sa sposobnostima danog modula te nasljeđuje svojstva od razreda Tile.
- * 
+ *
  * @author Luka Ruklić
  *
  */
@@ -38,7 +38,7 @@ public class Unit extends BoardTile {
 	}
 	/**
 	 * Konstruktor za razred Unit. Zanemaruje konstruktore u nadklasama BoardTile i Tile. Koristi se za postavljanje jedinice u špil.
-	 * 
+	 *
 	 * @param name naziv jedinice
 	 * @param hitPoints �ivotni bodovi
 	 * @param speed lista s brzinama
@@ -48,15 +48,16 @@ public class Unit extends BoardTile {
 	public Unit(String name, int hitPoints, List<Integer> speed, List<Attack> attacks, List<Ability> abilities) {
 		this.name = name;
 		this.hitPoints = hitPoints;
+		this.maxHitPoints = hitPoints;
 		this.speed = speed;
 		this.attacks = attacks;
 		this.abilities = abilities;
 	}
 
 	/**
-	 * 
+	 *
 	 * Konstruktor koji stvara čitavu jedinicu, zajedno s vrijednostima varijabli iz njegovih nadklasa BoardTile i Tile.
-	 * 
+	 *
 	 * @param name ime jedinice
 	 * @param player instance igrača koja sadrži ime i boju igrača te kontrolira jedinicu
 	 * @param x x-koordinata jedinice na ploči

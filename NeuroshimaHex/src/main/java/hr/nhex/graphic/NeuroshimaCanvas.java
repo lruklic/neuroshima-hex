@@ -129,6 +129,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		super.paintComponent(g2);
 
 		if (this.backgroundImage == null) {
@@ -144,9 +145,6 @@ public class NeuroshimaCanvas extends JPanel {
 		int windowHeight = this.getHeight();
 		int windowWidth = this.getWidth();
 
-		// ovdje je moguce dodati boju ili debljinu crte tako da se Pair zamijeni s custom razredom
-		//List<Pair> specialHex = this.getTmma().getSpecialHex();
-
 		BoardDrawer bd = new BoardDrawer(g2, cache, gameInstance, HexagonListContainer.getInstance().prepareHexagonContainer(windowHeight, windowWidth));
 
 		bd.drawAllHex();
@@ -156,10 +154,6 @@ public class NeuroshimaCanvas extends JPanel {
 	public Game getGameInstance() {
 		return gameInstance;
 	}
-
-	//	public HexagonListContainer getHlc() {
-	//		return hlc;
-	//	}
 
 	public MouseAdapterContainer getMac() {
 		return mac;

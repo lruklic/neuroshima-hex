@@ -1,6 +1,5 @@
 package hr.nhex.graphic.adapters;
 
-import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 
 import java.awt.event.ComponentAdapter;
@@ -17,15 +16,13 @@ public class CanvasResizeComponentAdapter extends ComponentAdapter {
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		NeuroshimaCanvas cn = ((NeuroshimaCanvas)e.getComponent());
-		HexagonListContainer.getInstance().prepareHexagonContainer(cn.getHeight(), cn.getWidth());
+		HexagonListContainer.getInstance().clearHexagonLists();
 		e.getComponent().repaint();
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		NeuroshimaCanvas cn = ((NeuroshimaCanvas)e.getComponent());
-		HexagonListContainer.getInstance().prepareHexagonContainer(cn.getHeight(), cn.getWidth());
+		HexagonListContainer.getInstance().clearHexagonLists();
 		e.getComponent().repaint();
 	}
 

@@ -24,7 +24,7 @@ import javax.swing.JComponent;
 
 /**
  * Class that represents graphical interpretation of hexagon on the NHex board.
- * 
+ *
  * @author Luka Rukli�
  * @author Marin Bu�an�i�
  *
@@ -57,7 +57,7 @@ public class Hexagon extends JComponent {
 
 	/**
 	 * Constructor for class hexagon.
-	 * 
+	 *
 	 * @param tileX
 	 * @param tileY
 	 * @param xC
@@ -75,13 +75,13 @@ public class Hexagon extends JComponent {
 
 	/**
 	 * Method that creates instance on hexagon based on x and y coordinates.
-	 * 
+	 *
 	 * @param xC x coordinate of hexagon center
 	 * @param yC y coordinate of hexagon center
 	 * @param flatOrientation is hexagon rotated to flat side up
 	 */
 
-	public Polygon createHex(int xC, int yC) {
+	public Polygon createHex() {
 
 		int[] arrayX = null;
 		int[] arrayY = null;
@@ -120,7 +120,7 @@ public class Hexagon extends JComponent {
 		// opcije: slati Canvas pa u njemu neku listu/mapu s koordinatama i bojom u koju se iscrtava
 		// ili slati samo tu listu/mapu
 
-		Polygon poly = createHex(xC,yC);
+		Polygon poly = createHex();
 
 		String imageName = null;
 		BufferedImage image = null;
@@ -216,7 +216,7 @@ public class Hexagon extends JComponent {
 
 	/**
 	 * Method that crops given picture to adjust its size for board hexagons.
-	 * 
+	 *
 	 * @param src picture that is being cropped
 	 * @return cropped picture
 	 */

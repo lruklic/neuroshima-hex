@@ -5,6 +5,7 @@ import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.imagecache.ImageCache;
 import hr.nhex.model.AbstractTile;
+import hr.nhex.model.HQ;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -13,6 +14,7 @@ import java.awt.Polygon;
 import java.awt.Stroke;
 import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,6 +25,11 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 public class BoardDrawer {
+
+	private static final int SPECIAL_STROKE_SIZE = 3;
+	private static final int DAMAGE_TOKEN_DIAMETER = 30;
+	private static final int SPECIAL_DISTANCE = 3;
+	private static final int DAMAGE_TOKEN_SHIFT = 10;
 
 	private Graphics2D g2;
 	private ImageCache cache;
@@ -48,8 +55,8 @@ public class BoardDrawer {
 	public void drawAllHex() {
 		drawBoardHex();
 		drawSideHex();
+		drawDamageTokens();
 		drawDraggedHex();
-
 	}
 
 	private void drawBoardHex() {
@@ -78,14 +85,35 @@ public class BoardDrawer {
 		}
 	}
 
+	private void drawDamageTokens() {
+		for (BoardTile bt : game.getBoard().getTiles()) {
+			if (bt.getHitPoints() < bt.getMaxHitPoints() && !(bt instanceof HQ)) {
+				for (int i = 0; i < bt.getMaxHitPoints() - bt.getHitPoints(); i++) {
+					int damageTokenShift = DAMAGE_TOKEN_SHIFT*i;
+					Hexagon h = hlc.getHexagon(bt.getX(), bt.getY());
+					Ellipse2D.Double circle = new Ellipse2D.Double(h.getxC()+damageTokenShift, h.getyC(), DAMAGE_TOKEN_DIAMETER, DAMAGE_TOKEN_DIAMETER);
+					BufferedImage image = null;
+					if (cache.getImage("damageToken") == null) {
+						try {
+							image = ImageIO.read(new File("pics/damageToken.jpg"));
+						} catch (IOException e) {
+							System.out.println("Damage token image not found.");
+						}
+					} else {
+						image = cache.getImage("damageToken");
+					}
+
+					TexturePaint tex = new TexturePaint(image, circle.getBounds2D());
+					g2.setPaint(tex);
+					g2.fillOval(h.getxC()+damageTokenShift, h.getyC(), DAMAGE_TOKEN_DIAMETER, DAMAGE_TOKEN_DIAMETER);
+				}
+			}
+		}
+	}
+
 	public void drawHex(Hexagon h, AbstractTile t) {
 
-		// odlu�iti kako se �alje podatak u drawHex koji da heksagoni budu iscrtani drugom bojom
-		// kod movementa ili pusha
-		// opcije: slati Canvas pa u njemu neku listu/mapu s koordinatama i bojom u koju se iscrtava
-		// ili slati samo tu listu/mapu
-
-		Polygon poly = h.createHex(h.getxC(),h.getyC());
+		Polygon poly = h.createHex();
 
 		String imageName = null;
 		BufferedImage image = null;
@@ -108,8 +136,7 @@ public class BoardDrawer {
 			g2.setPaint(tex);
 			g2.fillPolygon(poly);
 
-			g2.setColor(Color.BLACK);
-			g2.drawPolygon(poly);
+			drawSpecialHexBorder(h, poly);
 			return;
 
 		}
@@ -156,23 +183,42 @@ public class BoardDrawer {
 
 		g2.fillPolygon(poly);
 
+		drawSpecialHexBorder(h, poly);
+
+	}
+
+	private void drawSpecialHexBorder(Hexagon h, Polygon poly) {
+
 		SpecialHex specialHexPair = new SpecialHex(new Pair(h.getTileX(), h.getTileY()), null);
 		if (hlc.getSpecialHexList() != null && hlc.getSpecialHexList().contains(specialHexPair)) {
 			SpecialHex sh = hlc.getSpecialHexList().get(hlc.getSpecialHexList().indexOf(specialHexPair));
-			Stroke oldStroke = g2.getStroke();
-			g2.setStroke(new BasicStroke(4));
-			g2.setColor(sh.getColor());
-			g2.drawPolygon(poly);
-			g2.setStroke(oldStroke);
+			drawHexBorder(sh);
 		} else {
 			g2.setColor(Color.BLACK);
 			g2.drawPolygon(poly);
 		}
+	}
 
+	private void drawHexBorder(SpecialHex sh) {
+		Stroke oldStroke = g2.getStroke();
+		g2.setStroke(new BasicStroke(SPECIAL_STROKE_SIZE));
+		g2.setColor(sh.getColor());
+
+		Hexagon h = hlc.getHexagon(sh.getCoordinates().getX(), sh.getCoordinates().getY());
+
+		Polygon poly = h.createHex();
+
+		g2.drawLine(poly.xpoints[0], poly.ypoints[0]-SPECIAL_DISTANCE, poly.xpoints[1]+SPECIAL_DISTANCE, poly.ypoints[1]);
+		g2.drawLine(poly.xpoints[1]+SPECIAL_DISTANCE, poly.ypoints[1], poly.xpoints[2]+SPECIAL_DISTANCE, poly.ypoints[2]);
+		g2.drawLine(poly.xpoints[2]+SPECIAL_DISTANCE, poly.ypoints[2], poly.xpoints[3], poly.ypoints[3]+SPECIAL_DISTANCE);
+		g2.drawLine(poly.xpoints[3], poly.ypoints[3]+SPECIAL_DISTANCE, poly.xpoints[4]-SPECIAL_DISTANCE, poly.ypoints[4]);
+		g2.drawLine(poly.xpoints[4]-SPECIAL_DISTANCE, poly.ypoints[4], poly.xpoints[5]-SPECIAL_DISTANCE, poly.ypoints[5]);
+		g2.drawLine(poly.xpoints[5]-SPECIAL_DISTANCE, poly.ypoints[5], poly.xpoints[0], poly.ypoints[0]-SPECIAL_DISTANCE);
+
+		g2.setStroke(oldStroke);
 	}
 
 	private BufferedImage cropImage(BufferedImage src) {
-		//System.out.println("dimension: "+src.getWidth() + ", "+src.getHeight());
 		BufferedImage dest = src.getSubimage(0, 0, 230, 270);
 		return dest;
 	}

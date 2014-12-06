@@ -31,6 +31,7 @@ public class TileRotateMouseAdapter extends AbstractMouseAdapter {
 		this.type = AdapterType.ROTATE;
 		this.setListenerOff();
 
+		// store cursor image to cache?
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image rotateImage = toolkit.getImage("icons/rotate.png");
 		this.c = toolkit.createCustomCursor(rotateImage , new Point(cn.getX(),

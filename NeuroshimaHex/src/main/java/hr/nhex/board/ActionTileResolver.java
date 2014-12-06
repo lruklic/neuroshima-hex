@@ -1,5 +1,6 @@
 package hr.nhex.board;
 
+import hr.nhex.battle.BattlePresenter;
 import hr.nhex.battle.BattleSimulator;
 import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
@@ -7,8 +8,6 @@ import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.adapters.AdapterType;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.hexagon.SpecialHex;
-import hr.nhex.graphic.timer.BattleTimer;
-import hr.nhex.graphic.timer.TileAttackTimer;
 import hr.nhex.model.action.ActionTile;
 import hr.nhex.model.action.ActionType;
 
@@ -40,12 +39,14 @@ public class ActionTileResolver {
 		if (at.getActionType() == ActionType.BATTLE) {
 			BattleSimulator bs = new BattleSimulator(game.getBoard());
 
-			TileAttackTimer tat = new TileAttackTimer(cn);
-			BattleTimer bt = new BattleTimer(cn, bs, tat);
-			bt.animateBattle();
+			BattlePresenter bp = new BattlePresenter(cn, bs);
+			bp.executeAndPresent();
+			//			TileAttackTimer tat = new TileAttackTimer(cn);
+			//			BattleTimer bt = new BattleTimer(cn, bs, tat);
 
 			System.out.println("Borba: \n"+bs.getBattleEvents());
 
+			game.setSelectedTile(null);
 			return true;
 
 		} else if (tilePos != null && at.getActionType() == ActionType.SNIPER) {
@@ -57,6 +58,7 @@ public class ActionTileResolver {
 					BattleSimulator bs = new BattleSimulator(game.getBoard());
 					bs.updateAfterEffects();
 				}
+				game.setSelectedTile(null);
 				return true;
 			}
 		} else if (tilePos != null && at.getActionType() == ActionType.MOVE) {
@@ -88,11 +90,11 @@ public class ActionTileResolver {
 				for (Pair pusherAdj : pusherAdjecantTiles) {
 					BoardTile tilePushee = game.getBoard().getTile(pusherAdj.getX(), pusherAdj.getY());
 
-					if (tilePushee != null && !tilePushee.getPlayer().equals(game.getCurrentPlayer())) {	// da li se može pushati nettani unit?
+					if (tilePushee != null && !tilePushee.getPlayer().equals(game.getCurrentPlayer())) {
 						List<Pair> pusheeAdjecantTiles = game.getBoard().getAdjecantTiles(tilePushee.getX(), tilePushee.getY());
 						for (Pair pusheeAdj : pusheeAdjecantTiles) {
 							if (!game.getBoard().isFilled(pusheeAdj.getX(), pusheeAdj.getY())
-									&& (Math.abs(pusheeAdj.getX() - tilePusher.getX()) > 1 || Math.abs(pusheeAdj.getY() - tilePusher.getY()) > 1)) {
+									&& (!(pusherAdjecantTiles.contains(pusheeAdj)))) {
 								pusheeTiles.add(pusherAdj);
 								hlc.getSpecialHexList().add(new SpecialHex(new Pair(tilePushee.getX(), tilePushee.getY()), game.getCurrentPlayer().getPlayerColor()));
 								break;
@@ -111,6 +113,7 @@ public class ActionTileResolver {
 
 		}
 
+		game.setSelectedTile(null);
 		return false;
 	}
 

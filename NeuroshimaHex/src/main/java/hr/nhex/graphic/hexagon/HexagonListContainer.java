@@ -39,7 +39,6 @@ public class HexagonListContainer {
 	}
 
 	public HexagonListContainer prepareHexagonContainer(int windowHeight, int windowWidth) {
-		clearHexagonLists();
 		this.hexSize = calculateHexSize(windowHeight, windowWidth);
 
 		// Fill out hexagon lists if they are empty

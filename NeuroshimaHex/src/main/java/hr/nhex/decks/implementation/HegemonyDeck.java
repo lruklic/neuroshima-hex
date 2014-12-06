@@ -19,9 +19,9 @@ import java.util.List;
 public class HegemonyDeck extends Deck implements IBasicDeck {
 
 	private static final int MOVE_NUMBER = 3;
-	private static final int BATTLE_NUMBER = 5;
+	private static final int BATTLE_NUMBER = 20; // 5
 	private static final int SNIPER_NUMBER = 1;
-	private static final int PUSH_NUMBER = 10; // 2
+	private static final int PUSH_NUMBER = 2; // 2
 
 	private static final int UNIT_GANGER = 4;
 	private static final int UNIT_GLADIATOR = 1;

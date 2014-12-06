@@ -4,16 +4,17 @@ import hr.nhex.model.AbstractTile;
 import hr.nhex.model.player.Player;
 
 /**
- * Razred koji predstavlja polje na plo�i.
+ * Class that represents tile that can be placed on the board.
  *
- * @author Luka Rukli�
+ * @author Luka Ruklic
  *
  */
 
 public class BoardTile extends AbstractTile {
 
 	/**
-	 * Prazan konstruktor.
+	 * Empty constructor. Defined for purpose of creating board tiles outside of board, like in alternate constructors
+	 * in module and unit classes.
 	 */
 	public BoardTile() {
 
@@ -25,6 +26,7 @@ public class BoardTile extends AbstractTile {
 		this.x = x;
 		this.y = y;
 		this.hitPoints = hitPoints;
+		this.maxHitPoints = hitPoints;
 		this.angle = angle;
 		this.isNetted = isNetted;
 	}
@@ -34,6 +36,8 @@ public class BoardTile extends AbstractTile {
 	protected int y;
 
 	protected int hitPoints;
+
+	protected int maxHitPoints;
 
 	protected int angle;
 
@@ -60,6 +64,10 @@ public class BoardTile extends AbstractTile {
 
 	public int getHitPoints() {
 		return hitPoints;
+	}
+
+	public int getMaxHitPoints() {
+		return maxHitPoints;
 	}
 
 	public void setHitPoints(int hitPoints) {

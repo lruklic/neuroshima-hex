@@ -108,6 +108,10 @@ public abstract class AbstractMouseAdapter extends MouseAdapter {
 
 	}
 
+	public void clearAndRepaint() {
+		hlc.clearHexSpecialList();
+		cn.repaint();
+	}
 	/**
 	 * Method that turns the adapter on.
 	 */

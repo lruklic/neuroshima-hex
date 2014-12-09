@@ -78,6 +78,7 @@ public class Board implements IBasicBoard {
 	 * @param y koordinata y na koju dolazi polje
 	 */
 
+	// OVAJ DIO JE DODAN U BattleSimulator ZBOG BUGA KOD RESOLVANJA NETA PRILIKOM MOVE I MOGUCE DA JE POTPUNO NEPOTREBAN, PROVJERI JOS JEDNOM PRIJE BRISANJA
 	private void addNettedToTile(BoardTile tile, int x, int y) {
 		if (tile instanceof Netter) {
 			Netter unit = ((Netter)tile);

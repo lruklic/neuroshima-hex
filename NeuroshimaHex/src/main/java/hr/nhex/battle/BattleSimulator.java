@@ -98,7 +98,7 @@ public class BattleSimulator implements IBasicBoard {
 		executeBattleInitiative(currentInitiative);
 		currentInitiative--;
 
-		if (currentInitiative == -1) {
+		if (currentInitiative == -2) {
 			return true;
 		} else {
 			return false;
@@ -114,6 +114,7 @@ public class BattleSimulator implements IBasicBoard {
 
 	private void executeBattleInitiative(int currentSpeed) {
 
+		System.out.println("Executing initiative "+currentSpeed);
 		for (BattleTile bt : boardBattleTiles) {
 			if ((bt.getTile() instanceof Unit)
 					&& !tileIsNetted(bt.getX(), bt.getY(), 0, bt.getTile().getPlayer())) {
@@ -248,7 +249,7 @@ public class BattleSimulator implements IBasicBoard {
 			if (bt.getTile().getHitPoints() <= 0) {
 				deadTiles.add(bt.getTile());
 			}
-			else if (bt.getTile().getHitPoints() != board.getTile(bt.getX(), bt.getY()).getHitPoints()) {
+			else if (bt.getTile().getHitPoints() != board.getTile(bt.getX(), bt.getY()).getHitPoints()) { // greška nakon Move, provjeri
 				board.getTile(bt.getTile().getX(), bt.getTile().getY()).setHitPoints(bt.getTile().getHitPoints());
 			}
 		}
@@ -329,7 +330,20 @@ public class BattleSimulator implements IBasicBoard {
 		for (BattleTile tile : boardBattleTiles) {
 			if (adjacentTiles.contains(new Pair(tile.getX(), tile.getY()))) {
 				if (tile.getTile() instanceof Netter && !tile.getTile().getPlayer().equals(player)) {
-					if (!tileIsNetted(tile.getX(), tile.getY(), noOfIterations+1, player)) {
+					if (!tileIsNetted(tile.getX(), tile.getY(), noOfIterations+1, tile.getTile().getPlayer())) {
+
+						Netter netter = ((Netter)tile.getTile());
+						netter.getNettedTiles().clear();
+						for (Ability ability : netter.getAbilities()) {
+							if (ability.getType() == AbilityType.NET) {
+								int pointsToTileX = netter.getX() + angleX[(ability.getPointsTo() + netter.getAngle()) % 6];
+								int pointsToTileY = netter.getY() + angleY[(ability.getPointsTo() + netter.getAngle()) % 6];
+								if (isFilled(pointsToTileX, pointsToTileY)) { // i ne sadr�i mre�u usmjerenu prema meni
+
+								}
+								netter.addNettedTile(new Pair(pointsToTileX, pointsToTileY));
+							}
+						}
 						for (Pair p : ((Netter) tile.getTile()).getNettedTiles()) {
 							if (p.getX() == x && p.getY() == y) {
 								return true;

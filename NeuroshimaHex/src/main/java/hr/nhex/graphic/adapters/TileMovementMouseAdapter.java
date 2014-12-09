@@ -1,6 +1,5 @@
 package hr.nhex.graphic.adapters;
 
-import hr.nhex.battle.BattleSimulator;
 import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
 import hr.nhex.generic.Pair;
@@ -41,8 +40,8 @@ public class TileMovementMouseAdapter extends AbstractMouseAdapter {
 					bt.setX(tilePos.getX());
 					bt.setY(tilePos.getY());
 
-					BattleSimulator bs = new BattleSimulator(board);
-					bs.updateAfterEffects();
+					//					BattleSimulator bs = new BattleSimulator(board);
+					//					bs.updateAfterEffects();
 
 				}
 

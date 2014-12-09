@@ -19,14 +19,17 @@ public class BattleTimer {
 
 	private BattleAnimation bta;
 
+	private int battleAnimationTime = 0;
+
 	public BattleTimer(NeuroshimaCanvas cn, BattleSimulator bs) {
 		TileAttackTimer tat = new TileAttackTimer(cn);
 		this.bta = new BattleAnimation(bs, tat);
+		this.battleAnimationTime = bs.getBattleEvents().size() * 500 + 500;
 	}
 
 	public void animateRound() {
 
-		Timer timer = new Timer(EVENT_ANIMATION_TIME, bta);
+		Timer timer = new Timer(battleAnimationTime, bta);
 
 		timer.start();
 
@@ -36,6 +39,10 @@ public class BattleTimer {
 		if (!bta.getObservers().contains(obj)) {
 			bta.register(obj);
 		}
+	}
+
+	public void unregisterPresenterObserver(TimerObserver obj) {
+		bta.unregister(obj);
 	}
 
 }

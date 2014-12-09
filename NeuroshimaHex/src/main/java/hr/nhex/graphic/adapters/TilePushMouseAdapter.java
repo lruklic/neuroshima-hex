@@ -57,8 +57,8 @@ public class TilePushMouseAdapter extends AbstractMouseAdapter {
 						pushee.setX(newPosition.getX());
 						pushee.setY(newPosition.getY());
 
-						BattleSimulator bs = new BattleSimulator(board);
-						bs.updateAfterEffects();
+						//						BattleSimulator bs = new BattleSimulator(board);
+						//						bs.updateAfterEffects();
 
 						clearAndRepaint();
 						game.setSelectedTile(null);

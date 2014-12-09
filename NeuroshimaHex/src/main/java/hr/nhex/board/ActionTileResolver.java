@@ -41,10 +41,6 @@ public class ActionTileResolver {
 
 			BattlePresenter bp = new BattlePresenter(cn, bs);
 			bp.executeAndPresent();
-			//			TileAttackTimer tat = new TileAttackTimer(cn);
-			//			BattleTimer bt = new BattleTimer(cn, bs, tat);
-
-			System.out.println("Borba: \n"+bs.getBattleEvents());
 
 			game.setSelectedTile(null);
 			return true;

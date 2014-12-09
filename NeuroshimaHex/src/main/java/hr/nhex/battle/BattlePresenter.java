@@ -29,10 +29,12 @@ public class BattlePresenter implements TimerObserver {
 
 	@Override
 	public void update() {
-		System.out.println("updated");
 		bs.updateAfterEffects();
 		cn.repaint();
-		bs.executeNextRound();
+
+		if (bs.executeNextRound()) {
+			return;
+		}
 
 		battleTimer.animateRound();
 	}

@@ -19,14 +19,14 @@ import java.util.List;
 
 public class BorgoDeck extends Deck implements IBasicDeck {
 
-	private static final int MOVE_NUMBER = 12; // 4
+	private static final int MOVE_NUMBER = 4;
 	private static final int BATTLE_NUMBER = 6;
 	private static final int GRENADE_NUMBER = 1;
 
 	private static final int UNIT_MUTANT = 6;
 	private static final int UNIT_BUTCHER = 4;
-	private static final int UNIT_NET_FIGHTER = 2;
-	private static final int UNIT_BRAWLER = 21; // 1
+	private static final int UNIT_NET_FIGHTER = 22; // 2
+	private static final int UNIT_BRAWLER = 1; // 1
 	private static final int UNIT_SUPER_MUTANT = 2;
 	private static final int UNIT_ASSASSIN = 2;
 

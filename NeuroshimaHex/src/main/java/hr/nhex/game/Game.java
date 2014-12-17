@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Class that represents instance of Neuroshima Hex game.
  *
- * @author Luka Rukli�
+ * @author Luka Ruklic
  *
  */
 
@@ -23,21 +23,37 @@ public class Game {
 	 * List of players participating in current game.
 	 */
 	private List<Player> players = new ArrayList<>();
-
+	/**
+	 * Current phase of the game.
+	 */
 	private GamePhase gamePhase = GamePhase.GAME_START;
-
+	/**
+	 * Instance of the current turn.
+	 */
 	private Turn currentTurn;
-
+	/**
+	 * Instance of board in current game.
+	 */
 	private Board board;
-
+	/**
+	 * Tile that is currently selected.
+	 */
 	private AbstractTile selectedTile;
 
+	/**
+	 * Constructor for game instance.
+	 *
+	 * @param board instance of board for current game
+	 * @param players list of players that will play the game
+	 */
 	public Game(Board board, List<Player> players) {
 		this.board = board;
 		this.players = players;
 		this.currentTurn = new Turn(players.get(0));
 	}
-
+	/**
+	 * Method that starts the turn for the next player in line.
+	 */
 	public void nextPlayerTurn() {
 		int currentPlayerIndex = players.indexOf(currentTurn.getCurrentPlayer());
 		if (currentPlayerIndex != players.size()-1) {
@@ -46,7 +62,11 @@ public class Game {
 			currentTurn.newPlayerTurn(players.get(0), gamePhase);
 		}
 	}
-
+	/**
+	 * Getter for current deck.
+	 *
+	 * @return current deck
+	 */
 	public Deck getCurrentPlayerDeck() {
 		return getCurrentPlayer().getPlayerDeck();
 	}

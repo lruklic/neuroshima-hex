@@ -2,6 +2,8 @@ package hr.nhex.game;
 
 import hr.nhex.board.Board;
 import hr.nhex.decks.Deck;
+import hr.nhex.game.turn.Turn;
+import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.model.AbstractTile;
 import hr.nhex.model.player.Player;
 
@@ -21,14 +23,10 @@ public class Game {
 	 * List of players participating in current game.
 	 */
 	private List<Player> players = new ArrayList<>();
-	/**
-	 * Player whose turn currently is.
-	 */
-	private int currentPlayerIndex;
 
 	private GamePhase gamePhase = GamePhase.GAME_START;
 
-	private TurnPhase turnPhase = TurnPhase.DISCARD_PHASE;
+	private Turn currentTurn;
 
 	private Board board;
 
@@ -37,13 +35,15 @@ public class Game {
 	public Game(Board board, List<Player> players) {
 		this.board = board;
 		this.players = players;
+		this.currentTurn = new Turn(players.get(0));
 	}
 
 	public void nextPlayerTurn() {
+		int currentPlayerIndex = players.indexOf(currentTurn.getCurrentPlayer());
 		if (currentPlayerIndex != players.size()-1) {
-			currentPlayerIndex++;
+			currentTurn.newPlayerTurn(players.get(currentPlayerIndex+1), gamePhase);
 		} else {
-			currentPlayerIndex = 0;
+			currentTurn.newPlayerTurn(players.get(0), gamePhase);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class Game {
 	}
 
 	public Player getCurrentPlayer() {
-		return players.get(currentPlayerIndex);
+		return currentTurn.getCurrentPlayer();
 	}
 
 	public int getNumberOfPlayers() {
@@ -79,8 +79,12 @@ public class Game {
 		return gamePhase;
 	}
 
+	public Turn getTurn() {
+		return currentTurn;
+	}
+
 	public TurnPhase getTurnPhase() {
-		return turnPhase;
+		return currentTurn.getTurnPhase();
 	}
 
 	public void setGamePhase(GamePhase gamePhase) {
@@ -88,7 +92,7 @@ public class Game {
 	}
 
 	public void setTurnPhase(TurnPhase turnPhase) {
-		this.turnPhase = turnPhase;
+		currentTurn.setTurnPhase(turnPhase);
 	}
 
 }

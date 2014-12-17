@@ -18,14 +18,14 @@ import java.util.List;
 
 public class HegemonyDeck extends Deck implements IBasicDeck {
 
-	private static final int MOVE_NUMBER = 15; // 3
-	private static final int BATTLE_NUMBER = 20; // 5
+	private static final int MOVE_NUMBER = 3;
+	private static final int BATTLE_NUMBER = 5;
 	private static final int SNIPER_NUMBER = 1;
-	private static final int PUSH_NUMBER = 2; // 2
+	private static final int PUSH_NUMBER = 2;
 
 	private static final int UNIT_GANGER = 4;
 	private static final int UNIT_GLADIATOR = 1;
-	private static final int UNIT_NET_FIGHTER = 35; // 2
+	private static final int UNIT_NET_FIGHTER = 2;
 	private static final int UNIT_NET_MASTER = 1;
 	private static final int UNIT_RUNNER = 3;
 	private static final int UNIT_THUG = 1;
@@ -35,7 +35,7 @@ public class HegemonyDeck extends Deck implements IBasicDeck {
 	private static final int MODULE_OFFICER_ONE = 2;
 	private static final int MODULE_OFFICER_TWO = 1;
 	private static final int MODULE_THE_BOSS = 1;
-	private static final int MODULE_TRANSPORT = 1;
+	private static final int MODULE_TRANSPORT = 20; // 1
 	private static final int MODULE_QUARTERMASTER = 1;
 	private static final int MODULE_SCOUT = 1;
 

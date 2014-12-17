@@ -5,12 +5,12 @@ import hr.nhex.decks.implementation.BorgoDeck;
 import hr.nhex.decks.implementation.HegemonyDeck;
 import hr.nhex.game.Game;
 import hr.nhex.game.GamePhase;
-import hr.nhex.game.TurnPhase;
+import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.graphic.adapters.CanvasResizeComponentAdapter;
-import hr.nhex.graphic.adapters.MouseAdapterContainer;
 import hr.nhex.graphic.hexagon.BoardDrawer;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.imagecache.ImageCache;
+import hr.nhex.graphic.mouse.GenericMouseAdapter;
 import hr.nhex.model.player.Player;
 
 import java.awt.BorderLayout;
@@ -55,7 +55,9 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private ImageCache cache = new ImageCache();
 
-	private MouseAdapterContainer mac = new MouseAdapterContainer();
+	// private MouseAdapterContainer mac = new MouseAdapterContainer();
+
+	private GenericMouseAdapter genericMouseAdapter;
 
 	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
 
@@ -81,7 +83,12 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private void addMouseAdapters() {
 		addComponentListener(new CanvasResizeComponentAdapter());
-		mac.registerAll(this);
+
+		this.genericMouseAdapter = new GenericMouseAdapter(this);
+		addMouseListener(genericMouseAdapter);
+		addMouseMotionListener(genericMouseAdapter);
+
+		// mac.registerAll(this);
 	}
 
 	private void addBtn() {
@@ -117,6 +124,7 @@ public class NeuroshimaCanvas extends JPanel {
 				}
 				//getGameInstance().getCurrentPlayerGameDeck().discardAllTiles();
 				getGameInstance().nextPlayerTurn();
+				//System.out.println("Current gp: "+getGameInstance().getGamePhase()+ " tp: "+getGameInstance().getTurnPhase());
 				repaint();
 			}
 		});
@@ -134,7 +142,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 		if (this.backgroundImage == null) {
 			try {
-				backgroundImage = ImageIO.read(new File("background.jpg"));
+				backgroundImage = ImageIO.read(new File("background2.jpg"));
 			} catch (IOException e) {
 				System.out.println("Background image not found.");
 			}
@@ -155,8 +163,8 @@ public class NeuroshimaCanvas extends JPanel {
 		return gameInstance;
 	}
 
-	public MouseAdapterContainer getMac() {
-		return mac;
+	public GenericMouseAdapter getGenericMouseAdapter() {
+		return genericMouseAdapter;
 	}
 
 }

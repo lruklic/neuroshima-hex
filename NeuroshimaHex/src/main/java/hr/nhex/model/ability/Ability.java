@@ -1,21 +1,21 @@
 package hr.nhex.model.ability;
 
 /**
- * Razred koji predstavlja sposobnost jedinice, modula ili baze.
- * 
- * @author Luka Rukliæ
+ * Class that represents an ability of BoardTile or FoundationTile (nyi).
+ *
+ * @author Luka Rukliï¿½
  *
  */
 
 public class Ability {
 
 	/**
-	 * Na kojoj strani polja se sposobnost nalazi.
+	 * Direction at which ability is bestowed.
 	 */
 	private int pointsTo;
 
 	/**
-	 * Vrsta sposobnosti.
+	 * Type of ability..
 	 */
 	private AbilityType type;
 
@@ -51,17 +51,22 @@ public class Ability {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Ability other = (Ability) obj;
-		if (pointsTo != other.pointsTo)
+		if (pointsTo != other.pointsTo) {
 			return false;
-		if (type != other.type)
+		}
+		if (type != other.type) {
 			return false;
+		}
 		return true;
 	}
 

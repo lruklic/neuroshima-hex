@@ -37,11 +37,11 @@ public class Hexagon extends JComponent {
 	/**
 	 * X coordinate on hexagon board.
 	 */
-	private int tileX;
+	private Integer tileX;
 	/**
 	 * Y coordinate on hexagon board.
 	 */
-	private int tileY;
+	private Integer tileY;
 	/**
 	 * X pixel coordinate on the window with hexagon board.
 	 */
@@ -64,7 +64,7 @@ public class Hexagon extends JComponent {
 	 * @param yC
 	 * @param hexSize
 	 */
-	public Hexagon(int tileX, int tileY, int xC, int yC, int hexSize) {
+	public Hexagon(Integer tileX, Integer tileY, int xC, int yC, int hexSize) {		// da li moraju postojati
 		super();
 		this.tileX = tileX;
 		this.tileY = tileY;
@@ -242,11 +242,11 @@ public class Hexagon extends JComponent {
 		this.yC = yC;
 	}
 
-	public int getTileX() {
+	public Integer getTileX() {
 		return tileX;
 	}
 
-	public int getTileY() {
+	public Integer getTileY() {
 		return tileY;
 	}
 

@@ -1,6 +1,8 @@
 package hr.nhex.decks;
 
+import hr.nhex.game.DrawnTileSet;
 import hr.nhex.model.AbstractTile;
+import hr.nhex.model.HQ;
 import hr.nhex.model.ability.Ability;
 import hr.nhex.model.unit.Attack;
 
@@ -12,7 +14,7 @@ import java.util.Stack;
 /**
  * Class that represents deck of tiles.
  *
- * @author Luka Rukli�
+ * @author Luka Ruklic
  *
  */
 
@@ -35,7 +37,7 @@ public class Deck {
 	 */
 	private Stack<AbstractTile> tiles = new Stack<>();
 
-	private AbstractTile[] drawnTiles = new AbstractTile[3];
+	private DrawnTileSet drawnTileSet = new DrawnTileSet();
 
 	public void shuffleDeck() {
 		long seed = System.nanoTime();
@@ -43,27 +45,26 @@ public class Deck {
 	}
 
 	public void drawHQ() {
-		drawnTiles[2] = tiles.pop();
+		drawnTileSet.putHqToDrawn((HQ) tiles.pop());	// razmisli o ovome, uvijek HQ mora biti na početku da bi radilo
 	}
 
 	public void drawNew() {
-		for (int i = 0; i < 3; i++) {
-			if (drawnTiles[i] == null) {
-				drawnTiles[i] = tiles.pop();
-			}
+		int numberOfEmptyTiles = drawnTileSet.TILES_DRAWN_PER_TURN - drawnTileSet.getTilesCount();
+		for (int i = 0; i < numberOfEmptyTiles; i++) {
+			drawnTileSet.putTileToSet(tiles.pop());
 		}
 	}
 
 	public AbstractTile getDrawnTile(int numberOfTile) {
-		if (numberOfTile > 2) {
-			return null;
-		} else {
-			return drawnTiles[numberOfTile];
-		}
+		return drawnTileSet.getDrawnTile(numberOfTile);
+	}
+
+	public AbstractTile[] getDrawnTiles() {
+		return drawnTileSet.getDrawnTiles();
 	}
 
 	public void discardTile(int numberOfTile) {
-		drawnTiles[numberOfTile] = null;
+		drawnTileSet.discardTile(numberOfTile);
 	}
 
 	public void addTileToDeck(AbstractTile tile) {
@@ -76,10 +77,6 @@ public class Deck {
 
 	protected void setDeckName(String deckName) {
 		this.deckName = deckName;
-	}
-
-	public AbstractTile[] getDrawnTiles() {
-		return drawnTiles;
 	}
 
 	/**

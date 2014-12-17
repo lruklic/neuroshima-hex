@@ -56,6 +56,7 @@ public class Module extends BoardTile {
 		this.abilities = abilities;
 	}
 
+	@Override
 	public List<Ability> getAbilities() {
 		return abilities;
 	}

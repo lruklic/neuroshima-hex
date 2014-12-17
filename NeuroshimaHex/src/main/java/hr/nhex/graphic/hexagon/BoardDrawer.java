@@ -136,7 +136,9 @@ public class BoardDrawer {
 			g2.setPaint(tex);
 			g2.fillPolygon(poly);
 
-			drawSpecialHexBorder(h, poly);
+			if (h.getTileX() != null && h.getTileY() != null) {
+				drawSpecialHexBorder(h, poly);
+			}
 			return;
 
 		}
@@ -183,7 +185,10 @@ public class BoardDrawer {
 
 		g2.fillPolygon(poly);
 
-		drawSpecialHexBorder(h, poly);
+		if (h.getTileX() != null && h.getTileY() != null) {
+			drawSpecialHexBorder(h, poly);
+		}
+
 
 	}
 

@@ -1,4 +1,4 @@
-package hr.nhex.game;
+package hr.nhex.game.turn;
 
 public enum TurnPhase {
 

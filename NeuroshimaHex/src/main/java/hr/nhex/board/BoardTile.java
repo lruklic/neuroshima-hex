@@ -1,7 +1,10 @@
 package hr.nhex.board;
 
 import hr.nhex.model.AbstractTile;
+import hr.nhex.model.ability.Ability;
 import hr.nhex.model.player.Player;
+
+import java.util.List;
 
 /**
  * Class that represents tile that can be placed on the board.
@@ -88,6 +91,10 @@ public class BoardTile extends AbstractTile {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public List<Ability> getAbilities() {
+		return null;
 	}
 
 	@Override

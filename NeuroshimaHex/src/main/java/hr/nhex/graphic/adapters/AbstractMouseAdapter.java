@@ -8,6 +8,7 @@ import hr.nhex.graphic.hexagon.HexagonListContainer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Interface that defines basic custom adapter options, like turning the adapter on and off.
@@ -16,13 +17,15 @@ import java.awt.event.MouseEvent;
  *
  */
 
+// promjena trenutnog modela s AbstractMouseListenerom na obični MouseListener
+
 public abstract class AbstractMouseAdapter extends MouseAdapter {
 
 	protected AdapterType type;
 	/**
 	 * Variable that defines whether the listener is listening or not (is it on or off).
 	 */
-	protected boolean listenerOn = false;
+	protected AtomicBoolean listenerOn = new AtomicBoolean(false);
 
 	/**
 	 * Top level container.
@@ -116,13 +119,13 @@ public abstract class AbstractMouseAdapter extends MouseAdapter {
 	 * Method that turns the adapter on.
 	 */
 	public void setListenerOn() {
-		listenerOn = true;
+		listenerOn.set(true);
 	}
 	/**
 	 * Method that turns the adapter off.
 	 */
 	public void setListenerOff() {
-		listenerOn = false;
+		listenerOn.set(false);
 	};
 	public AdapterType getType() {
 		return type;

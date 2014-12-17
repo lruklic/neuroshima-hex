@@ -92,7 +92,7 @@ public class TileAttackAnimation implements ActionListener {
 			moved++;
 		} else {
 			((Timer)e.getSource()).stop();
-			cn.getMac().mouseListenerActivate(AdapterType.PLACEMENT);
+			cn.getGenericMouseAdapter().setActiveAdapterType(AdapterType.PLACEMENT);
 		}
 		//System.out.println("Att hex coord: "+attackingHex.getxC()+", "+attackingHex.getyC());
 		cn.repaint();

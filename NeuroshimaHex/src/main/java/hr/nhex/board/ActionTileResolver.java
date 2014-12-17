@@ -8,6 +8,7 @@ import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.adapters.AdapterType;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.hexagon.SpecialHex;
+import hr.nhex.model.HQ;
 import hr.nhex.model.action.ActionTile;
 import hr.nhex.model.action.ActionType;
 
@@ -48,7 +49,7 @@ public class ActionTileResolver {
 		} else if (tilePos != null && at.getActionType() == ActionType.SNIPER) {
 
 			BoardTile tileTarget = game.getBoard().getTile(tilePos.getX(), tilePos.getY());
-			if (tileTarget != null && tileTarget.getPlayer() != game.getCurrentPlayer()) {
+			if (tileTarget != null && tileTarget.getPlayer() != game.getCurrentPlayer() && !(tileTarget instanceof HQ)) {
 				tileTarget.setHitPoints(tileTarget.getHitPoints() - 1);
 				if (tileTarget.getHitPoints() == 0) {
 					BattleSimulator bs = new BattleSimulator(game.getBoard());
@@ -70,7 +71,7 @@ public class ActionTileResolver {
 				}
 				if (!hlc.getSpecialHexList().isEmpty()) {
 					game.setSelectedTile(tileTarget);
-					cn.getMac().mouseListenerActivate(AdapterType.MOVEMENT);
+					cn.getGenericMouseAdapter().setActiveAdapterType(AdapterType.MOVEMENT);
 				}
 				return true;
 			}
@@ -101,7 +102,7 @@ public class ActionTileResolver {
 
 				if (!pusheeTiles.isEmpty()) {
 					game.setSelectedTile(tilePusher);
-					cn.getMac().mouseListenerActivate(AdapterType.PUSH);	// dodaj push adapter
+					cn.getGenericMouseAdapter().setActiveAdapterType(AdapterType.PUSH);	// dodaj push adapter
 					return true;
 				}
 

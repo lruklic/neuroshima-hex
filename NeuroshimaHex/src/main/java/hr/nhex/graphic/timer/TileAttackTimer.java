@@ -51,7 +51,7 @@ public class TileAttackTimer {
 		// promijeniti
 		Timer timer = new Timer(ANIMATION_ATTACK_SPEED, new TileAttackAnimation(attackingHex, hitHex, cn));
 		timer.start();
-		cn.getMac().deactivateAll();
+		// cn.getMac().deactivateAll(); OVO OBAVEZNO VRATITI
 
 	}
 }

@@ -216,7 +216,7 @@ public class BattleSimulator implements IBasicBoard {
 		return highestSpeed;
 	}
 
-	private void applyModuleBonus() {
+	public void applyModuleBonus() {
 
 		for (BattleTile battleTile : boardBattleTiles) {
 			BoardTile currentTile = battleTile.getTile();

@@ -85,8 +85,6 @@ public enum AbilityType {
 	TRANSPORT {
 		@Override
 		public void applyBonus(BattleTile battleTile) {
-			// TODO Auto-generated method stub
-
 		}
 	},
 

@@ -1,5 +1,7 @@
 package hr.nhex.graphic;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -21,8 +23,19 @@ public class NeuroshimaHex extends JFrame {
 		//createActions();
 		//createMenu();
 
+		this.getContentPane().setLayout(new BorderLayout());
+
 		this.canvas = new NeuroshimaCanvas(this, null);
-		this.getContentPane().add(canvas);
+		this.getContentPane().add(canvas, BorderLayout.CENTER);
+
+		//		Panel p = new Panel(new BorderLayout());
+		//
+		//		JButton drawBtn = new JButton("Draw");
+		//		p.add(drawBtn, BorderLayout.WEST);
+		//		JButton endTurnBtn = new JButton("End Turn");
+		//		p.add(endTurnBtn, BorderLayout.EAST);
+
+		//		this.getContentPane().add(p, BorderLayout.NORTH);
 	}
 
 	//	private void createMenu() {

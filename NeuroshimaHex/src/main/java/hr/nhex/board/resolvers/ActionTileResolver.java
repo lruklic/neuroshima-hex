@@ -1,7 +1,8 @@
-package hr.nhex.board;
+package hr.nhex.board.resolvers;
 
 import hr.nhex.battle.BattlePresenter;
 import hr.nhex.battle.BattleSimulator;
+import hr.nhex.board.BoardTile;
 import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;

@@ -6,7 +6,7 @@ import hr.nhex.model.HQ;
 
 /**
  * Enum that represents attack types.
- * 
+ *
  * @author Luka Ruklic
  *
  */

@@ -1,7 +1,7 @@
 package hr.nhex.graphic.mouse.resolvers;
 
-import hr.nhex.board.ActionTileResolver;
 import hr.nhex.board.BoardTile;
+import hr.nhex.board.resolvers.ActionTileResolver;
 import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.NeuroshimaCanvas;

@@ -4,12 +4,13 @@ import hr.nhex.board.Board;
 import hr.nhex.decks.implementation.BorgoDeck;
 import hr.nhex.decks.implementation.HegemonyDeck;
 import hr.nhex.game.Game;
-import hr.nhex.game.GamePhase;
-import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.graphic.adapters.CanvasResizeComponentAdapter;
+import hr.nhex.graphic.buttons.DrawActionListener;
+import hr.nhex.graphic.buttons.EndTurnActionListener;
 import hr.nhex.graphic.hexagon.BoardDrawer;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.imagecache.ImageCache;
+import hr.nhex.graphic.labels.LabelContainer;
 import hr.nhex.graphic.mouse.GenericMouseAdapter;
 import hr.nhex.model.player.Player;
 
@@ -18,8 +19,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +50,8 @@ public class NeuroshimaCanvas extends JPanel {
 	 */
 	private JLabel label;
 
+	LabelContainer lc = new LabelContainer();
+
 	private BufferedImage backgroundImage;
 
 	private ImageCache cache = new ImageCache();
@@ -61,8 +62,6 @@ public class NeuroshimaCanvas extends JPanel {
 
 	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
 
-		addBtn();
-
 		this.label = new JLabel("Neuroshima game has begun.");
 		this.add(label, BorderLayout.NORTH);
 
@@ -70,15 +69,23 @@ public class NeuroshimaCanvas extends JPanel {
 
 		Player player1 = new Player("Luka", Color.BLUE, new BorgoDeck());
 		Player player2 = new Player("Marin", Color.YELLOW, new HegemonyDeck());
+
 		List<Player> players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
+
+		lc.createHqHpLabels(players);
+
+		for (Player player : players) {
+			this.add(lc.getHqHpLabel(player.getPlayerDeck().getDeckName()));
+		}
 
 		Board board = new Board();
 
 		this.gameInstance = new Game(board, players);
 		addMouseAdapters();
 
+		addBtn();
 	}
 
 	private void addMouseAdapters() {
@@ -93,41 +100,11 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private void addBtn() {
 		JButton newTilesBtn = new JButton("Draw!");
-		newTilesBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Game game = getGameInstance();
-				if (game.getGamePhase() == GamePhase.GAME_START) {
-					label.setText("Please place your HQ");
-					game.setGamePhase(GamePhase.HQ_SETUP);
-					game.setTurnPhase(TurnPhase.TILES_DRAWN);
-				} else if (game.getGamePhase() == GamePhase.HQ_SETUP) {
-					game.getCurrentPlayerDeck().drawHQ();
-				} else {
-					game.getCurrentPlayerDeck().shuffleDeck();
-					game.getCurrentPlayerDeck().drawNew();
-					gameInstance.setTurnPhase(TurnPhase.DISCARD_PHASE);
-				}
-				repaint();
-			}
-		});
+		newTilesBtn.addActionListener(new DrawActionListener(gameInstance));
 		this.add(newTilesBtn, BorderLayout.SOUTH);
 
 		JButton endTurnBtn = new JButton("End Turn");
-		endTurnBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (getGameInstance().getBoard().numberOfHQ() == getGameInstance().getNumberOfPlayers()) {
-					getGameInstance().setGamePhase(GamePhase.PLAYER_TURN);
-				}
-				//getGameInstance().getCurrentPlayerGameDeck().discardAllTiles();
-				getGameInstance().nextPlayerTurn();
-				//System.out.println("Current gp: "+getGameInstance().getGamePhase()+ " tp: "+getGameInstance().getTurnPhase());
-				repaint();
-			}
-		});
+		endTurnBtn.addActionListener(new EndTurnActionListener(gameInstance));
 		this.add(endTurnBtn, BorderLayout.SOUTH);
 
 	}
@@ -156,6 +133,8 @@ public class NeuroshimaCanvas extends JPanel {
 		BoardDrawer bd = new BoardDrawer(g2, cache, gameInstance, HexagonListContainer.getInstance().prepareHexagonContainer(windowHeight, windowWidth));
 
 		bd.drawAllHex();
+
+		lc.updateHp(gameInstance.getBoard());
 
 	}
 

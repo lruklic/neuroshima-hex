@@ -35,7 +35,7 @@ public class HegemonyDeck extends Deck implements IBasicDeck {
 	private static final int MODULE_OFFICER_ONE = 2;
 	private static final int MODULE_OFFICER_TWO = 1;
 	private static final int MODULE_THE_BOSS = 1;
-	private static final int MODULE_TRANSPORT = 20; // 1
+	private static final int MODULE_TRANSPORT = 1;
 	private static final int MODULE_QUARTERMASTER = 1;
 	private static final int MODULE_SCOUT = 1;
 

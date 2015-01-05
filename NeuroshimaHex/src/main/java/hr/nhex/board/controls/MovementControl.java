@@ -1,5 +1,7 @@
-package hr.nhex.board;
+package hr.nhex.board.controls;
 
+import hr.nhex.board.Board;
+import hr.nhex.board.BoardTile;
 import hr.nhex.generic.BoardTilePair;
 import hr.nhex.generic.Pair;
 import hr.nhex.model.ability.Ability;

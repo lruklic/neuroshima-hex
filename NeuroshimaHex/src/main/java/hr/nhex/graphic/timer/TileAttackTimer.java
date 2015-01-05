@@ -54,4 +54,10 @@ public class TileAttackTimer {
 		// cn.getMac().deactivateAll(); OVO OBAVEZNO VRATITI
 
 	}
+
+	public NeuroshimaCanvas getCn() {
+		return cn;
+	}
+
+
 }

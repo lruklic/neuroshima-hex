@@ -1,6 +1,6 @@
 package hr.nhex.game.turn;
 
-import hr.nhex.board.MovementControl;
+import hr.nhex.board.controls.MovementControl;
 import hr.nhex.game.GamePhase;
 import hr.nhex.model.player.Player;
 

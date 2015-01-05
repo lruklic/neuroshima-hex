@@ -28,12 +28,12 @@ public class BorgoDeck extends Deck implements IBasicDeck {
 	private static final int UNIT_NET_FIGHTER = 2;
 	private static final int UNIT_BRAWLER = 1;
 	private static final int UNIT_SUPER_MUTANT = 2;
-	private static final int UNIT_ASSASSIN = 32; // 2
+	private static final int UNIT_ASSASSIN = 2; // 2
 
 	private static final int MODULE_OFFICER = 2;
 	private static final int MODULE_SUPER_OFFICER = 1;
 	private static final int MODULE_SCOUT = 2;
-	private static final int MODULE_MEDIC = 1;
+	private static final int MODULE_MEDIC = 1; // 1
 
 	public BorgoDeck() {
 

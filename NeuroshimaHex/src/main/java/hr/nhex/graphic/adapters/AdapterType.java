@@ -8,6 +8,8 @@ public enum AdapterType {
 
 	ROTATE,
 
-	PUSH
+	PUSH,
+
+	MEDIC
 
 }

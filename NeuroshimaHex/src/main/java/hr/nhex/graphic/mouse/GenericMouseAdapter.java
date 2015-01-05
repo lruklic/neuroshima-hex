@@ -2,9 +2,18 @@ package hr.nhex.graphic.mouse;
 
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.mouse.resolvers.AbstractMouseResolver;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+/**
+ * Mouse adapter that resolves mouse events that happen in Neuroshima Game application by calling the correct method in
+ * one of the mouse event resolvers.
+ *
+ * @author Luka Ruklic
+ *
+ */
 
 public class GenericMouseAdapter extends MouseAdapter {
 
@@ -12,6 +21,14 @@ public class GenericMouseAdapter extends MouseAdapter {
 
 	public GenericMouseAdapter(NeuroshimaCanvas cn) {
 		this.tree = new MouseResolverTree(cn);
+	}
+
+	public AbstractMouseResolver getActiveResolver() {
+		return tree.getActiveResolver();
+	}
+
+	public void disableAllResolvers() {
+		tree.disableAllResolvers();
 	}
 
 	public void setActiveAdapterType(AdapterType type) {

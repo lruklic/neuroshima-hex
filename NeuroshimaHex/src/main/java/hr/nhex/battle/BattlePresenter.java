@@ -1,7 +1,8 @@
 package hr.nhex.battle;
 
 import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.timer.BattleTimer;
+import hr.nhex.graphic.timer.BattleAnimation;
+import hr.nhex.graphic.timer.TileAttackTimer;
 import hr.nhex.graphic.timer.observer.TimerObserver;
 import hr.nhex.graphic.timer.observer.TimerSubject;
 
@@ -9,7 +10,8 @@ public class BattlePresenter implements TimerObserver {
 
 	private NeuroshimaCanvas cn;
 	private BattleSimulator bs;
-	private BattleTimer battleTimer;
+
+	private BattleAnimation battleAnimation;
 
 	public BattlePresenter(NeuroshimaCanvas cn, BattleSimulator bs) {
 		this.cn = cn;
@@ -20,10 +22,9 @@ public class BattlePresenter implements TimerObserver {
 
 		bs.executeNextRound();
 
-		this.battleTimer = new BattleTimer(cn, bs);
-		battleTimer.registerPresenterObserver(this);
-
-		battleTimer.animateRound();
+		this.battleAnimation = new BattleAnimation(bs, new TileAttackTimer(cn));
+		battleAnimation.register(this);
+		battleAnimation.animateRound();
 
 	}
 
@@ -36,7 +37,7 @@ public class BattlePresenter implements TimerObserver {
 			return;
 		}
 
-		battleTimer.animateRound();
+		battleAnimation.animateRound();
 	}
 
 	@Override

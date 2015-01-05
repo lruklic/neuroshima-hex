@@ -3,6 +3,7 @@ package hr.nhex.battle;
 import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
 import hr.nhex.board.IBasicBoard;
+import hr.nhex.board.controls.MedicControl;
 import hr.nhex.generic.Pair;
 import hr.nhex.model.AbstractTile;
 import hr.nhex.model.HQ;
@@ -16,7 +17,6 @@ import hr.nhex.model.unit.Attack;
 import hr.nhex.model.unit.AttackType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,7 +35,9 @@ public class BattleSimulator implements IBasicBoard {
 
 	private List<BattleTile> boardBattleTiles = new ArrayList<>();
 
-	public StringBuilder battleEvents = new StringBuilder();
+	private List<BattleEvent> battleEvents = new ArrayList<BattleEvent>();
+
+	private MedicControl medicControl = new MedicControl();
 
 	public Integer currentInitiative = null;
 
@@ -88,21 +90,29 @@ public class BattleSimulator implements IBasicBoard {
 
 	public boolean executeNextRound() {
 
-		battleEvents.setLength(0);
+		battleEvents.clear();
+
 		applyModuleBonus();
 
 		if (currentInitiative == null) {
 			this.currentInitiative = defineHighestSpeed();
 		}
 
+		System.out.println("Executing initiative "+currentInitiative);
 		executeBattleInitiative(currentInitiative);
 		currentInitiative--;
 
-		if (currentInitiative == -2) {
+		medicControl.executeMedic();
+
+		if (currentInitiative < -1) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public MedicControl getMedicControl() {
+		return medicControl;
 	}
 
 	/**
@@ -114,7 +124,6 @@ public class BattleSimulator implements IBasicBoard {
 
 	private void executeBattleInitiative(int currentSpeed) {
 
-		System.out.println("Executing initiative "+currentSpeed);
 		for (BattleTile bt : boardBattleTiles) {
 			if ((bt.getTile() instanceof Unit)
 					&& !tileIsNetted(bt.getX(), bt.getY(), 0, bt.getTile().getPlayer())) {
@@ -139,13 +148,15 @@ public class BattleSimulator implements IBasicBoard {
 	 */
 
 	private void executeAttacks(Unit unit) {
+
 		for (Attack attack : unit.getAttacks()) {
+
 			if (attack.getType() == AttackType.MELEE || attack.getType() == AttackType.HQ_MELEE) {
 				int pointsToTileX = unit.getX() + angleX[(attack.getPointsTo() + unit.getAngle()) % 6];	// vjerojatno se % 6 mo�e maknuti
 				int pointsToTileY = unit.getY() + angleY[(attack.getPointsTo() + unit.getAngle()) % 6];
 				BattleTile attacked = getBattleTile(pointsToTileX, pointsToTileY);
 				if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer()) && !(unit instanceof HQ && attacked.getTile() instanceof HQ)) {
-					addBattleEvent("attack", unit, attacked);
+					addBattleEvent(BattleEventType.MELEE_ATTACK, unit, attacked.getTile(), attack.getValue());
 					attack.getType().attack(attacked, attack.getValue(), attack.getType());
 				}
 			}
@@ -162,29 +173,17 @@ public class BattleSimulator implements IBasicBoard {
 					BattleTile attacked = getBattleTile(pointsToTileXrange, pointsToTileYrange);
 					if (attacked != null && !unit.getPlayer().equals(attacked.getTile().getPlayer())) {
 
-						if (attacked.getTile() instanceof Unit) {
-							Unit unitBlock = (Unit)attacked.getTile();
-							int pointsToBlock = (attack.getPointsTo() + unit.getAngle() + 3 - unitBlock.getAngle()) % 6;
-							if (unitBlock.getAbilities().contains(new Ability(pointsToBlock, AbilityType.BLOCK))) {
+						if (attacked.getTile() instanceof Unit || attacked.getTile() instanceof Module) {
+							BoardTile boardTileBlock = attacked.getTile();
+							int pointsToBlock = (attack.getPointsTo() + unit.getAngle() + 3 - boardTileBlock.getAngle()) % 6;
+							if (boardTileBlock.getAbilities().contains(new Ability(pointsToBlock, AbilityType.BLOCK))) {
 								attack.getType().attack(attacked, attack.getValue() - 1, attack.getType());
 							} else {
 								attack.getType().attack(attacked, attack.getValue(), attack.getType());
 							}
-							addBattleEvent("rattack", unit, attacked);
+							addBattleEvent(BattleEventType.RANGED_ATTACK, unit, attacked.getTile(), attack.getValue());
 							break;
 						}
-						if (attacked.getTile() instanceof Module) {
-							Module moduleBlock = (Module)attacked.getTile();
-							int pointsToBlock = (attack.getPointsTo() + unit.getAngle() + 3 - moduleBlock.getAngle()) % 6;
-							if (moduleBlock.getAbilities().contains(new Ability(pointsToBlock, AbilityType.BLOCK))) {
-								attack.getType().attack(attacked, attack.getValue() - 1, attack.getType());
-							} else {
-								attack.getType().attack(attacked, attack.getValue(), attack.getType());
-							}
-							addBattleEvent("rattack", unit, attacked);
-							break;
-						}
-
 					}
 					shift++;
 				}
@@ -193,12 +192,14 @@ public class BattleSimulator implements IBasicBoard {
 		}
 	}
 
-	private void addBattleEvent(String eventType, Unit unit, BattleTile attacked) {
-		this.battleEvents.append(eventType+" "+unit.getX()+" "+unit.getY()+" "+attacked.getX()+" "+attacked.getY()+"\n");
+	private void addBattleEvent(BattleEventType eventType, BoardTile attacker, BoardTile target, int value) {
+
+		battleEvents.add(new BattleEvent(eventType, attacker, value, target));
+
 	}
 
 	/**
-	 * Metoda koja određuje najveću brzinu (inicijativu) koja se pojavljuje tijekom borbe.
+	 * Method that determines the highest initiative during battle.
 	 */
 
 	private int defineHighestSpeed() {
@@ -221,12 +222,15 @@ public class BattleSimulator implements IBasicBoard {
 		for (BattleTile battleTile : boardBattleTiles) {
 			BoardTile currentTile = battleTile.getTile();
 			// provjera da li postoje mogu�i potezi unutar borbe
-			if (currentTile instanceof Module && !tileIsNetted(currentTile.getX(), currentTile.getY(), 0, battleTile.getTile().getPlayer())) {
-				for (Ability ability : ((Module)currentTile).getAbilities()) {
+			if (!tileIsNetted(currentTile.getX(), currentTile.getY(), 0, battleTile.getTile().getPlayer())) {
+				for (Ability ability : currentTile.getAbilities()) {
 					int pointsToTileX = currentTile.getX() + angleX[(ability.getPointsTo() + currentTile.getAngle()) % 6];
 					int pointsToTileY = currentTile.getY() + angleY[(ability.getPointsTo() + currentTile.getAngle()) % 6];
 					BattleTile bonusApplicant = getBattleTile(pointsToTileX, pointsToTileY);
 					if (bonusApplicant != null && currentTile.getPlayer().equals(bonusApplicant.getTile().getPlayer())) {
+						if (ability.getType() == AbilityType.MEDIC) {
+							medicControl.addMedicTargetPair(currentTile, bonusApplicant.getTile());
+						}
 						ability.getType().applyBonus(bonusApplicant);
 					}
 				}
@@ -284,8 +288,8 @@ public class BattleSimulator implements IBasicBoard {
 		return null;
 	}
 
-	public List<String> getBattleEvents() {
-		return Arrays.asList(battleEvents.toString().split("\n"));
+	public List<BattleEvent> getBattleEvents() {
+		return battleEvents;
 	}
 
 	/**

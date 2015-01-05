@@ -6,6 +6,7 @@ import hr.nhex.generic.Position;
 import hr.nhex.graphic.NeuroshimaCanvas;
 import hr.nhex.graphic.adapters.AdapterType;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
+import hr.nhex.graphic.timer.BattleAnimation;
 
 import java.awt.event.MouseEvent;
 
@@ -35,6 +36,14 @@ public abstract class AbstractMouseResolver {
 
 	public AdapterType getType() {
 		return type;
+	}
+
+	public void setCurrentBattleAnimation(BattleAnimation currentBattleAnimation) {
+		// No effect on basic resolvers.
+	}
+
+	public void disableAllResolvers() {
+		this.cn.getGenericMouseAdapter().disableAllResolvers();
 	}
 
 	public void setActiveAdapterType(AdapterType type) {

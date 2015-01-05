@@ -36,25 +36,29 @@ public class SpecialHex {
 		return result;
 	}
 
+	/**
+	 * Compares two special hexagons by their coordinates. If coordinates are the same, hexagons are presumed to be the same.
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		SpecialHex other = (SpecialHex) obj;
 		if (coordinates == null) {
-			if (other.coordinates != null)
+			if (other.coordinates != null) {
 				return false;
-		} else if (!coordinates.equals(other.coordinates))
+			}
+		} else if (!coordinates.equals(other.coordinates)) {
 			return false;
+		}
 		return true;
 	}
-
-
-
-
 
 }

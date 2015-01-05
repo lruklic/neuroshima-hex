@@ -48,9 +48,18 @@ public class Deck {
 		drawnTileSet.putHqToDrawn((HQ) tiles.pop());	// razmisli o ovome, uvijek HQ mora biti na početku da bi radilo
 	}
 
+	/**
+	 * Method that draws full hand of tiles. Default is 3, but value is specified in <code>drawnTileSet.TILES_DRAWN_PER_TURN</code>.
+	 */
 	public void drawNew() {
 		int numberOfEmptyTiles = drawnTileSet.TILES_DRAWN_PER_TURN - drawnTileSet.getTilesCount();
 		for (int i = 0; i < numberOfEmptyTiles; i++) {
+			drawnTileSet.putTileToSet(tiles.pop());
+		}
+	}
+
+	public void drawNew(int numberOfTiles) {
+		for (int i = 0; i < numberOfTiles; i++) {
 			drawnTileSet.putTileToSet(tiles.pop());
 		}
 	}

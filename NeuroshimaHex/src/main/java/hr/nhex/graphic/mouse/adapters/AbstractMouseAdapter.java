@@ -1,9 +1,9 @@
-package hr.nhex.graphic.adapters;
+package hr.nhex.graphic.mouse.adapters;
 
 import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.generic.Position;
-import hr.nhex.graphic.NeuroshimaCanvas;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 
 import java.awt.event.MouseAdapter;

@@ -1,4 +1,4 @@
-package hr.nhex.graphic.adapters;
+package hr.nhex.graphic.mouse.adapters;
 
 public enum AdapterType {
 

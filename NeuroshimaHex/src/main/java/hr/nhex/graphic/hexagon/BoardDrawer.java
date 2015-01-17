@@ -3,6 +3,7 @@ package hr.nhex.graphic.hexagon;
 import hr.nhex.board.BoardTile;
 import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
+import hr.nhex.graphic.canvas.buttons.ButtonContainer;
 import hr.nhex.graphic.imagecache.ImageCache;
 import hr.nhex.model.AbstractTile;
 import hr.nhex.model.HQ;
@@ -35,6 +36,7 @@ public class BoardDrawer {
 	private ImageCache cache;
 	private Game game;
 	private HexagonListContainer hlc;
+	private ButtonContainer bc;
 
 	/**
 	 * Constructor.
@@ -45,11 +47,12 @@ public class BoardDrawer {
 	 * @param specialHex
 	 */
 
-	public BoardDrawer(Graphics2D g2, ImageCache cache, Game game, HexagonListContainer hlc) {
+	public BoardDrawer(Graphics2D g2, ImageCache cache, Game game, HexagonListContainer hlc, ButtonContainer bc) {
 		this.g2 = g2;
 		this.cache = cache;
 		this.game = game;
 		this.hlc = hlc;
+		this.bc = bc;
 	}
 
 	public void drawAllHex() {
@@ -80,8 +83,11 @@ public class BoardDrawer {
 
 	private void drawDraggedHex() {
 		if (hlc.getDraggedHexagon() != null) {
+			bc.makeButtonsTransparent(true);
 			AbstractTile t = game.getSelectedTile();
 			drawHex(hlc.getDraggedHexagon(), t);
+		} else {
+			bc.makeButtonsTransparent(false);
 		}
 	}
 

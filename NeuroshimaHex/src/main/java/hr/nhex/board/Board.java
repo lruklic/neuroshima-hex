@@ -57,6 +57,10 @@ public class Board implements IBasicBoard {
 		addNettedToTile(tile, x, y);
 	}
 
+	public int numberOfTilesOnBoard() {
+		return tiles.size();
+	}
+
 	/**
 	 * Method that adds tile to board and checks for tile netting.
 	 *

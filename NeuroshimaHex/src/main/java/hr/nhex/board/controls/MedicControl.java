@@ -29,8 +29,6 @@ public class MedicControl {
 				possibleMedicPairs.add(mp);
 			}
 		}
-
-
 	}
 
 	public List<SpecialHex> possibleMedicSpecialHex() {//List<BattleEvent> battleEvents) {
@@ -55,10 +53,6 @@ public class MedicControl {
 			}
 
 		}
-
-
-
-
 
 		return specialHexList;
 	}

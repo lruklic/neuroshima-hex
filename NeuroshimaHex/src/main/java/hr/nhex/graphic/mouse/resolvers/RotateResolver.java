@@ -1,11 +1,16 @@
 package hr.nhex.graphic.mouse.resolvers;
 
 import hr.nhex.board.BoardTile;
+import hr.nhex.board.resolvers.ActionTileResolver;
+import hr.nhex.game.GamePhase;
 import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.generic.Pair;
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
+import hr.nhex.model.HQ;
+import hr.nhex.model.action.ActionTile;
+import hr.nhex.model.action.ActionType;
 
 import java.awt.Cursor;
 import java.awt.Image;
@@ -59,11 +64,20 @@ public class RotateResolver extends AbstractMouseResolver {
 				game.getBoard().addTile(bt);
 			}
 
+			if (game.getGamePhase() == GamePhase.HQ_SETUP && game.getSelectedTile() instanceof HQ) {
+				cn.getButtonContainer().toggleEndTurnButton(true);
+			}
+
 			game.setSelectedTile(null);
 			hlc.setDraggedHexagon(null);
 			cn.repaint();
 
 			game.setTurnPhase(TurnPhase.TILES_DRAWN);
+
+			if (game.getBoard().numberOfTilesOnBoard() == 19) {		// ovo radje provjeri s metodom da li su sva polja na ploci zauzeta; zbog foundation tileova
+				ActionTileResolver atr = new ActionTileResolver();
+				atr.resolve(new ActionTile("Battle", ActionType.BATTLE), null, cn);
+			}
 
 			setActiveAdapterType(AdapterType.PLACEMENT);
 			//cn.getMac().mouseListenerActivate(AdapterType.PLACEMENT);

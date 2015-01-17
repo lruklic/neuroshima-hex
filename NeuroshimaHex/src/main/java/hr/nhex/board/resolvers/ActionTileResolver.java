@@ -5,10 +5,10 @@ import hr.nhex.battle.BattleSimulator;
 import hr.nhex.board.BoardTile;
 import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.hexagon.SpecialHex;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
 import hr.nhex.model.HQ;
 import hr.nhex.model.action.ActionTile;
 import hr.nhex.model.action.ActionType;
@@ -103,7 +103,7 @@ public class ActionTileResolver {
 
 				if (!pusheeTiles.isEmpty()) {
 					game.setSelectedTile(tilePusher);
-					cn.getGenericMouseAdapter().setActiveAdapterType(AdapterType.PUSH);	// dodaj push adapter
+					cn.getGenericMouseAdapter().setActiveAdapterType(AdapterType.PUSH);
 					return true;
 				}
 

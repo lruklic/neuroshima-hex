@@ -26,7 +26,7 @@ public class Game {
 	/**
 	 * Current phase of the game.
 	 */
-	private GamePhase gamePhase = GamePhase.GAME_START;
+	private GamePhase gamePhase = GamePhase.HQ_SETUP;
 	/**
 	 * Instance of the current turn.
 	 */

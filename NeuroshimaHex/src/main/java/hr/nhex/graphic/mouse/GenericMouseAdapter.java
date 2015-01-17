@@ -1,7 +1,7 @@
 package hr.nhex.graphic.mouse;
 
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
 import hr.nhex.graphic.mouse.resolvers.AbstractMouseResolver;
 
 import java.awt.event.MouseAdapter;
@@ -16,7 +16,9 @@ import java.awt.event.MouseEvent;
  */
 
 public class GenericMouseAdapter extends MouseAdapter {
-
+	/**
+	 * Data structure that holds all the mouse resolvers for Neuroshima game.
+	 */
 	private MouseResolverTree tree;
 
 	public GenericMouseAdapter(NeuroshimaCanvas cn) {

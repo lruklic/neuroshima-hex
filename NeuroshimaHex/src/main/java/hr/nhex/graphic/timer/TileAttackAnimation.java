@@ -1,9 +1,9 @@
 package hr.nhex.graphic.timer;
 
 import hr.nhex.generic.Pair;
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;

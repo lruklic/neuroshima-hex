@@ -36,18 +36,24 @@ public class Deck {
 	 * List of tiles that are contained in a deck.
 	 */
 	private Stack<AbstractTile> tiles = new Stack<>();
-
+	/**
+	 * Instance of class that contains drawn tiles from player deck that are currently in the game.
+	 */
 	private DrawnTileSet drawnTileSet = new DrawnTileSet();
-
+	/**
+	 * Method that shuffles current player deck using random seed.
+	 */
 	public void shuffleDeck() {
 		long seed = System.nanoTime();
 		Collections.shuffle(tiles, new Random(seed));
 	}
-
+	/**
+	 * Method that draws Headquaters tile from the top of the deck.
+	 */
 	public void drawHQ() {
 		drawnTileSet.putHqToDrawn((HQ) tiles.pop());	// razmisli o ovome, uvijek HQ mora biti na početku da bi radilo
+		shuffleDeck();
 	}
-
 	/**
 	 * Method that draws full hand of tiles. Default is 3, but value is specified in <code>drawnTileSet.TILES_DRAWN_PER_TURN</code>.
 	 */
@@ -57,64 +63,69 @@ public class Deck {
 			drawnTileSet.putTileToSet(tiles.pop());
 		}
 	}
-
+	/**
+	 * Overriden method that draws custom number of tiles. Used in first and second player turn.
+	 * @param numberOfTiles number of the tiles that is drawn from the deck
+	 */
 	public void drawNew(int numberOfTiles) {
 		for (int i = 0; i < numberOfTiles; i++) {
 			drawnTileSet.putTileToSet(tiles.pop());
 		}
 	}
-
+	/**
+	 * Getter for one of the drawn tiles.
+	 * @param numberOfTile number of tile that method gets
+	 * @return instance of tile
+	 */
 	public AbstractTile getDrawnTile(int numberOfTile) {
 		return drawnTileSet.getDrawnTile(numberOfTile);
 	}
-
+	/**
+	 * Getter for all drawn tiles.
+	 * @return AbstractTile list of all drawn tiles
+	 */
 	public AbstractTile[] getDrawnTiles() {
 		return drawnTileSet.getDrawnTiles();
 	}
-
+	/**
+	 * Method that discards on of the drawn tiles.
+	 * @param numberOfTile number of tile that is being discarded
+	 */
 	public void discardTile(int numberOfTile) {
 		drawnTileSet.discardTile(numberOfTile);
 	}
-
+	/**
+	 * Method that adds tile to deck.
+	 * @param tile
+	 */
 	public void addTileToDeck(AbstractTile tile) {
 		tiles.add(tile);
 	}
-
+	/**
+	 * Getter for deck name.
+	 * @return name of the deck
+	 */
 	public String getDeckName() {
 		return deckName;
 	}
-
+	/**
+	 * Setter for deck name.
+	 * @param deckName deck name
+	 */
 	protected void setDeckName(String deckName) {
 		this.deckName = deckName;
 	}
-
 	/**
-	 * Metoda koja mi�e sve elemente iz primljenih listi.
+	 * Method that removes all elements from received lists.
 	 *
-	 * @param speed lista brzina jedinice koja se prazni
-	 * @param attacks lista napada jedinice koja se prazni
-	 * @param abilities lista sposobnosti jedinice koja se prazni
+	 * @param speed list containing unit initiatives
+	 * @param attacks list containing unit attacks
+	 * @param abilities  list containing unit abilities
 	 */
-
 	public void clearAllLists(List<Integer> speed, List<Attack> attacks, List<Ability> abilities) {
 		speed.clear();
 		attacks.clear();
 		abilities.clear();
-	}
-
-	/**
-	 * Metoda koja prema primljenom imenu vra�a polje s tim imenom iz �pila.
-	 *
-	 * @param name naziv polja
-	 * @return polje ukoliko postoji, <code>null</code> ina�e
-	 */
-	public AbstractTile getTileByName(String name) {
-		for (AbstractTile tile : tiles) {
-			if (tile.getName().equals(name) && !tile.isOnBoard()) {
-				return tile;
-			}
-		}
-		return null;
 	}
 
 }

@@ -3,9 +3,9 @@ package hr.nhex.graphic.mouse.resolvers;
 import hr.nhex.game.Game;
 import hr.nhex.generic.Pair;
 import hr.nhex.generic.Position;
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
 import hr.nhex.graphic.timer.BattleAnimation;
 
 import java.awt.event.MouseEvent;

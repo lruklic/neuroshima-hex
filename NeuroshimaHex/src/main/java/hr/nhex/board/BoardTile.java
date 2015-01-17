@@ -139,7 +139,4 @@ public class BoardTile extends AbstractTile {
 		return true;
 	}
 
-
-
-
 }

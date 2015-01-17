@@ -1,20 +1,20 @@
-package hr.nhex.graphic;
+package hr.nhex.graphic.canvas;
 
 import hr.nhex.board.Board;
 import hr.nhex.decks.implementation.BorgoDeck;
 import hr.nhex.decks.implementation.HegemonyDeck;
 import hr.nhex.game.Game;
-import hr.nhex.graphic.adapters.CanvasResizeComponentAdapter;
-import hr.nhex.graphic.buttons.DrawActionListener;
-import hr.nhex.graphic.buttons.EndTurnActionListener;
+import hr.nhex.graphic.canvas.buttons.ButtonContainer;
+import hr.nhex.graphic.canvas.buttons.DrawActionListener;
+import hr.nhex.graphic.canvas.buttons.EndTurnActionListener;
+import hr.nhex.graphic.canvas.labels.LabelContainer;
 import hr.nhex.graphic.hexagon.BoardDrawer;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.imagecache.ImageCache;
-import hr.nhex.graphic.labels.LabelContainer;
 import hr.nhex.graphic.mouse.GenericMouseAdapter;
+import hr.nhex.graphic.singleton.Repainter;
 import hr.nhex.model.player.Player;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,8 +27,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -45,12 +43,8 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private Game gameInstance;
 
-	/**
-	 * TEST LABEL
-	 */
-	private JLabel label;
-
-	LabelContainer lc = new LabelContainer();
+	private ButtonContainer buttonContainer = new ButtonContainer();
+	LabelContainer labelContainer = new LabelContainer();
 
 	private BufferedImage backgroundImage;
 
@@ -60,10 +54,9 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private GenericMouseAdapter genericMouseAdapter;
 
-	public NeuroshimaCanvas(JFrame mainWindow, Game gameInstance) {
+	public NeuroshimaCanvas(Game gameInstance) {
 
-		this.label = new JLabel("Neuroshima game has begun.");
-		this.add(label, BorderLayout.NORTH);
+		Repainter.setCanvas(this);
 
 		// TEST-RUN (this should go in NeuroshimaHex.java)
 
@@ -74,10 +67,10 @@ public class NeuroshimaCanvas extends JPanel {
 		players.add(player1);
 		players.add(player2);
 
-		lc.createHqHpLabels(players);
+		labelContainer.createHqHpLabels(players);
 
 		for (Player player : players) {
-			this.add(lc.getHqHpLabel(player.getPlayerDeck().getDeckName()));
+			this.add(labelContainer.getHqHpLabel(player.getPlayerDeck().getDeckName()));
 		}
 
 		Board board = new Board();
@@ -99,14 +92,18 @@ public class NeuroshimaCanvas extends JPanel {
 	}
 
 	private void addBtn() {
-		JButton newTilesBtn = new JButton("Draw!");
-		newTilesBtn.addActionListener(new DrawActionListener(gameInstance));
-		this.add(newTilesBtn, BorderLayout.SOUTH);
+
+		buttonContainer.initialize(gameInstance);
+
+		JButton drawBtn = new JButton("Draw!");
+		buttonContainer.setDrawButton(drawBtn);
+		drawBtn.addActionListener(new DrawActionListener(gameInstance, buttonContainer));
 
 		JButton endTurnBtn = new JButton("End Turn");
-		endTurnBtn.addActionListener(new EndTurnActionListener(gameInstance));
-		this.add(endTurnBtn, BorderLayout.SOUTH);
+		buttonContainer.setEndButton(endTurnBtn);
+		endTurnBtn.addActionListener(new EndTurnActionListener(gameInstance, buttonContainer));
 
+		buttonContainer.addButtonsToCanvas(this);
 	}
 
 	@Override
@@ -119,7 +116,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 		if (this.backgroundImage == null) {
 			try {
-				backgroundImage = ImageIO.read(new File("background2.jpg"));
+				backgroundImage = ImageIO.read(new File("pics/background/background2.jpg"));
 			} catch (IOException e) {
 				System.out.println("Background image not found.");
 			}
@@ -130,11 +127,14 @@ public class NeuroshimaCanvas extends JPanel {
 		int windowHeight = this.getHeight();
 		int windowWidth = this.getWidth();
 
-		BoardDrawer bd = new BoardDrawer(g2, cache, gameInstance, HexagonListContainer.getInstance().prepareHexagonContainer(windowHeight, windowWidth));
+		HexagonListContainer hlc = HexagonListContainer.getInstance();
 
+		buttonContainer.setButtonLocations(windowWidth, windowHeight, hlc.getHexSize(), hlc.getHexGap());
+
+		BoardDrawer bd = new BoardDrawer(g2, cache, gameInstance, hlc.prepareHexagonContainer(windowHeight, windowWidth), buttonContainer);
 		bd.drawAllHex();
 
-		lc.updateHp(gameInstance.getBoard());
+		labelContainer.updateHp(gameInstance.getBoard());
 
 	}
 
@@ -144,6 +144,10 @@ public class NeuroshimaCanvas extends JPanel {
 
 	public GenericMouseAdapter getGenericMouseAdapter() {
 		return genericMouseAdapter;
+	}
+
+	public ButtonContainer getButtonContainer() {
+		return buttonContainer;
 	}
 
 }

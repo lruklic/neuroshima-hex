@@ -1,4 +1,4 @@
-package hr.nhex.graphic.labels;
+package hr.nhex.graphic.canvas.labels;
 
 import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;

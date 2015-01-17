@@ -1,6 +1,6 @@
 package hr.nhex.battle;
 
-import hr.nhex.graphic.NeuroshimaCanvas;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.timer.BattleAnimation;
 import hr.nhex.graphic.timer.TileAttackTimer;
 import hr.nhex.graphic.timer.observer.TimerObserver;
@@ -34,6 +34,8 @@ public class BattlePresenter implements TimerObserver {
 		cn.repaint();
 
 		if (bs.executeNextRound()) {
+			cn.getButtonContainer().getEndButton().doClick();
+			//disablePressedButton();
 			return;
 		}
 

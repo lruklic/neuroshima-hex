@@ -1,4 +1,4 @@
-package hr.nhex.graphic.adapters;
+package hr.nhex.graphic.canvas;
 
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 

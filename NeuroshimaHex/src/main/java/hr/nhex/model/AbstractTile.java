@@ -49,6 +49,4 @@ public abstract class AbstractTile {
 	public abstract int getAngle();
 	public abstract Player getPlayer();
 
-
-
 }

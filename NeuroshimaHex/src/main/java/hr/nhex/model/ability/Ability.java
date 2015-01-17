@@ -70,7 +70,4 @@ public class Ability {
 		return true;
 	}
 
-
-
-
 }

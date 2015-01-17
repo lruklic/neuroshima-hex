@@ -9,10 +9,6 @@ package hr.nhex.game;
 
 public enum GamePhase {
 	/**
-	 * Game has just begun.
-	 */
-	GAME_START,
-	/**
 	 * HQ are currently being set on the board.
 	 */
 	HQ_SETUP,

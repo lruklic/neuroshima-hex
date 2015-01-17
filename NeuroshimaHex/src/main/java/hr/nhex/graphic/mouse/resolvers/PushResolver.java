@@ -5,10 +5,10 @@ import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
 import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.generic.Pair;
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.hexagon.SpecialHex;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;

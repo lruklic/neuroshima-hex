@@ -5,10 +5,10 @@ import hr.nhex.battle.BattleSimulator;
 import hr.nhex.battle.BattleTile;
 import hr.nhex.board.controls.MedicPair;
 import hr.nhex.generic.Pair;
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.hexagon.SpecialHex;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
 import hr.nhex.graphic.timer.BattleAnimation;
 
 import java.awt.event.MouseEvent;

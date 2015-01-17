@@ -4,11 +4,11 @@ import hr.nhex.board.BoardTile;
 import hr.nhex.board.resolvers.ActionTileResolver;
 import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.generic.Pair;
-import hr.nhex.graphic.NeuroshimaCanvas;
-import hr.nhex.graphic.adapters.AdapterType;
+import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.Hexagon;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.hexagon.SpecialHex;
+import hr.nhex.graphic.mouse.adapters.AdapterType;
 import hr.nhex.model.action.ActionTile;
 
 import java.awt.Point;
@@ -32,16 +32,7 @@ public class PlacementResolver extends AbstractMouseResolver {
 
 		game.getTurn().getMovementControl().locateAllMovementSource(game.getBoard()); 		// kršenje demetra, popravi
 
-		if (game.getTurnPhase() == TurnPhase.DISCARD_PHASE) {
-
-			Integer drawnTileForDiscardIndex = getClickedDrawnTile(ev);
-
-			if (drawnTileForDiscardIndex != null) {
-				game.getCurrentPlayerDeck().discardTile(drawnTileForDiscardIndex-1);
-				game.setTurnPhase(TurnPhase.TILES_DRAWN);
-				cn.repaint();
-			}
-		} else if (game.getTurnPhase() == TurnPhase.TILES_DRAWN) {
+		if (game.getTurnPhase() == TurnPhase.TILES_DRAWN) {
 
 			Pair tileOnBoard = getClickedTile(cn, ev);
 
@@ -108,6 +99,7 @@ public class PlacementResolver extends AbstractMouseResolver {
 			} else {
 				if (tilePos == null) {
 					hlc.setDraggedHexagon(null);
+					game.setTurnPhase(TurnPhase.TILES_DRAWN);
 					game.setSelectedTile(null);
 					cn.repaint();
 					return;

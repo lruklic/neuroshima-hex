@@ -1,6 +1,5 @@
 package hr.nhex.graphic.mouse.resolvers;
 
-import hr.nhex.board.Board;
 import hr.nhex.board.BoardTile;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.canvas.NeuroshimaCanvas;
@@ -30,7 +29,7 @@ public class MovementResolver extends AbstractMouseResolver {
 
 			if (!(tilePos.getX() == bt.getX() && tilePos.getY() == bt.getY())) {
 
-				Board board = game.getBoard();
+				// Board board = game.getBoard();
 				bt.setX(tilePos.getX());
 				bt.setY(tilePos.getY());
 

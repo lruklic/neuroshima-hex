@@ -29,12 +29,16 @@ public class NeuroshimaHex extends JFrame {
 
 		this.getContentPane().setLayout(new BorderLayout());
 
-		this.canvas = new NeuroshimaCanvas(null);
-		this.getContentPane().add(canvas, BorderLayout.CENTER);
-
-		this.mainMenu = new MainMenu();
+		this.mainMenu = new MainMenu(this);
 		this.getContentPane().add(mainMenu, BorderLayout.CENTER);
 
+	}
+
+	public void startGame() {
+		this.getContentPane().removeAll();
+		this.canvas = new NeuroshimaCanvas(null);
+		this.getContentPane().add(canvas, BorderLayout.CENTER);
+		revalidate();
 	}
 
 	private static final long serialVersionUID = 1L;

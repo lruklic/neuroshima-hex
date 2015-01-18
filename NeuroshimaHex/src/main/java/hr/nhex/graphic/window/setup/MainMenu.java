@@ -1,5 +1,6 @@
 package hr.nhex.graphic.window.setup;
 
+import hr.nhex.graphic.window.main.NeuroshimaHex;
 import hr.nhex.graphic.window.setup.buttons.NewGameButton;
 
 import java.awt.Graphics;
@@ -20,8 +21,8 @@ public class MainMenu extends JPanel {
 
 	private NewGameButton newGameButton;
 
-	public MainMenu() {
-		this.newGameButton = new NewGameButton();
+	public MainMenu(NeuroshimaHex topContainer) {
+		this.newGameButton = new NewGameButton(topContainer);
 		this.add(newGameButton);
 
 	}

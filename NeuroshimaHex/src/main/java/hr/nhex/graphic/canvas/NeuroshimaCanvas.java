@@ -18,6 +18,7 @@ import hr.nhex.model.player.Player;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -114,9 +115,13 @@ public class NeuroshimaCanvas extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		super.paintComponent(g2);
 
-		if (this.backgroundImage == null) {
+		String deckName = gameInstance.getCurrentPlayer().getPlayerDeck().getDeckName().toLowerCase();
+
+		Image backgroundImage = cache.getImage(deckName);
+		if (backgroundImage == null) {		// this.backgroundImage == null
 			try {
-				backgroundImage = ImageIO.read(new File("pics/background/background2.jpg"));
+				cache.addToCache(deckName, ImageIO.read(new File("pics/background/"+deckName+".jpg")));
+				backgroundImage = cache.getImage(deckName);
 			} catch (IOException e) {
 				System.out.println("Background image not found.");
 			}

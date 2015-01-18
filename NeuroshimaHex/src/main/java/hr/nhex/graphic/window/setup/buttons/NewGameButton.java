@@ -1,5 +1,7 @@
 package hr.nhex.graphic.window.setup.buttons;
 
+import hr.nhex.graphic.window.main.NeuroshimaHex;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,39 +17,42 @@ public class NewGameButton extends JComponent {
 
 	private static final long serialVersionUID = 1L;
 
-	public NewGameButton() {
+	private NeuroshimaHex topContainer;
+
+	private boolean isSelected = false;
+
+	public NewGameButton(final NeuroshimaHex topContainer) {
 		super();
+		this.topContainer = topContainer;
 		setSize(200, 100);
 
 		addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				System.out.println("Izasao sam");
+				isSelected = false;
+				repaint();
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				System.out.println("Usao sam");
+				isSelected = true;
+				repaint();
 
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+				topContainer.startGame();
 
 			}
 		});
@@ -63,16 +68,20 @@ public class NewGameButton extends JComponent {
 		g2.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(2));
 
-		drawLetterN(g2, 100, 50);
-		drawLetterE(g2, 100, 50);
-		drawLetterW(g2, 100, 50);
+		drawLetterN(g2, 100, 50, 2, 2);
+		drawLetterE(g2, 100, 50, 2, 2);
+		drawLetterW(g2, 100, 50, 2, 2);
+
+		if (isSelected) {
+			g2.setColor(Color.RED);
+			drawLetterN(g2, 100, 50, 1, 1);
+			drawLetterE(g2, 100, 50, 1, 1);
+			drawLetterW(g2, 100, 50, 1, 1);
+		}
 
 	}
 
-	private void drawLetterN(Graphics2D g2, int w, int h) {
-
-		int hInset = 2;
-		int wInset = 2;
+	private void drawLetterN(Graphics2D g2, int w, int h, int hInset, int wInset) {
 
 		g2.drawLine(wInset, h-hInset, wInset, hInset);
 		g2.drawLine(wInset, hInset, wInset+3*h/5, hInset+3*h/5);
@@ -88,10 +97,7 @@ public class NewGameButton extends JComponent {
 
 	}
 
-	private void drawLetterE(Graphics2D g2, int w, int h) {
-
-		int wInset = 2;
-		int hInset = 2;
+	private void drawLetterE(Graphics2D g2, int w, int h, int hInset, int wInset) {
 
 		int cs = wInset+h; // current size; N
 
@@ -114,10 +120,7 @@ public class NewGameButton extends JComponent {
 
 	}
 
-	private void drawLetterW(Graphics2D g2, int w, int h) {
-
-		int wInset = 2;
-		int hInset = 2;
+	private void drawLetterW(Graphics2D g2, int w, int h, int hInset, int wInset) {
 
 		int cs = wInset+15*h/10; // current size; Ne
 

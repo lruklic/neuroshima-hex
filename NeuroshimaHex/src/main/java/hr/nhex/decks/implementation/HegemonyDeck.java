@@ -18,26 +18,26 @@ import java.util.List;
 
 public class HegemonyDeck extends Deck implements IBasicDeck {
 
-	private static final int MOVE_NUMBER = 3;
-	private static final int BATTLE_NUMBER = 5;
-	private static final int SNIPER_NUMBER = 1;
-	private static final int PUSH_NUMBER = 2;
+	private static final int MOVE_NUMBER = 0;	// 3
+	private static final int BATTLE_NUMBER = 0;	// 5
+	private static final int SNIPER_NUMBER = 0;	// 1
+	private static final int PUSH_NUMBER = 0;	// 2
 
 	private static final int UNIT_GANGER = 4;
-	private static final int UNIT_GLADIATOR = 1;
-	private static final int UNIT_NET_FIGHTER = 2;
-	private static final int UNIT_NET_MASTER = 1;
-	private static final int UNIT_RUNNER = 3;
-	private static final int UNIT_THUG = 1;
-	private static final int UNIT_GUARD = 1;
-	private static final int UNIT_UNIVERSAL_SOLDIER = 3;
+	private static final int UNIT_GLADIATOR = 1;	// 1
+	private static final int UNIT_NET_FIGHTER = 2; // 2
+	private static final int UNIT_NET_MASTER = 0;	// 1
+	private static final int UNIT_RUNNER = 0; 	// 3
+	private static final int UNIT_THUG = 1;	// 1
+	private static final int UNIT_GUARD = 0;	// 1
+	private static final int UNIT_UNIVERSAL_SOLDIER = 0;	// 3
 
-	private static final int MODULE_OFFICER_ONE = 2;
-	private static final int MODULE_OFFICER_TWO = 1;
-	private static final int MODULE_THE_BOSS = 1;
-	private static final int MODULE_TRANSPORT = 1;
-	private static final int MODULE_QUARTERMASTER = 1;
-	private static final int MODULE_SCOUT = 1;
+	private static final int MODULE_OFFICER_ONE = 0;	// 2
+	private static final int MODULE_OFFICER_TWO = 1;	// 1
+	private static final int MODULE_THE_BOSS = 0;	// 1
+	private static final int MODULE_TRANSPORT = 0;	// 1
+	private static final int MODULE_QUARTERMASTER = 0;	// 1
+	private static final int MODULE_SCOUT = 0;	// 1
 
 	public HegemonyDeck() {
 

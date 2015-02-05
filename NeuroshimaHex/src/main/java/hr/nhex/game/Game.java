@@ -39,6 +39,10 @@ public class Game {
 	 * Tile that is currently selected.
 	 */
 	private AbstractTile selectedTile;
+	/**
+	 * Player that started the final round.
+	 */
+	private Player finalRoundStarter;
 
 	/**
 	 * Constructor for game instance.
@@ -62,6 +66,16 @@ public class Game {
 			currentTurn.newPlayerTurn(players.get(0), gamePhase);
 		}
 	}
+
+	public Player getNextPlayer() {
+		int currentPlayerIndex = players.indexOf(currentTurn.getCurrentPlayer());
+		if (currentPlayerIndex != players.size()-1) {
+			return players.get(currentPlayerIndex+1);
+		} else {
+			return players.get(0);
+		}
+	}
+
 	/**
 	 * Getter for current deck.
 	 *
@@ -113,6 +127,14 @@ public class Game {
 
 	public void setTurnPhase(TurnPhase turnPhase) {
 		currentTurn.setTurnPhase(turnPhase);
+	}
+
+	public Player getFinalRoundStarter() {
+		return finalRoundStarter;
+	}
+
+	public void setFinalRoundStarter(Player finalRoundStarter) {
+		this.finalRoundStarter = finalRoundStarter;
 	}
 
 }

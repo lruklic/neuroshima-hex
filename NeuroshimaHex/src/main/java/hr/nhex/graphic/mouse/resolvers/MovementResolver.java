@@ -25,7 +25,7 @@ public class MovementResolver extends AbstractMouseResolver {
 		Pair tilePos = getClickedTile(cn, ev);
 		int specialTilePos = hlc.getSpecialHexList().lastIndexOf(new SpecialHex(tilePos, null));
 		BoardTile bt = (BoardTile) game.getSelectedTile();
-		if (specialTilePos != -1 || (tilePos.getX() == bt.getX() && tilePos.getY() == bt.getY())) {
+		if (specialTilePos != -1 || (tilePos.getX() == bt.getX() && tilePos.getY() == bt.getY())) {		// RUŠI SE, PROVJERI ZAŠTO
 
 			if (!(tilePos.getX() == bt.getX() && tilePos.getY() == bt.getY())) {
 

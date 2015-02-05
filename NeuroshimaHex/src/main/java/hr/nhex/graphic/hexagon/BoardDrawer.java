@@ -97,7 +97,7 @@ public class BoardDrawer {
 				for (int i = 0; i < bt.getMaxHitPoints() - bt.getHitPoints(); i++) {
 					int damageTokenShift = DAMAGE_TOKEN_SHIFT*i;
 					Hexagon h = hlc.getHexagon(bt.getX(), bt.getY());
-					Ellipse2D.Double circle = new Ellipse2D.Double(h.getxC()+damageTokenShift, h.getyC(), DAMAGE_TOKEN_DIAMETER, DAMAGE_TOKEN_DIAMETER);
+					Ellipse2D.Double circle = new Ellipse2D.Double(h.getxC()+damageTokenShift, h.getyC(), DAMAGE_TOKEN_DIAMETER, DAMAGE_TOKEN_DIAMETER);		// SLOŽITI DA SE DIJAMETAR MIJENJA OVISNO O VELIČINI PLOČE
 					BufferedImage image = null;
 					if (cache.getImage("damageToken") == null) {
 						try {
@@ -185,9 +185,8 @@ public class BoardDrawer {
 			g2.setPaint(tex);
 		}
 		else {
-			g2.setColor(Color.WHITE);
+			g2.setColor(Color.lightGray);
 		}
-
 
 		g2.fillPolygon(poly);
 
@@ -230,7 +229,7 @@ public class BoardDrawer {
 	}
 
 	private BufferedImage cropImage(BufferedImage src) {
-		BufferedImage dest = src.getSubimage(0, 0, 230, 270);
+		BufferedImage dest = src.getSubimage(0, 0, 230, 270);	// MAGIC NUMBERS!
 		return dest;
 	}
 }

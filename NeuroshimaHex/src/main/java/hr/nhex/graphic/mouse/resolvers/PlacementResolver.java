@@ -2,6 +2,7 @@ package hr.nhex.graphic.mouse.resolvers;
 
 import hr.nhex.board.BoardTile;
 import hr.nhex.board.resolvers.ActionTileResolver;
+import hr.nhex.game.GamePhase;
 import hr.nhex.game.turn.TurnPhase;
 import hr.nhex.generic.Pair;
 import hr.nhex.graphic.canvas.NeuroshimaCanvas;
@@ -10,6 +11,7 @@ import hr.nhex.graphic.hexagon.HexagonListContainer;
 import hr.nhex.graphic.hexagon.SpecialHex;
 import hr.nhex.graphic.mouse.adapters.AdapterType;
 import hr.nhex.model.action.ActionTile;
+import hr.nhex.model.action.ActionType;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -106,6 +108,12 @@ public class PlacementResolver extends AbstractMouseResolver {
 				}
 
 				ActionTileResolver atr = new ActionTileResolver();
+
+				// It is not possible to perform battle in final round (except final battle, GR).
+				if (((ActionTile) game.getSelectedTile()).getActionType() == ActionType.BATTLE && game.getGamePhase() == GamePhase.FINAL_ROUND) {
+					return;
+				}
+
 				if (atr.resolve((ActionTile) game.getSelectedTile(), getClickedTile(cn, ev), cn)) {
 					game.getCurrentPlayerDeck().discardTile(this.clickedTileNo-1);
 				}

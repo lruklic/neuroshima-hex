@@ -23,6 +23,8 @@ public enum GamePhase {
 	/**
 	 * Common turn. Three tiles are drawn, one is discarded.
 	 */
-	PLAYER_TURN
+	PLAYER_TURN,
+
+	FINAL_ROUND
 
 }

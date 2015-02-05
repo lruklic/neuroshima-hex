@@ -37,14 +37,14 @@ public class MainMenu extends JPanel {
 
 		if (this.backgroundImage == null) {
 			try {
-				backgroundImage = ImageIO.read(new File("pics/background/background.jpg"));
+				backgroundImage = ImageIO.read(new File("pics/background/background2.jpg"));
 			} catch (IOException e) {
 				System.out.println("Background image not found.");
 			}
 		}
 		g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
-		newGameButton.setLocation((2*getWidth())/3, getHeight()/3);
+		newGameButton.setLocation((getWidth())/10, getHeight()/4);
 
 	}
 

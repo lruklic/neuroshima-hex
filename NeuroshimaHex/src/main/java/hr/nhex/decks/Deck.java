@@ -59,6 +59,11 @@ public class Deck {
 	 */
 	public void drawNew() {
 		int numberOfEmptyTiles = drawnTileSet.TILES_DRAWN_PER_TURN - drawnTileSet.getTilesCount();
+
+		if (tiles.size() < numberOfEmptyTiles) {
+			numberOfEmptyTiles = tiles.size();
+		}
+
 		for (int i = 0; i < numberOfEmptyTiles; i++) {
 			drawnTileSet.putTileToSet(tiles.pop());
 		}
@@ -100,6 +105,13 @@ public class Deck {
 	 */
 	public void addTileToDeck(AbstractTile tile) {
 		tiles.add(tile);
+	}
+	/**
+	 * Getter for number of tiles left in the deck.
+	 * @return number of tiles left in the deck
+	 */
+	public int getTilesLeft() {
+		return tiles.size();
 	}
 	/**
 	 * Getter for deck name.

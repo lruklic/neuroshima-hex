@@ -20,7 +20,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,15 +46,13 @@ public class NeuroshimaCanvas extends JPanel {
 	private ButtonContainer buttonContainer = new ButtonContainer();
 	LabelContainer labelContainer = new LabelContainer();
 
-	private BufferedImage backgroundImage;
-
 	private ImageCache cache = new ImageCache();
 
 	// private MouseAdapterContainer mac = new MouseAdapterContainer();
 
 	private GenericMouseAdapter genericMouseAdapter;
 
-	public NeuroshimaCanvas(Game gameInstance) {
+	public NeuroshimaCanvas(Game game) {
 
 		Repainter.setCanvas(this);
 
@@ -69,9 +66,11 @@ public class NeuroshimaCanvas extends JPanel {
 		players.add(player2);
 
 		labelContainer.createHqHpLabels(players);
+		labelContainer.createTilesLeftLabels(players);
 
 		for (Player player : players) {
 			this.add(labelContainer.getHqHpLabel(player.getPlayerDeck().getDeckName()));
+			this.add(labelContainer.getTilesLeftLabel(player.getPlayerDeck().getDeckName()));
 		}
 
 		Board board = new Board();
@@ -89,7 +88,6 @@ public class NeuroshimaCanvas extends JPanel {
 		addMouseListener(genericMouseAdapter);
 		addMouseMotionListener(genericMouseAdapter);
 
-		// mac.registerAll(this);
 	}
 
 	private void addBtn() {
@@ -102,7 +100,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 		JButton endTurnBtn = new JButton("End Turn");
 		buttonContainer.setEndButton(endTurnBtn);
-		endTurnBtn.addActionListener(new EndTurnActionListener(gameInstance, buttonContainer));
+		endTurnBtn.addActionListener(new EndTurnActionListener(gameInstance, buttonContainer, this));
 
 		buttonContainer.addButtonsToCanvas(this);
 	}
@@ -140,6 +138,7 @@ public class NeuroshimaCanvas extends JPanel {
 		bd.drawAllHex();
 
 		labelContainer.updateHp(gameInstance.getBoard());
+		labelContainer.updateTilesLeft(gameInstance);
 
 	}
 

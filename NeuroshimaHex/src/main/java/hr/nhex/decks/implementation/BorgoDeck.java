@@ -65,7 +65,7 @@ public class BorgoDeck extends Deck implements IBasicDeck {
 
 		this.addTileToDeck(new HQ(
 				"Borgo HQ",
-				STANDARD_HQ_HIT_POINTS,
+				5,
 				new ArrayList<>(speed),
 				new ArrayList<>(attacks),
 				new ArrayList<>(abilities))

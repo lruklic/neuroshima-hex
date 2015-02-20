@@ -3,6 +3,7 @@ package hr.nhex.graphic.canvas.buttons;
 import hr.nhex.game.Game;
 import hr.nhex.graphic.canvas.NeuroshimaCanvas;
 import hr.nhex.graphic.hexagon.HexagonListContainer;
+import hr.nhex.graphic.imagecache.ImageCache;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -31,9 +32,9 @@ public class ButtonContainer {
 
 	private List<DiscardButton> discardButtons = new ArrayList<DiscardButton>();
 
-	public void initialize(Game game) {
+	public void initialize(Game game, ImageCache cache) {
 		for (int discardButtonNumber = 0; discardButtonNumber < DISCARD_BUTTON_NUMBER; discardButtonNumber++) {
-			DiscardButton db = new DiscardButton(this, DISCARD_BUTTON_NUMBER - discardButtonNumber - 1, game);
+			DiscardButton db = new DiscardButton(this, DISCARD_BUTTON_NUMBER - discardButtonNumber - 1, cache, game);
 			//db.setToolTipText("D"+String.valueOf(discardButtonNumber+1));
 			discardButtons.add(db);
 		}

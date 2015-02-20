@@ -28,6 +28,7 @@ public class GameFinisher {
 		System.out.println("Winner is " + winner.getPlayerName());
 		cn.removeAll();
 		cn.validate();
+		cn.repaint();
 	}
 
 	/**

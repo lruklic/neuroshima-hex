@@ -13,17 +13,24 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
+/**
+ * Class that represents the new game button on the main screen. Letters are custom drawn.
+ *
+ * @author Luka Ruklić
+ *
+ */
+
 public class NewGameButton extends JComponent {
 
 	private static final long serialVersionUID = 1L;
 
-	private NeuroshimaHex topContainer;
+	// private NeuroshimaHex topContainer;
 
 	private boolean isSelected = false;
 
 	public NewGameButton(final NeuroshimaHex topContainer) {
 		super();
-		this.topContainer = topContainer;
+		// this.topContainer = topContainer;
 		setSize(200, 100);
 
 		addMouseListener(new MouseListener() {

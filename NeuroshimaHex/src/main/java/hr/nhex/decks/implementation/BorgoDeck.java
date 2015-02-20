@@ -21,19 +21,19 @@ public class BorgoDeck extends Deck implements IBasicDeck {
 
 	private static final int MOVE_NUMBER = 4;
 	private static final int BATTLE_NUMBER = 6;
-	private static final int GRENADE_NUMBER = 1;
+	private static final int GRENADE_NUMBER = 0;	// 1
 
 	private static final int UNIT_MUTANT = 6;
 	private static final int UNIT_BUTCHER = 4;
 	private static final int UNIT_NET_FIGHTER = 2;
 	private static final int UNIT_BRAWLER = 1;
 	private static final int UNIT_SUPER_MUTANT = 2;
-	private static final int UNIT_ASSASSIN = 2; // 2
+	private static final int UNIT_ASSASSIN = 2;
 
 	private static final int MODULE_OFFICER = 2;
 	private static final int MODULE_SUPER_OFFICER = 1;
 	private static final int MODULE_SCOUT = 2;
-	private static final int MODULE_MEDIC = 1; // 1
+	private static final int MODULE_MEDIC = 0; // 1
 
 	public BorgoDeck() {
 
@@ -65,7 +65,7 @@ public class BorgoDeck extends Deck implements IBasicDeck {
 
 		this.addTileToDeck(new HQ(
 				"Borgo HQ",
-				5,
+				20,
 				new ArrayList<>(speed),
 				new ArrayList<>(attacks),
 				new ArrayList<>(abilities))

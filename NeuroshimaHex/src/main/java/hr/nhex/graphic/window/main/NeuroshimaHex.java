@@ -9,6 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+/**
+ * Main class that starts the Neuroshima Hex game.
+ *
+ * @author Luka Ruklić
+ *
+ */
+
 public class NeuroshimaHex extends JFrame {
 
 	private NeuroshimaCanvas canvas;
@@ -20,7 +27,7 @@ public class NeuroshimaHex extends JFrame {
 
 	private void initGui() {
 
-		this.setTitle("Neuroshima Hex");
+		this.setTitle("Neuroshima Hex v0.1 EARLY ALPHA");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(800, 600);
 

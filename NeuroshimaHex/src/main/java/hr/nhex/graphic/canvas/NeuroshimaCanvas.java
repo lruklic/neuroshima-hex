@@ -92,7 +92,7 @@ public class NeuroshimaCanvas extends JPanel {
 
 	private void addBtn() {
 
-		buttonContainer.initialize(gameInstance);
+		buttonContainer.initialize(gameInstance, cache);
 
 		JButton drawBtn = new JButton("Draw!");
 		buttonContainer.setDrawButton(drawBtn);
